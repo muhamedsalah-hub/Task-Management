@@ -1,0 +1,88 @@
+<section class="w-80 sm:w-120 mx-auto">
+  <div class="my-5 text-center">
+    <h1 class="headline-lg text-textPrimary">Welcome Back</h1>
+    <p class="body-md text-textSecondary">
+      Please Enter your details to access your workspace
+    </p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="logInSubmission()" class="my-5">
+    <div class="flex flex-col space-y-5">
+      <div>
+        <label for="email" class="label-sm text-inputLabel"
+          >Email Address</label
+        >
+        <div class="input flex items-center justify-between">
+          <input
+            class="title-md bg-bgInput w-full outline-0"
+            id="email"
+            formControlName="email"
+            type="email"
+            placeholder="curator@workspace.com"
+          />
+          <fa-icon  [icon]="faEnvelope"></fa-icon>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between">
+          <label for="password" class="label-sm text-inputLabel"
+            >Password</label
+          >
+          <span class="sm:hidden label-sm text-bgPrimary">Forgot?</span>
+        </div>
+        <div class="flex items-center justify-between input">
+          <input
+            formControlName="password"
+            class="title-md bg-bgInput w-full outline-0"
+            id="password"
+            type="password"
+            placeholder=". . . . . . . . "
+            autocomplete="off"
+          />
+          <fa-icon [icon]="faEye"></fa-icon>
+        </div>
+      </div>
+      <div>
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <input
+              class="w-5 h-5 border-textSecondary rounded-sm"
+              id="remember"
+              type="checkbox"
+            />
+            <label class="text-textSecondary body-md" for="remember"
+              >Remember Me</label
+            >
+          </div>
+          <div>
+            <span class="hidden sm:block label-sm text-bgPrimary"
+              >Forgot Password?</span
+            >
+          </div>
+        </div>
+      </div>
+      <div>
+        <button
+          [ngClass]="{
+            'cursor-pointer': this.loginForm.valid,
+            'bg-gray-400': this.loginForm.invalid,
+          }"
+          [disabled]="this.loginForm.invalid"
+          class="btn-primary w-full"
+        >
+          <span class="mx-1">Sign In</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="flex justify-center items-center space-x-10">
+    <span class="body-md text-textSecondary">Don't have an account ?</span>
+    <button
+      class="text-bgPrimary body-md cursor-pointer underline font-semibold"
+    >
+      Sign Up
+    </button>
+  </div>
+</section>

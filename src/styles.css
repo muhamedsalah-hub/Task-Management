@@ -7,13 +7,28 @@
   font-display: swap;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 2rem var(--bg-input) inset;
+}
+
+body {
+  font-family: var(--font);
+}
+
 :root {
   --bg-primary: #003d9b;
   --bg-primary-container: #a2c1ef;
   --bg-surface-highest: #d7e2ff;
   --bg-surface-low: #f1f3ff;
   --bg-background: #f9f9ff;
-  --bg-error: #ffdad6;
+  --bg-input: #d7e2ff;
+  --bg-input-error: #ffdad6;
+  --input-label: #737685;
+  --placeholder-color: #6b7280;
+  --placeholder-error-color: #93000a;
   --text-primary: #041b3c;
   --text-secondary: #434654;
   --btn-primary: #003d9b;
@@ -24,16 +39,22 @@
   --font: "Inter", sans-serif;
 }
 
+
 @theme {
-  --color-primary: var(--bg-primary);
-  --color-primary-container: var(--bg-primary-container);
-  --color-surface-highest: var(--bg-surface-highest);
-  --color-surface-low: var(--bg-surface-low);
-  --color-background: var(--bg-background);
+  --color-bgPrimary: var(--bg-primary);
+  --color-bgPrimary-container: var(--bg-primary-container);
+  --color-bgSurface-highest: var(--bg-surface-highest);
+  --color-bgSurface-low: var(--bg-surface-low);
+  --color-bgBackground: var(--bg-background);
+  --color-bgInput: var(--bg-input);
+  --color-textPrimary: var(--text-primary);
+  --color-textSecondary: var(--text-secondary);
+  --color-inputLabel: var(--input-label);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
   --font-sans: var(--font);
+  --spacing-120: 30rem;
 }
 
 @utility display-lg {
@@ -69,7 +90,6 @@
   font-weight: 700;
   line-height: 1.03rem;
   letter-spacing: 0.06rem;
-
   text-transform: uppercase;
 }
 
@@ -79,14 +99,12 @@
     color: white;
     padding: 0.625rem 1.5rem;
     border-radius: 0.125rem;
-
     font-size: 0.875rem;
     font-weight: 500;
     line-height: 1.25rem;
   }
 
   .btn-secondary {
-   
     padding: 0.625rem 1.5rem;
     color: var(--btn-primary);
 
@@ -96,7 +114,6 @@
   }
 
   .btn-ghost {
-   
     padding: 0.625rem 1.5rem;
     color: var(--btn-ghost);
 
@@ -104,4 +121,24 @@
     font-weight: 400;
     line-height: 1.25rem;
   }
+
+  .input {
+    background-color: var(--bg-input);
+    padding: 0.875rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 100%;
+  }
+
+  .input-error {
+    background-color: var(--bg-input-error);
+    padding: 0.875rem 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 100%;
+  }
 }
+
+
