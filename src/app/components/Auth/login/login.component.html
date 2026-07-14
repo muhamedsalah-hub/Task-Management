@@ -6,7 +6,7 @@
     </p>
   </div>
 
-  <form class="my-5">
+  <form [formGroup]="loginForm" (ngSubmit)="logInSubmission()" class="my-5">
     <div class="flex flex-col space-y-5">
       <div>
         <label for="email" class="label-sm text-inputLabel"
@@ -14,12 +14,13 @@
         >
         <div class="input flex items-center justify-between">
           <input
-            class="title-md input p-0 outline-0"
+            class="title-md bg-bgInput w-full outline-0"
             id="email"
+            formControlName="email"
             type="email"
             placeholder="curator@workspace.com"
           />
-          <i class="fa-regular fa-envelope"></i>
+          <fa-icon  [icon]="faEnvelope"></fa-icon>
         </div>
       </div>
       <div>
@@ -31,12 +32,14 @@
         </div>
         <div class="flex items-center justify-between input">
           <input
-            class="input title-md p-0 outline-0"
+            formControlName="password"
+            class="title-md bg-bgInput w-full outline-0"
             id="password"
             type="password"
             placeholder=". . . . . . . . "
+            autocomplete="off"
           />
-          <i class="fa-regular fa-eye"></i>
+          <fa-icon [icon]="faEye"></fa-icon>
         </div>
       </div>
       <div>
@@ -59,7 +62,14 @@
         </div>
       </div>
       <div>
-        <button class="btn-primary w-full">
+        <button
+          [ngClass]="{
+            'cursor-pointer': this.loginForm.valid,
+            'bg-gray-400': this.loginForm.invalid,
+          }"
+          [disabled]="this.loginForm.invalid"
+          class="btn-primary w-full"
+        >
           <span class="mx-1">Sign In</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
@@ -69,6 +79,10 @@
 
   <div class="flex justify-center items-center space-x-10">
     <span class="body-md text-textSecondary">Don't have an account ?</span>
-    <button class="text-bgPrimary body-md font-semibold">Sign Up</button>
+    <button
+      class="text-bgPrimary body-md cursor-pointer underline font-semibold"
+    >
+      Sign Up
+    </button>
   </div>
 </section>

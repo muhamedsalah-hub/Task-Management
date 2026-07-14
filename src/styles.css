@@ -7,7 +7,16 @@
   font-display: swap;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 2rem var(--bg-input) inset;
+}
 
+body {
+  font-family: var(--font);
+}
 
 :root {
   --bg-primary: #003d9b;
@@ -15,11 +24,11 @@
   --bg-surface-highest: #d7e2ff;
   --bg-surface-low: #f1f3ff;
   --bg-background: #f9f9ff;
-  --bg-input:#D7E2FF;
-  --bg-input-error:#FFDAD6;
-  --input-label:#737685;
-  --placeholder-color:#6B7280;
-  --placeholder-error-color:#93000A;
+  --bg-input: #d7e2ff;
+  --bg-input-error: #ffdad6;
+  --input-label: #737685;
+  --placeholder-color: #6b7280;
+  --placeholder-error-color: #93000a;
   --text-primary: #041b3c;
   --text-secondary: #434654;
   --btn-primary: #003d9b;
@@ -30,9 +39,6 @@
   --font: "Inter", sans-serif;
 }
 
-body{
-  font-family: var(--font);
-}
 
 @theme {
   --color-bgPrimary: var(--bg-primary);
@@ -40,6 +46,7 @@ body{
   --color-bgSurface-highest: var(--bg-surface-highest);
   --color-bgSurface-low: var(--bg-surface-low);
   --color-bgBackground: var(--bg-background);
+  --color-bgInput: var(--bg-input);
   --color-textPrimary: var(--text-primary);
   --color-textSecondary: var(--text-secondary);
   --color-inputLabel: var(--input-label);
@@ -47,7 +54,7 @@ body{
   --color-error: var(--error);
   --color-warning: var(--warning);
   --font-sans: var(--font);
-  --spacing-120:30rem;
+  --spacing-120: 30rem;
 }
 
 @utility display-lg {
@@ -55,7 +62,6 @@ body{
   font-weight: 700;
   line-height: 3.5rem;
   letter-spacing: 0rem;
- 
 }
 
 @utility headline-lg {
@@ -63,7 +69,6 @@ body{
   font-weight: 600;
   line-height: 2.5rem;
   letter-spacing: 0px;
- 
 }
 
 @utility title-md {
@@ -71,7 +76,6 @@ body{
   font-weight: 500;
   line-height: 1.69rem;
   letter-spacing: 0px;
- 
 }
 
 @utility body-md {
@@ -79,7 +83,6 @@ body{
   font-weight: 400;
   line-height: 1.42rem;
   letter-spacing: 0px;
-  
 }
 
 @utility label-sm {
@@ -119,29 +122,23 @@ body{
     line-height: 1.25rem;
   }
 
-  .input{
+  .input {
     background-color: var(--bg-input);
     padding: 0.875rem 1rem;
     border-radius: 0.25rem;
-    color:var(--placeholder-color);
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
   }
 
-  .input-error{
+  .input-error {
     background-color: var(--bg-input-error);
     padding: 0.875rem 1rem;
     border-radius: 0.25rem;
-    color:var(--placeholder-error-color);
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
   }
 }
 
-/*
-Added body font-family and color variable into some utilities
-add input component
 
-*/
