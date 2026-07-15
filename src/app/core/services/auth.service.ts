@@ -2,13 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environmet } from '../environment/environment';
-import { ILoginData, ILoginResponse, IUser } from '../interfaces/Auth/types';
+import {
+  ILoginData,
+  ISignUpData,
+  ILoginResponse,
+  IUserdata,
+  ISignupResponse,
+} from '../interfaces/Auth/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  user: IUser | null = null;
+  user: IUserdata | null = null;
 
   constructor(private _HttpClient: HttpClient) {}
 
@@ -19,8 +25,15 @@ export class AuthService {
     );
   }
 
-  setUserData(user: IUser) {
-    this.user = user;
+  SignUp(body: ISignUpData): Observable<ISignupResponse> {
+    return this._HttpClient.post<ISignupResponse>(
+      `${environmet.baseUrl}/auth/v1/signup`,
+      body,
+    );
   }
 
+  setUserData(data: IUserdata) {
+    this.user = data;
+  }
+  
 }

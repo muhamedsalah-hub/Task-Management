@@ -3,61 +3,42 @@ export interface ILoginData {
   password: string;
 }
 
-export interface IUser {
+export interface ISignUpData {
+  email: string;
+  password: string;
+  data: { name: string; job_title: string };
+}
+
+export interface IUserdata {
   id: string;
   name: string;
   role: string;
 }
 
-export interface ILoginResponse {
+interface IUserMetadata {
+  name: string;
+  email: string;
+}
+
+interface ILoginUserMetadata extends IUserMetadata {
+  department: string;
+}
+
+interface ISignupUserMetadata extends IUserMetadata {
+  job_title: string;
+}
+
+interface IAuthResponse<TMetadata> {
   access_token: string;
-  token_type: string;
+  refresh_token: string;
   expires_in: number;
   expires_at: number;
-  refresh_token: string;
-  user: IUserResponse;
-  weak_password: null;
+  user: {
+    id: string;
+    user_metadata: TMetadata;
+  };
 }
 
-interface IUserResponse {
-  id: string;
-  aud: string;
-  role: string;
-  email: string;
-  email_confirmed_at: string;
-  phone: string;
-  confirmed_at: string;
-  last_sign_in_at: string;
-  app_metadata: Appmetadata;
-  user_metadata: Usermetadata;
-  identities: Identity[];
-  created_at: string;
-  updated_at: string;
-  is_anonymous: boolean;
-}
+export type ILoginResponse = IAuthResponse<ILoginUserMetadata>;
 
-interface Identity {
-  identity_id: string;
-  id: string;
-  user_id: string;
-  identity_data: Usermetadata;
-  provider: string;
-  last_sign_in_at: string;
-  created_at: string;
-  updated_at: string;
-  email: string;
-}
-
-interface Usermetadata {
-  department: string;
-  email: string;
-  email_verified: boolean;
-  name: string;
-  phone_verified: boolean;
-  sub: string;
-}
-
-interface Appmetadata {
-  provider: string;
-  providers: string[];
-}
+export type ISignupResponse = IAuthResponse<ISignupUserMetadata>;

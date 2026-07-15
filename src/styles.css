@@ -50,6 +50,7 @@ body {
   --color-textPrimary: var(--text-primary);
   --color-textSecondary: var(--text-secondary);
   --color-inputLabel: var(--input-label);
+  --color-inputError: var(--placeholder-error-color);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
@@ -57,40 +58,42 @@ body {
   --spacing-120: 30rem;
 }
 
-@utility display-lg {
-  font-size: 3.5rem;
-  font-weight: 700;
-  line-height: 3.5rem;
-  letter-spacing: 0rem;
-}
+@layer utilities {
+  .display-lg {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 3.5rem;
+    letter-spacing: 0rem;
+  }
 
-@utility headline-lg {
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 2.5rem;
-  letter-spacing: 0px;
-}
+  .headline-lg {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 2.5rem;
+    letter-spacing: 0px;
+  }
 
-@utility title-md {
-  font-size: 1.125rem;
-  font-weight: 500;
-  line-height: 1.69rem;
-  letter-spacing: 0px;
-}
+  .title-md {
+    font-size: 1.125rem;
+    font-weight: 500;
+    line-height: 1.69rem;
+    letter-spacing: 0px;
+  }
 
-@utility body-md {
-  font-size: 0.875rem;
-  font-weight: 400;
-  line-height: 1.42rem;
-  letter-spacing: 0px;
-}
+  .body-md {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.42rem;
+    letter-spacing: 0px;
+  }
 
-@utility label-sm {
-  font-size: 0.69rem;
-  font-weight: 700;
-  line-height: 1.03rem;
-  letter-spacing: 0.06rem;
-  text-transform: uppercase;
+  .label-sm {
+    font-size: 0.69rem;
+    font-weight: 700;
+    line-height: 1.03rem;
+    letter-spacing: 0.06rem;
+    text-transform: uppercase;
+  }
 }
 
 @layer components {
@@ -129,6 +132,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    color: var(--text-primary);
   }
 
   .input-error {
@@ -138,6 +142,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    color:var(--placeholder-error-color)
   }
 }
 
