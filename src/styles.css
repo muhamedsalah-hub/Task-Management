@@ -50,6 +50,7 @@ body {
   --color-textPrimary: var(--text-primary);
   --color-textSecondary: var(--text-secondary);
   --color-inputLabel: var(--input-label);
+  --color-inputError: var(--placeholder-error-color);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
@@ -131,6 +132,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    color: var(--text-primary);
   }
 
   .input-error {
@@ -140,6 +142,7 @@ body {
     font-size: 1rem;
     font-weight: 400;
     width: 100%;
+    color:var(--placeholder-error-color)
   }
 }
 

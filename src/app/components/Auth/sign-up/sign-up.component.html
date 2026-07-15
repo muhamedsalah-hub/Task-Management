@@ -1,117 +1,180 @@
 <section class="w-80 sm:w-120 mx-auto">
-  <div class="my-5 text-center">
-    <h1 class="headline-lg text-textPrimary">Create your workspace</h1>
-    <p class="body-md text-textSecondary">
-      Join the curated environment for institutional trust and task precision.
-    </p>
-  </div>
-
-  <form class="my-5" (ngSubmit)="signUpSubmission()">
-    <div class="flex flex-col space-y-5">
-      <div>
-        <label for="fullName" class="label-sm text-inputLabel">Full Name</label>
-        <input
-          class="title-md input bg-bgInput w-full outline-0"
-          id="fullName"
-          formControlName=""
-          type="text"
-          placeholder="Enter your full name"
-        />
-        <span
-          class="label-sm font-light text-inputLabel tracking-normal lowercase"
-          >3-50 characters , letters only</span
-        >
-      </div>
-      <div>
-        <div class="flex justify-between items-center">
-          <label for="jobTitle" class="label-sm text-inputLabel"
-            >Job Title
-          </label>
-          <span
-            class="label-sm font-light text-bgPrimary tracking-normal lowercase"
-            >( optional )</span
-          >
-        </div>
-
-        <input
-          class="title-md input bg-bgInput w-full outline-0"
-          id="jobTitle"
-          formControlName=""
-          type="text"
-          placeholder="e.g. Project Manager"
-        />
-      </div>
-      <div>
-        <label for="email" class="label-sm text-inputLabel">Email</label>
-        <input
-          class="title-md input bg-bgInput w-full outline-0"
-          id="email"
-          formControlName=""
-          type="email"
-          placeholder="yourname@comapny.com"
-        />
-      </div>
-      <div
-        class="flex flex-col space-y-5 sm:flex-nowrap sm:flex-row sm:space-y-0 sm:space-x-4"
-      >
-        <div>
-          <label for="password" class="label-sm text-inputLabel"
-            >Password</label
-          >
-          <div class="flex items-center justify-between input">
+  <app-auth-card
+    [title]="'Create your workspace'"
+    [description]="
+      'Join the curated environment for institutional trust and task precision.'
+    "
+    [question]="'Already have an account ?'"
+    [navigate]="'Log in'"
+  >
+    <form [formGroup]="signUpForm" class="my-5" (ngSubmit)="signUpSubmission()">
+      <div class="flex flex-col space-y-5">
+        <div class="flex flex-col space-y-4" formGroupName="data">
+          <div>
+            <label for="fullName" class="label-sm text-inputLabel"
+              >Full Name</label
+            >
             <input
-              formControlName="password"
-              class="title-md bg-bgInput w-full outline-0"
-              id="password"
-              type="password"
-              placeholder="Password"
-              autocomplete="off"
+              [ngClass]="{
+                'input-error': nameValidation(),
+                input: !nameValidation(),
+              }"
+              class="title-md w-full outline-0"
+              id="fullName"
+              formControlName="name"
+              type="text"
+              placeholder="Enter your full name"
             />
-            <fa-icon [icon]="faEye"></fa-icon>
+            <span
+              class="label-sm font-light text-inputLabel tracking-normal lowercase"
+              >3-50 characters , letters only</span
+            >
+          </div>
+          @if (
+            signUpForm.get(["data", "name"])?.errors &&
+            signUpForm.get(["data", "name"])?.touched
+          ) {
+            @if (signUpForm.get(["data", "name"])?.getError("required")) {
+              <app-auth-error message="Name is Required" />
+            } @else if (signUpForm.get(["data", "name"])?.getError("pattern")) {
+              <app-auth-error message="Invalid name" />
+            }
+          }
+          <div>
+            <div class="flex justify-between items-center">
+              <label for="jobTitle" class="label-sm text-inputLabel"
+                >Job Title
+              </label>
+              <span
+                class="label-sm font-light text-bgPrimary tracking-normal lowercase"
+                >( optional )</span
+              >
+            </div>
+            <input
+              class="title-md input bg-bgInput w-full outline-0"
+              id="jobTitle"
+              formControlName="job_title"
+              type="text"
+              placeholder="e.g. Project Manager"
+            />
           </div>
         </div>
         <div>
-          <label for="confirmPassword" class="label-sm text-inputLabel"
-            >Confirm Password</label
-          >
+          <label for="email" class="label-sm text-inputLabel">Email</label>
           <input
-            class="title-md input bg-bgInput w-full outline-0"
-            id="confirmPassword"
-            formControlName=""
-            type="password"
-            placeholder="Repeat your password"
+            [ngClass]="{
+              'input-error': this.emailValidation(),
+              input: !this.emailValidation(),
+            }"
+            class="title-md w-full outline-0 mb-2"
+            id="email"
+            formControlName="email"
+            type="email"
+            placeholder="yourname@comapny.com"
           />
+          @if (
+            signUpForm.get("email")?.errors && signUpForm.get("email")?.touched
+          ) {
+            @if (signUpForm.get("email")?.getError("required")) {
+              <app-auth-error message="Email is Required" />
+            } @else if (signUpForm.get("email")?.getError("email")) {
+              <app-auth-error message="Invalid Email" />
+            }
+          }
+        </div>
+        <div
+          class="flex flex-col space-y-5 sm:flex-nowrap sm:flex-row sm:space-y-0 sm:space-x-4"
+        >
+          <div>
+            <label for="password" class="label-sm text-inputLabel"
+              >Password</label
+            >
+            <div
+              [ngClass]="{
+                'input-error': this.passwordValidation(),
+                input: !this.passwordValidation(),
+              }"
+              class="flex items-center justify-between input"
+            >
+              <input
+                formControlName="password"
+                class="title-md w-full outline-0"
+                id="password"
+                type="password"
+                placeholder="Password"
+                autocomplete="off"
+              />
+              <fa-icon [icon]="faEye"></fa-icon>
+            </div>
+            @if (
+              signUpForm.get("password")?.errors &&
+              signUpForm.get("password")?.touched
+            ) {
+              @if (signUpForm.get("password")?.getError("required")) {
+                <div class="mt-2">
+                  <app-auth-error message="Password is Required" />
+                </div>
+              } @else if (signUpForm.get("password")?.getError("pattern")) {
+                <div class="mt-2">
+                  <app-auth-error message="Invalid Password" />
+                </div>
+              }
+            }
+          </div>
+
+          <div>
+            <label for="confirmPassword" class="label-sm text-inputLabel"
+              >Confirm Password</label
+            >
+            <input
+              [ngClass]="{
+                'input-error': signUpForm.errors,
+                input: !signUpForm.errors,
+              }"
+              class="title-md w-full outline-0"
+              id="confirmPassword"
+              type="password"
+              placeholder="Repeat your password"
+              formControlName="confirmPassword"
+              autocomplete="off"
+            />
+            @if (signUpForm.errors && signUpForm.touched) {
+              @if (signUpForm.getError("mismatch")) {
+                <div class="mt-2">
+                  <app-auth-error message="Password is not identical" />
+                </div>
+              }
+            }
+          </div>
+        </div>
+
+        <div
+          class="rounded-md flex flex-col body-sm font-light text-inputLabel tracking-normal lowercase bg-[#E8EDFF] p-4"
+        >
+          <div>
+            <span>At least 8 characters</span>
+          </div>
+          <div>
+            <span>One uppercase,lowercase, and digit</span>
+          </div>
+          <div>
+            <span>One special character</span>
+          </div>
+        </div>
+
+        <div>
+          <button
+            class="btn-primary w-full"
+            [ngClass]="{
+              'cursor-pointer': this.signUpForm.valid,
+              'bg-gray-400': this.signUpForm.invalid,
+            }"
+            [disabled]="this.signUpForm.invalid"
+          >
+            <span class="mx-1 cursor-pointer">Create Account</span>
+          </button>
         </div>
       </div>
-
-      <div
-        class="rounded-md flex flex-col body-sm font-light text-inputLabel tracking-normal lowercase bg-[#E8EDFF] p-4"
-      >
-        <div>
-          <span>At least 8 characters</span>
-        </div>
-        <div>
-          <span>One uppercase,lowercase, and digit</span>
-        </div>
-        <div>
-          <span>One special character</span>
-        </div>
-      </div>
-
-      <div>
-        <button class="btn-primary w-full">
-          <span class="mx-1">Create Account</span>
-        </button>
-      </div>
-    </div>
-  </form>
-
-  <div class="flex justify-center items-center space-x-10">
-    <span class="body-md text-textSecondary">Already have an account ?</span>
-    <button
-      class="text-bgPrimary body-md cursor-pointer underline font-semibold"
-    >
-      Log in
-    </button>
-  </div>
+    </form>
+  </app-auth-card>
 </section>
