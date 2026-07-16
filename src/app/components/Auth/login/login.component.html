@@ -1,4 +1,4 @@
-<section class="">
+<section >
   <app-auth-card
     [title]="'Welcome Back'"
     [description]="' Please Enter your details to access your workspace'"
@@ -67,10 +67,10 @@
               'bg-gray-400': this.loginForm.invalid,
             }"
             [disabled]="this.loginForm.invalid"
-            class="btn-primary w-full"
+            class="btn-primary w-full flex justify-center items-center"
           >
             <span class="mx-1">Sign In</span>
-            <i class="fa-solid fa-arrow-right"></i>
+            <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
           </button>
         </div>
       </div>

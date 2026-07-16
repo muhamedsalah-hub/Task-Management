@@ -1,15 +1,21 @@
-<div class="my-5 text-center">
-  <h1 class="headline-lg text-textPrimary">{{ title }}</h1>
-  <p class="body-md text-textSecondary">
-    {{ description }}
-  </p>
-</div>
+<div class="flex flex-col space-y-5">
+  <div class="my-5 text-center">
+    <h1 class="headline-lg text-textPrimary">{{ title }}</h1>
+    <p class="body-md text-textSecondary">
+      {{ description }}
+    </p>
+  </div>
 
-<ng-content />
+  <ng-content />
 
-<div class="flex justify-center items-center space-x-10">
-  <span class="body-md text-textSecondary">{{ question }}</span>
-  <button class="text-bgPrimary body-md cursor-pointer underline font-semibold">
-    {{ navigate }}
-  </button>
+  <div class="flex justify-center items-center space-x-10">
+    <span class="body-md text-textSecondary">{{ question }}</span>
+    <button
+      class="text-bgPrimary body-md cursor-pointer underline font-semibold"
+    >
+      {{ navigate }}
+    </button>
+  </div>
+
+  <ng-content select="#success" />
 </div>

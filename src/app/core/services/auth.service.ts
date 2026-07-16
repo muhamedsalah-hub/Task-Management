@@ -35,5 +35,8 @@ export class AuthService {
   setUserData(data: IUserdata) {
     this.user = data;
   }
-  
+
+  handleEmailSubmission(body: { email: string }): Observable<any> {
+    return this._HttpClient.post(`${environmet.baseUrl}/auth/v1/recover`, body);
+  }
 }
