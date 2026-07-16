@@ -10,9 +10,8 @@ import { NgClass } from '@angular/common';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEnvelope ,faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +22,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class LoginComponent {
   faEye = faEye;
+  faArrowAltCircleRight=faArrowAltCircleRight;
   faEnvelope = faEnvelope;
+
 
   _AuthService = inject(AuthService);
   _Toastr = inject(ToastrService);
