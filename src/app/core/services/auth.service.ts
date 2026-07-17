@@ -36,7 +36,15 @@ export class AuthService {
     this.user = data;
   }
 
-  handleEmailSubmission(body: { email: string }): Observable<any> {
-    return this._HttpClient.post(`${environmet.baseUrl}/auth/v1/recover`, body);
+  handleEmailSubmission(body: { email: string }): Observable<null> {
+    return this._HttpClient.post<null>(
+      `${environmet.baseUrl}/auth/v1/recover`,
+      body,
+      { headers: { redirect_to: 'http://localhost:4200/reset-password' } },
+    );
+  }
+
+  handleNewPassword(body: { password: string }) {
+    return this._HttpClient.put(`${environmet.baseUrl}/auth/v1/user`, body);
   }
 }
