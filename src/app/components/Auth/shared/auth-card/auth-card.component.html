@@ -11,7 +11,8 @@
   <div class="flex justify-center items-center space-x-10">
     <span class="body-md text-textSecondary">{{ question }}</span>
     <button
-      class="text-bgPrimary body-md cursor-pointer underline font-semibold"
+      [routerLink]="navigate.includes('Sign up') ? '/sign-up' : '/login'"
+      class="text-bgPrimary title-md cursor-pointer underline font-semibold"
     >
       {{ navigate }}
     </button>
