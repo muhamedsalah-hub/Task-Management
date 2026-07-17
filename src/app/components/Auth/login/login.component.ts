@@ -7,31 +7,29 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faEye, faEnvelope ,faArrowAltCircleRight } from '@fortawesome/free-regular-svg-icons';
+import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, FontAwesomeModule, AuthCardComponent],
+  imports: [ReactiveFormsModule, NgClass, FontAwesomeModule, AuthCardComponent, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
   faEye = faEye;
-  faArrowAltCircleRight=faArrowAltCircleRight;
+  faArrowAltCircleRight = faArrowRight;
   faEnvelope = faEnvelope;
-
 
   _AuthService = inject(AuthService);
   _Toastr = inject(ToastrService);
   _Router = inject(Router);
-  constructor(private _FormBuilder: FormBuilder) {
-  
-  }
+  constructor(private _FormBuilder: FormBuilder) {}
 
   loginForm: FormGroup = this._FormBuilder.group({
     email: ['', [Validators.required, Validators.email]],

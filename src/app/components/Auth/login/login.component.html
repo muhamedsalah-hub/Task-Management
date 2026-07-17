@@ -3,7 +3,7 @@
     [title]="'Welcome Back'"
     [description]="' Please Enter your details to access your workspace'"
     [question]="'Don\'t have an account ?'"
-    [navigate]="'Sign Up'"
+    [navigate]="'Sign up'"
   >
     <form [formGroup]="loginForm" (ngSubmit)="logInSubmission()" class="my-5">
       <div class="flex flex-col space-y-5">
@@ -35,7 +35,7 @@
               class="title-md bg-bgInput w-full outline-0"
               id="password"
               type="password"
-              placeholder=". . . . . . . . "
+              placeholder="Password "
               autocomplete="off"
             />
             <fa-icon [icon]="faEye"></fa-icon>
@@ -45,7 +45,7 @@
           <div class="flex items-center justify-between">
             <div class="flex items-center space-x-2">
               <input
-                class="w-5 h-5 border-textSecondary rounded-sm"
+                class="w-5 h-5 border-textSecondary cursor-pointer rounded-sm"
                 id="remember"
                 type="checkbox"
               />
@@ -54,7 +54,7 @@
               >
             </div>
             <div>
-              <span class="hidden sm:block label-sm text-bgPrimary"
+              <span [routerLink]="['/forgot-password']" class="cursor-pointer hidden sm:block label-sm text-bgPrimary"
                 >Forgot Password?</span
               >
             </div>
