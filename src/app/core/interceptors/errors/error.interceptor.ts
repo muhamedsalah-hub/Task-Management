@@ -12,6 +12,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         _Toastr.error(err.error.msg);
       } else if (req.url.includes('token')) {
         _Toastr.error(err.error.msg);
+      } else if (req.url.includes('recover')) {
+        _Toastr.error('Sorry ,You can reset your password After one minute');
+      }else if(req.url.includes('auth/v1/user')){
+         _Toastr.error(err.error.msg);
       }
 
       return throwError(() => err);

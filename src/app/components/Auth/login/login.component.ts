@@ -29,7 +29,9 @@ export class LoginComponent {
   _AuthService = inject(AuthService);
   _Toastr = inject(ToastrService);
   _Router = inject(Router);
-  constructor(private _FormBuilder: FormBuilder) {}
+  constructor(private _FormBuilder: FormBuilder) {
+  
+  }
 
   loginForm: FormGroup = this._FormBuilder.group({
     email: ['', [Validators.required, Validators.email]],

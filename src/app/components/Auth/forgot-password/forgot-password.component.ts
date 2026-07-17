@@ -58,15 +58,11 @@ export class ForgotPasswordComponent {
       this.isCountingDown = true;
       this.startCountDown();
       this._AuthService.handleEmailSubmission(this.emailForm.value).subscribe({
-        next: (res) => {
-          this.isLoading = false;
-          this._Renderer2?.addClass(
-            this.divElement.nativeElement,
-            'opacity-100',
-          );
+        next: () => {
+          this.handleCountDownSubmission();
         },
         error: () => {
-          this.isLoading = false;
+          this.handleCountDownSubmission();
         },
       });
     }
@@ -87,11 +83,18 @@ export class ForgotPasswordComponent {
 
       this.time = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
       if (totalSeconds === 0) {
-        this.isCountingDown=false;
+        this.isCountingDown = false;
         clearInterval(timer);
         return;
       }
       totalSeconds--;
     }, 1000);
+  }
+
+  handleCountDownSubmission() {
+    this.isLoading = false;
+    this.isCountingDown = true;
+    this._Renderer2?.removeClass(this.divElement.nativeElement, 'hidden');
+    this._Renderer2?.addClass(this.divElement.nativeElement, 'flex');
   }
 }
