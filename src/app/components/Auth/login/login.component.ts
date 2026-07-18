@@ -57,7 +57,7 @@ export class LoginComponent {
           const name = res.user.user_metadata.name;
           const role = res.user.user_metadata.department;
           localStorage.setItem('token', res.access_token);
-          this._AuthService.setUserData({ id, name, role });
+          localStorage.setItem('user', JSON.stringify({ id, name, role }));
           this._Router.navigate(['/project']);
         });
     }
