@@ -8,12 +8,14 @@ import {
 } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { validationRules } from './utils/validation';
+import { validationRules } from '../../../core/utils/validation';
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '../../../../../node_modules/@angular/common';
 import { AuthErrorComponent } from '../shared/auth-error/auth-error.component';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
-import { Router } from '@angular/router';
+import { ISignupResponse } from '../../../core/interfaces/Auth/types';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
@@ -29,14 +31,17 @@ import { Router } from '@angular/router';
   styleUrl: './sign-up.component.css',
 })
 export class SignUpComponent {
-  faEye = faEye;
-  _AuthService = inject(AuthService);
-  _Router = inject(Router);
-  constructor(private _FormBuilder: FormBuilder) {}
+  readonly faEye = faEye;
+  readonly faSpinner = faSpinner;
+  readonly validations = validationRules;
+  isLoading: boolean = false;
+
+  private readonly _AuthService = inject(AuthService);
+  private readonly _FormBuilder = inject(FormBuilder);
 
   signUpForm: FormGroup = this._FormBuilder.group(
     {
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', validationRules.email],
       password: ['', validationRules.password],
       confirmPassword: ['', [Validators.required]],
       data: this._FormBuilder.group({
@@ -44,50 +49,23 @@ export class SignUpComponent {
         job_title: [''],
       }),
     },
-    { validators: this.passwordMatchValidator },
+    { validators: this.validations.passwordMatchValidator },
   );
 
   signUpSubmission() {
     if (this.signUpForm.valid) {
+      this.isLoading = true;
       const { confirmPassword, ...data } = this.signUpForm.value;
-      this._AuthService.SignUp(data).subscribe((res) => {
-        const id = res.user.id;
-        const name = res.user.user_metadata.name;
-        const role = res.user.user_metadata.job_title;
-        localStorage.setItem('token', res.access_token);
-        this._AuthService.setUserData({ id, name, role });
-        // this._Router.navigate(['/projects'])
-      });
+      this._AuthService
+        .SignUp(data)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe((res: ISignupResponse) => {
+          const id = res.user.id;
+          const name = res.user.user_metadata.name;
+          const role = res.user.user_metadata.job_title;
+          localStorage.setItem('token', res.access_token);
+          this._AuthService.setUserData({ id, name, role });
+        });
     }
-  }
-
-  passwordMatchValidator(Form: AbstractControl) {
-    if (Form.get('confirmPassword')?.value === Form.get('password')?.value) {
-      return null;
-    } else {
-      return { mismatch: true };
-    }
-  }
-
-  nameValidation(): boolean {
-    return (
-      !!this.signUpForm.get(['data', 'name'])?.errors &&
-      (!!this.signUpForm.get(['data', 'name'])?.touched ||
-        !!this.signUpForm.get(['data', 'name'])?.dirty)
-    );
-  }
-
-  emailValidation(): boolean {
-    return (
-      !!this.signUpForm.get('email')?.errors &&
-      !!this.signUpForm.get('email')?.touched
-    );
-  }
-
-  passwordValidation(): boolean {
-    return (
-      !!this.signUpForm.get('password')?.errors &&
-      !!this.signUpForm.get('password')?.touched
-    );
   }
 }

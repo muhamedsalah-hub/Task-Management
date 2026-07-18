@@ -63,13 +63,17 @@
         <div>
           <button
             [ngClass]="{
-              'cursor-pointer': this.loginForm.valid,
-              'bg-gray-400': this.loginForm.invalid,
+              'bg-gray-400': loginForm.invalid || isLoading,
+              'bg-bgPrimary cursor-pointer': loginForm.valid,
             }"
+            class="flex justify-center items-center btn-primary w-full"
             [disabled]="this.loginForm.invalid"
-            class="btn-primary w-full flex justify-center items-center"
+          
           >
             <span class="mx-1">Sign In</span>
+            @if (isLoading) {
+              <fa-icon [icon]="faSpinner" animation="spin"></fa-icon>
+            }
             <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
           </button>
         </div>

@@ -19,6 +19,8 @@ import { faCircleCheck, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { NgClass } from '../../../../../node_modules/@angular/common';
 import { AuthErrorComponent } from '../shared/auth-error/auth-error.component';
+import { finalize } from 'rxjs';
+import { validationRules } from '../../../core/utils/validation';
 
 @Component({
   selector: 'app-forgot-password',
@@ -35,47 +37,36 @@ import { AuthErrorComponent } from '../shared/auth-error/auth-error.component';
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
-  time: string = '01:00';
+  readonly validation = validationRules;
+  readonly faClock = faClock;
+  readonly faCircleCheck = faCircleCheck;
+  readonly faSpinner = faSpinner;
   isCountingDown: boolean = false;
-  faCircleCheck = faCircleCheck;
-  faSpinner = faSpinner;
-  faClock = faClock;
+  time: string = '01:00';
   isLoading: boolean = false;
+
   private readonly _AuthService = inject(AuthService);
-  constructor(
-    private _FormBuilder: FormBuilder,
-    private _Renderer2: Renderer2,
-  ) {}
+  private readonly _FormBuilder = inject(FormBuilder);
+  private readonly _Renderer2 = inject(Renderer2);
   @ViewChild('success') divElement!: ElementRef;
 
   emailForm: FormGroup = this._FormBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', this.validation.email],
   });
 
-  emailSubmission() {
+  emailSubmission(): void {
     if (this.emailForm.valid) {
       this.isLoading = true;
       this.isCountingDown = true;
       this.startCountDown();
-      this._AuthService.handleEmailSubmission(this.emailForm.value).subscribe({
-        next: () => {
-          this.handleCountDownSubmission();
-        },
-        error: () => {
-          this.handleCountDownSubmission();
-        },
-      });
+      this._AuthService
+        .handleEmailSubmission(this.emailForm.value)
+        .pipe(finalize(() => this.handleCountDownSubmission()))
+        .subscribe();
     }
   }
 
-  emailValidation(): boolean {
-    return (
-      !!this.emailForm.get('email')?.errors &&
-      !!this.emailForm.get('email')?.touched
-    );
-  }
-
-  startCountDown() {
+  startCountDown(): void {
     let totalSeconds = 1 * 60;
     const timer = setInterval(() => {
       const minutes = Math.floor(totalSeconds / 60);
@@ -91,7 +82,7 @@ export class ForgotPasswordComponent {
     }, 1000);
   }
 
-  handleCountDownSubmission() {
+  handleCountDownSubmission(): void {
     this.isLoading = false;
     this.isCountingDown = true;
     this._Renderer2?.removeClass(this.divElement.nativeElement, 'hidden');

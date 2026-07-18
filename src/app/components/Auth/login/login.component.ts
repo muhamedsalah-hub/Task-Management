@@ -7,45 +7,57 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
+import { ILoginResponse } from '../../../core/interfaces/Auth/types';
+import { validationRules } from '../../../core/utils/validation';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgClass, FontAwesomeModule, AuthCardComponent, RouterLink],
+  imports: [
+    ReactiveFormsModule,
+    NgClass,
+    FontAwesomeModule,
+    AuthCardComponent,
+    RouterLink,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  faEye = faEye;
-  faArrowAltCircleRight = faArrowRight;
-  faEnvelope = faEnvelope;
+  readonly validations = validationRules;
+  readonly faEye = faEye;
+  readonly faSpinner = faSpinner;
+  readonly faArrowAltCircleRight = faArrowRight;
+  readonly faEnvelope = faEnvelope;
+  isLoading: boolean = false;
 
-  _AuthService = inject(AuthService);
-  _Toastr = inject(ToastrService);
-  _Router = inject(Router);
-  constructor(private _FormBuilder: FormBuilder) {}
+  private readonly _AuthService = inject(AuthService);
+  private readonly _FormBuilder = inject(FormBuilder);
 
   loginForm: FormGroup = this._FormBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
+    email: ['', this.validations.email],
     password: ['', [Validators.required]],
   });
 
   logInSubmission() {
     if (this.loginForm.valid) {
-      this._AuthService.logIn(this.loginForm.value).subscribe((res) => {
-        const id = res.user.id;
-        const name = res.user.user_metadata.name;
-        const role = res.user.user_metadata.department;
-        localStorage.setItem('token', res.access_token);
-        this._AuthService.setUserData({ id, name, role });
-        // this._Router.navigate(['/projects'])
-      });
+      this.isLoading = true;
+      this._AuthService
+        .logIn(this.loginForm.value)
+        .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe((res: ILoginResponse) => {
+          const id = res.user.id;
+          const name = res.user.user_metadata.name;
+          const role = res.user.user_metadata.department;
+          localStorage.setItem('token', res.access_token);
+          this._AuthService.setUserData({ id, name, role });
+        });
     }
   }
 }
