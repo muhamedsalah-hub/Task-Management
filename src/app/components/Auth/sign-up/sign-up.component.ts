@@ -61,12 +61,7 @@ export class SignUpComponent {
       this._AuthService
         .SignUp(data)
         .pipe(finalize(() => (this.isLoading = false)))
-        .subscribe((res: ISignupResponse) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.job_title;
-          localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+        .subscribe(() => {
           this._Router.navigate(['/project']);
         });
     }
