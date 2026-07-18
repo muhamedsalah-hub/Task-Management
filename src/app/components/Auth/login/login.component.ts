@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
@@ -37,6 +37,7 @@ export class LoginComponent {
   readonly faEnvelope = faEnvelope;
   isLoading: boolean = false;
 
+  private readonly _Router = inject(Router);
   private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
 
@@ -57,6 +58,7 @@ export class LoginComponent {
           const role = res.user.user_metadata.department;
           localStorage.setItem('token', res.access_token);
           this._AuthService.setUserData({ id, name, role });
+          this._Router.navigate(['/project']);
         });
     }
   }
