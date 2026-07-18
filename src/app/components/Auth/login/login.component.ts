@@ -52,12 +52,7 @@ export class LoginComponent {
       this._AuthService
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
-        .subscribe((res: ILoginResponse) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.department;
-          localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+        .subscribe(() => {
           this._Router.navigate(['/project']);
         });
     }
