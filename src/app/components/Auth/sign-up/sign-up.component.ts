@@ -16,6 +16,7 @@ import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
 import { ISignupResponse } from '../../../core/interfaces/Auth/types';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -36,6 +37,7 @@ export class SignUpComponent {
   readonly validations = validationRules;
   isLoading: boolean = false;
 
+  private readonly _Router = inject(Router);
   private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
 
@@ -64,7 +66,8 @@ export class SignUpComponent {
           const name = res.user.user_metadata.name;
           const role = res.user.user_metadata.job_title;
           localStorage.setItem('token', res.access_token);
-          this._AuthService.setUserData({ id, name, role });
+          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+          this._Router.navigate(['/project']);
         });
     }
   }

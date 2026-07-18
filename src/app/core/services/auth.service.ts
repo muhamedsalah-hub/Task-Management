@@ -32,8 +32,10 @@ export class AuthService {
     );
   }
 
-  setUserData(data: IUserdata) {
-    this.user = data;
+  getUserData(data: IUserdata) {
+    if (localStorage.getItem('user')) {
+      this.user = JSON.parse(localStorage.getItem('user') as string);
+    }
   }
 
   handleEmailSubmission(body: { email: string }): Observable<null> {
