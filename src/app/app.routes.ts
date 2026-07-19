@@ -19,7 +19,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'project',
+    path: 'projects',
     component: BlankLayoutComponent,
     children: [],
   },

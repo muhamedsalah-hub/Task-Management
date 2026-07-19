@@ -53,7 +53,7 @@ export class LoginComponent {
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
-          this._Router.navigate(['/project']);
+          this._Router.navigate(['/projects']);
         });
     }
   }

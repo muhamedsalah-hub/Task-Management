@@ -1,0 +1,19 @@
+<div
+  class="lg:hidden px-6 py-3 bg-bgSurface-low flex justify-between items-center"
+>
+  @for (item of icons; track item.id) {
+    @if (item.id !== 1) {
+      <div
+        [routerLink]="item.link"
+        class="text-[#434654] cursor-pointer flex flex-col justify-between items-center spaxe-y-1"
+        routerLinkActive="!text-[#0052CC]"
+      >
+        <svg [attr.width]="item.width" [attr.height]="item.height">
+          <use [attr.href]="item.href"></use>
+        </svg>
+        <span class="text-sm">{{ item.title }}</span>
+      </div>
+    }
+  }
+</div>
+<app-icons />

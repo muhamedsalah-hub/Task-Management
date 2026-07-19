@@ -62,7 +62,7 @@ export class SignUpComponent {
         .SignUp(data)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
-          this._Router.navigate(['/project']);
+          this._Router.navigate(['/projects']);
         });
     }
   }

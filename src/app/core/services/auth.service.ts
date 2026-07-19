@@ -1,5 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, PLATFORM_ID } from '@angular/core';
+import {
+  inject,
+  Injectable,
+  PLATFORM_ID,
+} from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environmet } from '../environment/environment';
 import {
@@ -19,8 +23,8 @@ export class AuthService {
 
   private readonly _PlatrformID = inject(PLATFORM_ID);
 
-  constructor(private _HttpClient: HttpClient) {
-    if (isPlatformBrowser(this._PlatrformID)) {
+  constructor(private _HttpClient: HttpClient) {    
+    if (isPlatformBrowser(this._PlatrformID) && localStorage.getItem("user")) {
       this.user = JSON.parse(localStorage.getItem('user') as string);
     }
   }
@@ -33,11 +37,15 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.department;
+          const user: IUserdata = {
+            id: res.user.id,
+            name: res.user.user_metadata.name,
+            role: res.user.user_metadata.department,
+          };
+
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user = user;
         }),
       );
   }
@@ -47,11 +55,15 @@ export class AuthService {
       .post<ISignupResponse>(`${environmet.baseUrl}/auth/v1/signup`, body)
       .pipe(
         tap((res) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.job_title;
+          const user: IUserdata = {
+            id: res.user.id,
+            name: res.user.user_metadata.name,
+            role: res.user.user_metadata.job_title,
+          };
+
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user = user;
         }),
       );
   }

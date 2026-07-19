@@ -1,19 +1,19 @@
 <div
-  class="flex justify-between items-center border-b border-b-gray-200 px-6 py-3"
+  class="px-6 py-3 flex justify-between items-center border-b border-b-gray-200 "
 >
-  <div class="flex items-center space-x-2">
+  <div class="lg:invisible flex items-center space-x-2">
     <fa-icon class="text-textPrimary title-md" [icon]="faBars"></fa-icon>
     <h1 class="text-textPrimary title-md">Taskly</h1>
   </div>
   <div class="flex space-x-2 items-center justify-center">
     <div class="hidden lg:flex flex-col items-center">
-      <span class="body-md font-bold"></span>
-      <span class="text-bgPrimary label-sm"></span>
+      <span class="body-md font-bold">{{ _AuthService.user?.name }}</span>
+      <span class="text-bgPrimary label-sm">{{ _AuthService.user?.role }}</span>
     </div>
     <div
       class="w-10 h-10 text-white border rounded-lg bg-bgPrimary flex justify-center items-center"
     >
-     
+      <span>{{( _AuthService.user?.name || "") | trimText }}</span>
     </div>
   </div>
 </div>
