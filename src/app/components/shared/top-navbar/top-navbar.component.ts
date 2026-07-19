@@ -1,8 +1,9 @@
-import {  Component, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../../core/services/auth.service';
 import { TrimTextPipe } from '../../../core/pipes/trim-text.pipe';
+
 
 @Component({
   selector: 'app-top-navbar',
@@ -13,7 +14,14 @@ import { TrimTextPipe } from '../../../core/pipes/trim-text.pipe';
 })
 export class TopNavBarComponent {
   readonly faBars = faBars;
+
   readonly _AuthService = inject(AuthService);
 
-  
+  @Output() menuClicked=new EventEmitter<void>();
+
+  onToggle(){ 
+    this.menuClicked.emit();
+  }
+
+
 }
