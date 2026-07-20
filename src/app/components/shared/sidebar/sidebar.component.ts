@@ -19,12 +19,16 @@ export class SidebarComponent {
   @Input() isMobileSidebarOpen!: boolean;
   @Output() toggleDesktop = new EventEmitter();
   @Output() closeMobile = new EventEmitter();
+  @Output() logoutClicked = new EventEmitter();
 
   toggleDesktopEmission() {
     this.toggleDesktop.emit();
   }
   closeMobileEmission(){
     this.closeMobile.emit();
+  }
+  logoutSubmission(){
+     this.logoutClicked.emit();
   }
 
 }

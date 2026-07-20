@@ -1,5 +1,8 @@
 <div class="min-h-screen relative flex flex-col justify-between">
-  <app-top-navbar (menuClicked)="toggleMobileSidebar()" />
+  <app-top-navbar
+    (logoutClicked)="logOut()"
+    (menuClicked)="toggleMobileSidebar()"
+  />
 
   <app-bottom-navbar [class.hidden]="isMobileSidebarOpen" class="lg:hidden" />
 
@@ -16,6 +19,8 @@
       [isMobileSidebarOpen]="isMobileSidebarOpen"
       (toggleDesktop)="toggleDesktopSidebar()"
       (closeMobile)="closeMobileSidebar()"
+      (logoutClicked)="logOut()"
     />
   </div>
 </div>
+<app-icons />
