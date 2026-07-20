@@ -16,6 +16,7 @@ input:-webkit-autofill:active {
 
 body {
   font-family: var(--font);
+  height: 3000px;
 }
 
 :root {

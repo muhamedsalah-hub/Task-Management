@@ -37,8 +37,8 @@ export class LoginComponent {
   readonly faEnvelope = faEnvelope;
   isLoading: boolean = false;
 
+  readonly _AuthService = inject(AuthService);
   private readonly _Router = inject(Router);
-  private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
 
   loginForm: FormGroup = this._FormBuilder.group({

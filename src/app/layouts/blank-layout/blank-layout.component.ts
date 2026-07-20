@@ -4,11 +4,13 @@ import { BottomNavbarComponent } from '../../components/shared/bottom-navbar/bot
 import { SidebarComponent } from '../../components/shared/sidebar/sidebar.component';
 import { AuthService } from '../../core/services/auth.service';
 import { IconsComponent } from "../../components/shared/icons/icons.component";
+import { AddProjectFormComponent } from "../../components/projects/add-project-form/add-project-form.component";
+import { NgClass } from "../../../../node_modules/@angular/common";
 
 @Component({
   selector: 'app-blank-layout',
   standalone: true,
-  imports: [TopNavBarComponent, BottomNavbarComponent, SidebarComponent, IconsComponent],
+  imports: [TopNavBarComponent, BottomNavbarComponent, SidebarComponent, IconsComponent, AddProjectFormComponent, NgClass],
   templateUrl: './blank-layout.component.html',
   styleUrl: './blank-layout.component.css',
 })

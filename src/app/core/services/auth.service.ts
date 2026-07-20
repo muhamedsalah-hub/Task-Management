@@ -87,4 +87,8 @@ export class AuthService {
   handleNewPassword(body: { password: string }) {
     return this._HttpClient.put(`${environmet.baseUrl}/auth/v1/user`, body);
   }
+
+  isAuthenticated(): boolean {
+    return !!this.user;
+  }
 }
