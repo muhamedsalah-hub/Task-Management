@@ -10,6 +10,8 @@ import {
   ISignupResponse,
 } from '../interfaces/Auth/types';
 import { isPlatformBrowser } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +20,11 @@ export class AuthService {
   user: IUserdata | null = null;
 
   private readonly _PlatrformID = inject(PLATFORM_ID);
+  private readonly _Toastr = inject(ToastrService);
+  private readonly _Router = inject(Router);
 
   constructor(private _HttpClient: HttpClient) {
-    if (isPlatformBrowser(this._PlatrformID)) {
+    if (isPlatformBrowser(this._PlatrformID) && localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user') as string);
     }
   }
@@ -33,11 +37,15 @@ export class AuthService {
       )
       .pipe(
         tap((res) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.department;
+          const user: IUserdata = {
+            id: res.user.id,
+            name: res.user.user_metadata.name,
+            role: res.user.user_metadata.department,
+          };
+
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user = user;
         }),
       );
   }
@@ -47,11 +55,15 @@ export class AuthService {
       .post<ISignupResponse>(`${environmet.baseUrl}/auth/v1/signup`, body)
       .pipe(
         tap((res) => {
-          const id = res.user.id;
-          const name = res.user.user_metadata.name;
-          const role = res.user.user_metadata.job_title;
+          const user: IUserdata = {
+            id: res.user.id,
+            name: res.user.user_metadata.name,
+            role: res.user.user_metadata.job_title,
+          };
+
           localStorage.setItem('token', res.access_token);
-          localStorage.setItem('user', JSON.stringify({ id, name, role }));
+          localStorage.setItem('user', JSON.stringify(user));
+          this.user = user;
         }),
       );
   }
@@ -60,6 +72,8 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.user = null;
+    this._Toastr.success('User logged out successfully');
+    this._Router.navigate(['/login']);
   }
 
   handleEmailSubmission(body: { email: string }): Observable<null> {
