@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { icons } from '../data/data';
+import { icons } from '../../../core/data/data';
 import { Iconsdata } from '../../../core/interfaces/Icons/types';
 import { NgClass } from '../../../../../node_modules/@angular/common';
 

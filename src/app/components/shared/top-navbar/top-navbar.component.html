@@ -12,7 +12,7 @@
     </div>
     <div
       (click)="toggleDropdown()"
-      class="relative w-10 h-10 text-white border rounded-lg bg-bgPrimary flex justify-center items-center"
+      class="cursor-pointer relative w-10 h-10 text-white border rounded-lg bg-bgPrimary flex justify-center items-center"
     >
       <span>{{ _AuthService.user?.name || "" | trimText }}</span>
       <!--            dropdown Menu            -->
@@ -22,14 +22,14 @@
           'translate-y-0 opacity-100': isDropped,
           '-translate-y-2 opacity-0': !isDropped,
         }"
-        class="absolute flex flex-col top-full right-0 p-2 mt-2 w-40 bg-bgSurface-low hover:bg-bgSurface-highest transition-all duration-200 rounded-lg shadow-lg z-50"
+        class="absolute flex flex-col space-y-5 top-full right-0 p-3 mt-2 w-40 bg-bgSurface-low  transition-all duration-200 rounded-lg shadow-lg z-50"
       >
         <div>
-          <span class="text-md p-2 font-semibold text-textPrimary">{{
+          <span class="text-md p-2 font-semibold text-textPrimary ">{{
             _AuthService.user?.name
           }}</span>
         </div>
-        <div (click)="logoutSubmission()" class="flex p-2 items-center cursor-pointer">
+        <div (click)="logoutSubmission()" class="flex p-2 items-center cursor-pointer hover:bg-bgSurface-highest">
           <svg width="20" height="18">
             <use href="#logout"></use>
           </svg>

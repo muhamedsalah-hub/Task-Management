@@ -1,4 +1,4 @@
-import { Iconsdata } from '../../../core/interfaces/Icons/types';
+import { Iconsdata } from '../interfaces/Icons/types';
 
 export const icons: Iconsdata[] = [
   { id: 1, width: '18', height: '20', href: '#logo', title: 'Taskly' },

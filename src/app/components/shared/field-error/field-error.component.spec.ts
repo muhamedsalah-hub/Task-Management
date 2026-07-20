@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AuthErrorComponent } from './auth-error.component';
+import { AuthErrorComponent } from './field-error.component';
 
 describe('AuthErrorComponent', () => {
   let component: AuthErrorComponent;

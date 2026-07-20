@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Iconsdata } from '../../../core/interfaces/Icons/types';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { icons } from '../data/data';
+import { icons } from '../../../core/data/data';
 
 @Component({
   selector: 'app-bottom-navbar',

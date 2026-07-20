@@ -12,8 +12,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
-import { ILoginResponse } from '../../../core/interfaces/Auth/types';
-import { validationRules } from '../../../core/utils/validation';
+import { AuthValidationRules } from '../../../core/utils/validations';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -30,7 +29,7 @@ import { finalize } from 'rxjs';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
-  readonly validations = validationRules;
+  readonly validations = AuthValidationRules;
   readonly faEye = faEye;
   readonly faSpinner = faSpinner;
   readonly faArrowAltCircleRight = faArrowRight;

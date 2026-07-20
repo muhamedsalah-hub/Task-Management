@@ -18,13 +18,12 @@
     }
   </div>
 
-
   <!--               Right Side                  -->
   <div
     class="flex-1 transition-all duration-300"
     [ngClass]="{
-      'lg:translate-x-64': !isDesktopCollapsed,
-      'lg:translate-x-20': isDesktopCollapsed,
+      'lg:ml-64': !isDesktopCollapsed,
+      'lg:ml-20': isDesktopCollapsed,
     }"
   >
     <!--        top-Navbar             -->
@@ -34,7 +33,7 @@
     />
 
     <!--              Main              -->
-    <main>
+    <main >
       <app-add-project-form />
     </main>
 

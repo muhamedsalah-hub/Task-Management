@@ -1,6 +1,6 @@
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 
-export const validationRules = {
+export const AuthValidationRules = {
   name: [
     Validators.required,
     Validators.pattern(/^(?=.{3,50}$)(?!.*\s{2,})[\p{L}]+(?: [\p{L}]+)*$/u),
@@ -31,5 +31,20 @@ export const validationRules = {
     } else {
       return { mismatch: true };
     }
+  },
+};
+
+export const ProjectValidationRules = {
+  name: [
+    Validators.required,
+    Validators.minLength(3),
+    Validators.maxLength(100),
+  ],
+  description: [Validators.maxLength(500)],
+  nameValidations(form: FormGroup) {
+    return !!form.get('name')?.errors && !!form.get('name')?.touched;
+  },
+  descriptionValidations(form: FormGroup) {
+    return !!form.get('description')?.errors && !!form.get('description')?.touched;
   },
 };

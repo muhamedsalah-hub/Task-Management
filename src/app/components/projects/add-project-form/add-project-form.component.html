@@ -1,4 +1,4 @@
-<section class="bg-bgBackground flex flex-col space-y-8 px-6 py-3">
+<section class="bg-bgBackground min-h-screen flex flex-col space-y-8 px-6 py-3">
   <div class="hidden lg:block">
     <span class="text-xs uppercase font-semibold tracking-wider text-gray-500"
       >Projects > <span class="text-bgPrimary">Add new project</span></span
@@ -24,14 +24,23 @@
         Define the scope and foundational details of your project.
       </p>
     </div>
-    <form class="flex flex-col space-y-5">
+    <form
+      [formGroup]="projectForm"
+      (ngSubmit)="projectFormSubmission()"
+      class="flex flex-col space-y-5"
+    >
       <div>
         <div class="flex items-center space-x-1">
           <label for="name" class="label-sm text-inputLabel"
             >Project Title</label
           ><span class="text-error">*</span>
         </div>
-        <div class="input">
+        <div
+          [ngClass]="{
+            'input-error': this.validations.nameValidations(projectForm),
+            input: !this.validations.nameValidations(projectForm),
+          }"
+        >
           <input
             class="title-md w-full outline-0"
             id="name"
@@ -39,6 +48,23 @@
             type="text"
             placeholder="Enter project name"
           />
+        </div>
+        <div class="mt-2">
+          @if (
+            projectForm.get("name")?.errors && projectForm.get("name")?.touched
+          ) {
+            @if (projectForm.get("name")?.getError("required")) {
+              <app-field-error message="Project title is required" />
+            } @else if (projectForm.get("name")?.getError("minlength")) {
+              <app-field-error
+                message="Project name must be at least 3 characters."
+              />
+            } @else if (projectForm.get("name")?.getError("maxlength")) {
+              <app-field-error
+                message="Project name must be 100 characters maximum."
+              />
+            }
+          }
         </div>
       </div>
       <div>
@@ -52,7 +78,12 @@
           >
         </div>
 
-        <div class="input">
+        <div
+          [ngClass]="{
+            'input-error': this.validations.descriptionValidations(projectForm),
+            input: !this.validations.descriptionValidations(projectForm),
+          }"
+        >
           <textarea
             class="title-md w-full outline-0"
             id="description"
@@ -63,19 +94,35 @@
           ></textarea>
         </div>
         <span class="flex justify-end mt-1 text-textSecondary label-sm"
-          >0/500</span
+          >{{ projectForm.get("description")?.value.length || 0 }}/500</span
         >
+        @if (
+          projectForm.get("description")?.errors &&
+          projectForm.get("description")?.touched
+        ) {
+          @if (projectForm.get("description")?.getError("maxlength")) {
+            <app-field-error
+              message="Project name must be 500 characters maximum."
+            />
+          }
+        }
       </div>
       <div
         class="flex flex-col space-y-2 lg:flex-row lg:justify-between lg:items-center"
       >
         <button
+          [ngClass]="{
+            'bg-gray-400': projectForm.invalid || isLoading,
+            'bg-bgPrimary cursor-pointer': projectForm.valid,
+          }"
           class="text-lg btn-primary rounded-md w-full lg:w-fit lg:order-2"
         >
           Create Project
         </button>
         <button
-          class="text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
+          type="button"
+          routerLink="/projects"
+          class="cursor-pointer text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
         >
           Back
         </button>

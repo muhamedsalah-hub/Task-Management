@@ -10,14 +10,14 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { validationRules } from '../../../core/utils/validation';
+import { AuthValidationRules } from '../../../core/utils/validations';
 import { AuthService } from '../../../core/services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   isPlatformBrowser,
   NgClass,
 } from '../../../../../node_modules/@angular/common';
-import { AuthErrorComponent } from '../shared/auth-error/auth-error.component';
+import { FieldErrorComponent } from '../../shared/field-error/field-error.component';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
 
@@ -30,14 +30,14 @@ import { finalize } from 'rxjs';
     ɵInternalFormsSharedModule,
     ReactiveFormsModule,
     NgClass,
-    AuthErrorComponent,
     RouterLink,
-  ],
+    FieldErrorComponent
+],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
 })
 export class ResetPasswordComponent {
-  readonly validation = validationRules;
+  readonly validation = AuthValidationRules;
   readonly faSpinner = faSpinner;
   readonly faEye = faEye;
 
@@ -65,7 +65,7 @@ export class ResetPasswordComponent {
 
   newPasswordForm: FormGroup = this._FormBuilder.group(
     {
-      password: ['', validationRules.password],
+      password: ['', this.validation.password],
       confirmPassword: ['', [Validators.required]],
     },
     { validators: this.validation.passwordMatchValidator },
