@@ -94,7 +94,7 @@
           ></textarea>
         </div>
         <span class="flex justify-end mt-1 text-textSecondary label-sm"
-          >{{ projectForm.get("description")?.value.length || 0 }}/500</span
+          >{{ projectForm.get("description")?.value?.length || 0 }}/500</span
         >
         @if (
           projectForm.get("description")?.errors &&

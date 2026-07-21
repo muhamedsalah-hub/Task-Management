@@ -51,7 +51,8 @@ export class LoginComponent {
       this._AuthService
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
-        .subscribe(() => {
+        .subscribe((res) => {
+          console.log(res);
           this._Router.navigate(['/projects']);
         });
     }

@@ -9,6 +9,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
+        //logic
         _Toastr.error('Unauthorized');
       } else if (req.url.includes('signup')) {
         _Toastr.error(err.error.msg ?? 'Something went wrong');
@@ -18,6 +19,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         _Toastr.error('Sorry ,You can reset your password After one minute');
       } else if (req.url.includes('auth/v1/user')) {
         _Toastr.error(err.error.msg ?? 'Something went wrong');
+      } else if (req.url.includes('/rest/v1/projects')) {
+        _Toastr.error(`Failed to create project : ${err.error.msg}`);
       }
 
       return throwError(() => err);
