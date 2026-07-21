@@ -16,12 +16,13 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withFetch(), withInterceptors([headerInterceptor,errorInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([headerInterceptor, errorInterceptor]),
+    ),
     provideAnimations(),
     provideToastr({
-     
       positionClass: 'toast-top-left',
-
     }),
   ],
 };

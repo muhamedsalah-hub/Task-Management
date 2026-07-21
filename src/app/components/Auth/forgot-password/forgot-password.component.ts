@@ -18,9 +18,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleCheck, faClock } from '@fortawesome/free-regular-svg-icons';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { NgClass } from '../../../../../node_modules/@angular/common';
-import { AuthErrorComponent } from '../shared/auth-error/auth-error.component';
+import { FieldErrorComponent } from '../../shared/field-error/field-error.component';
 import { finalize } from 'rxjs';
-import { validationRules } from '../../../core/utils/validation';
+import { AuthValidationRules } from '../../../core/utils/validations';
 
 @Component({
   selector: 'app-forgot-password',
@@ -31,13 +31,13 @@ import { validationRules } from '../../../core/utils/validation';
     ReactiveFormsModule,
     FontAwesomeModule,
     NgClass,
-    AuthErrorComponent,
-  ],
+    FieldErrorComponent
+],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css',
 })
 export class ForgotPasswordComponent {
-  readonly validation = validationRules;
+  readonly validation = AuthValidationRules;
   readonly faClock = faClock;
   readonly faCircleCheck = faCircleCheck;
   readonly faSpinner = faSpinner;

@@ -1,19 +1,6 @@
-<div class="min-h-screen relative flex flex-col justify-between">
-  <app-top-navbar
-    (logoutClicked)="logOut()"
-    (menuClicked)="toggleMobileSidebar()"
-  />
-
-  <app-bottom-navbar [class.hidden]="isMobileSidebarOpen" class="lg:hidden" />
-
-  @if (isMobileSidebarOpen) {
-    <div
-      class="fixed inset-0 bg-black/50 z-40 lg:hidden"
-      (click)="closeMobileSidebar()"
-    ></div>
-  }
-
-  <div class="absolute top-0 left-0 bottom-full z-50">
+<div class="min-h-screen flex justify-between">
+  <!--                Left Side              -->
+  <div>
     <app-sidebar
       [isDesktopCollapsed]="isDesktopCollapsed"
       [isMobileSidebarOpen]="isMobileSidebarOpen"
@@ -21,6 +8,38 @@
       (closeMobile)="closeMobileSidebar()"
       (logoutClicked)="logOut()"
     />
+
+    <!--            Drop back shadow           -->
+    @if (isMobileSidebarOpen) {
+      <div
+        class="fixed inset-0 bg-black/50 z-40 lg:hidden"
+        (click)="closeMobileSidebar()"
+      ></div>
+    }
+  </div>
+
+  <!--               Right Side                  -->
+  <div
+    class="flex-1 transition-all duration-300"
+    [ngClass]="{
+      'lg:ml-64': !isDesktopCollapsed,
+      'lg:ml-20': isDesktopCollapsed,
+    }"
+  >
+    <!--        top-Navbar             -->
+    <app-top-navbar
+      (logoutClicked)="logOut()"
+      (menuClicked)="toggleMobileSidebar()"
+    />
+
+    <!--              Main              -->
+    <main>
+       <router-outlet></router-outlet>
+    </main>
+
+    <!--           bottom-Navbar               -->
+    <app-bottom-navbar [class.hidden]="isMobileSidebarOpen" class="lg:hidden" />
+
+    <app-icons />
   </div>
 </div>
-<app-icons />

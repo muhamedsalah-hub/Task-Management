@@ -1,4 +1,4 @@
-<section >
+<section>
   <app-auth-card
     [title]="'Welcome Back'"
     [description]="' Please Enter your details to access your workspace'"
@@ -54,7 +54,9 @@
               >
             </div>
             <div>
-              <span [routerLink]="['/forgot-password']" class="cursor-pointer hidden sm:block label-sm text-bgPrimary"
+              <span
+                [routerLink]="['/forgot-password']"
+                class="cursor-pointer hidden sm:block label-sm text-bgPrimary"
                 >Forgot Password?</span
               >
             </div>
@@ -68,7 +70,6 @@
             }"
             class="flex justify-center items-center btn-primary w-full"
             [disabled]="this.loginForm.invalid"
-          
           >
             <span class="mx-1">Sign In</span>
             @if (isLoading) {

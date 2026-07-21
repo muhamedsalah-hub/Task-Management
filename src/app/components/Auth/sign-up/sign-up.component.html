@@ -35,9 +35,9 @@
             signUpForm.get(["data", "name"])?.touched
           ) {
             @if (signUpForm.get(["data", "name"])?.getError("required")) {
-              <app-auth-error message="Name is Required" />
+              <app-field-error message="Name is Required" />
             } @else if (signUpForm.get(["data", "name"])?.getError("pattern")) {
-              <app-auth-error message="Invalid name" />
+              <app-field-error message="Invalid name" />
             }
           }
           <div>
@@ -76,9 +76,9 @@
             signUpForm.get("email")?.errors && signUpForm.get("email")?.touched
           ) {
             @if (signUpForm.get("email")?.getError("required")) {
-              <app-auth-error message="Email is Required" />
+              <app-field-error message="Email is Required" />
             } @else if (signUpForm.get("email")?.getError("email")) {
-              <app-auth-error message="Invalid Email" />
+              <app-field-error message="Invalid Email" />
             }
           }
         </div>
@@ -112,11 +112,11 @@
             ) {
               @if (signUpForm.get("password")?.getError("required")) {
                 <div class="mt-2">
-                  <app-auth-error message="Password is Required" />
+                  <app-field-error message="Password is Required" />
                 </div>
               } @else if (signUpForm.get("password")?.getError("pattern")) {
                 <div class="mt-2">
-                  <app-auth-error message="Invalid Password" />
+                  <app-field-error message="Invalid Password" />
                 </div>
               }
             }
@@ -141,7 +141,7 @@
             @if (signUpForm.errors && signUpForm.touched) {
               @if (signUpForm.getError("mismatch")) {
                 <div class="mt-2">
-                  <app-auth-error message="Password is not identical" />
+                  <app-field-error message="Password is not identical" />
                 </div>
               }
             }
