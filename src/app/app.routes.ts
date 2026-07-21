@@ -28,8 +28,8 @@ export const routes: Routes = [
     canActivate: [loggedGuard],
     children: [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'projects', component: AddProjectFormComponent },
-      { path: 'add', component: AddProjectFormComponent },
+      { path: 'projects', component: AddProjectFormComponent},
+      { path: 'projects/add', component: AddProjectFormComponent },
     ],
   },
 ];

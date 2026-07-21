@@ -5,8 +5,9 @@ import { SidebarComponent } from '../../components/shared/sidebar/sidebar.compon
 import { AuthService } from '../../core/services/auth.service';
 import { IconsComponent } from '../../components/shared/icons/icons.component';
 import { NgClass } from '../../../../node_modules/@angular/common';
-import { Router, RouterOutlet } from '../../../../node_modules/@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AddProjectFormComponent } from "../../components/projects/add-project-form/add-project-form.component";
 
 @Component({
   selector: 'app-blank-layout',
@@ -17,8 +18,7 @@ import { ToastrService } from 'ngx-toastr';
     SidebarComponent,
     IconsComponent,
     NgClass,
-    RouterOutlet,
-  ],
+    RouterOutlet],
   templateUrl: './blank-layout.component.html',
   styleUrl: './blank-layout.component.css',
 })
