@@ -10,8 +10,6 @@ import {
   ISignupResponse,
 } from '../interfaces/Auth/types';
 import { isPlatformBrowser } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +18,6 @@ export class AuthService {
   user: IUserdata | null = null;
 
   private readonly _PlatrformID = inject(PLATFORM_ID);
-  private readonly _Toastr = inject(ToastrService);
-  private readonly _Router = inject(Router);
 
   constructor(private _HttpClient: HttpClient) {
     if (isPlatformBrowser(this._PlatrformID) && localStorage.getItem('user')) {
@@ -72,8 +68,6 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.user = null;
-    this._Toastr.success('User logged out successfully');
-    this._Router.navigate(['/login']);
   }
 
   handleEmailSubmission(body: { email: string }): Observable<null> {
@@ -89,6 +83,8 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.user;
+    const token = localStorage.getItem('token') || '';
+    return !!token;
   }
+  
 }

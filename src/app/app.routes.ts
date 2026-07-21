@@ -23,9 +23,13 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'projects',
+    path: '',
     component: BlankLayoutComponent,
     canActivate: [loggedGuard],
-    children: [{ path: 'add', component: AddProjectFormComponent }],
+    children: [
+      { path: '', redirectTo: 'projects', pathMatch: 'full' },
+      { path: 'projects', component: AddProjectFormComponent },
+      { path: 'add', component: AddProjectFormComponent },
+    ],
   },
 ];
