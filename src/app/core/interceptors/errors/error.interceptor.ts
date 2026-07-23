@@ -22,7 +22,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       } else if (req.url.includes('/rest/v1/projects')) {
         _Toastr.error(`Failed to create project : ${err.error.msg}`);
       }
-
       return throwError(() => err);
     }),
   );

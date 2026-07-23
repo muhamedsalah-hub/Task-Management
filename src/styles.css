@@ -33,6 +33,7 @@ body {
   --text-secondary: #434654;
   --btn-primary: #003d9b;
   --btn-ghost: #4f5f7b;
+  --skeleton: #E8EDFF;
   --success: #82f9be;
   --error: #ba1a1a;
   --warning: #ffb300;
@@ -54,6 +55,7 @@ body {
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);
+  --color-skeleton: var(--skeleton);
   --font-sans: var(--font);
   --spacing-120: 30rem;
 }
