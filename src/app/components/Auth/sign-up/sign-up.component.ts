@@ -63,7 +63,7 @@ export class SignUpComponent {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
           this._Toastr.success("User registered successfully")
-          this._Router.navigate(['/projects']);
+          this._Router.navigate(['/Projects']);
         });
     }
   }

@@ -55,7 +55,7 @@ export class LoginComponent {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe((res) => {
           this._Toastr.success("User logged in successfully")
-          this._Router.navigate(['/projects']);
+          this._Router.navigate(['/Projects']);
         });
     }
   }
