@@ -34,11 +34,11 @@ export class SidebarComponent {
 
   getLink(link?: string) {
     if (link === 'projects') {
-      return ['/projects'];
+      return ['/Projects'];
     }
 
     if (this._ProjectContextService.projectId()) {
-      return ['/project', this._ProjectContextService.projectId(), link];
+      return ['/projects', this._ProjectContextService.projectId(), link];
     }
 
     return null;

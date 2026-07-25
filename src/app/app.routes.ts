@@ -33,11 +33,11 @@ export const routes: Routes = [
     component: BlankLayoutComponent,
     canActivate: [loggedGuard],
     children: [
-      { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'projects', component: ProjectsListComponent },
-      { path: 'projects/add', component: AddProjectFormComponent },
+      { path: '', redirectTo: 'Projects', pathMatch: 'full' },
+      { path: 'Projects', component: ProjectsListComponent },
+      { path: 'Projects/add', component: AddProjectFormComponent },
       {
-        path: 'project/:projectId',
+        path: 'projects/:projectId',
         component: ProjectLayoutComponent,
         children: [
           { path: '', redirectTo: 'epics', pathMatch: 'full' },
