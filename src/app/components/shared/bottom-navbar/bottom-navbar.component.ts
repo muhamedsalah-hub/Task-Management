@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Iconsdata } from '../../../core/interfaces/Icons/types';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { icons } from '../../../core/data/data';
+import { ProjectContextService } from '../../../core/services/project-context.service';
 
 @Component({
   selector: 'app-bottom-navbar',
@@ -12,4 +13,17 @@ import { icons } from '../../../core/data/data';
 })
 export class BottomNavbarComponent {
   icons: Iconsdata[] = icons;
+  private readonly _ProjectContextService=inject(ProjectContextService)
+
+    getLink(link?: string) {
+    if (link === 'projects') {
+      return ['/projects'];
+    }
+
+    if (this._ProjectContextService.projectId()) {
+      return ['/project', this._ProjectContextService.projectId(), link];
+    }
+
+    return null;
+  }
 }

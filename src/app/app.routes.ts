@@ -9,6 +9,11 @@ import { AddProjectFormComponent } from './components/projects/add-project-form/
 import { AuthGuard } from './core/guards/auth-guard.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { ProjectsListComponent } from './components/projects/projects-list/projects-list.component';
+import { ProjectLayoutComponent } from './components/projects/project/project-layout/project-layout.component';
+import { ProjectEpicsComponent } from './components/projects/project/project-epics/project-epics.component';
+import { ProjectTasksComponent } from './components/projects/project/project-tasks/project-tasks.component';
+import { ProjectMembersComponent } from './components/projects/project/project-members/project-members.component';
+import { EditProjectComponent } from './components/projects/project/edit-project/edit-project.component';
 
 export const routes: Routes = [
   {
@@ -29,8 +34,19 @@ export const routes: Routes = [
     canActivate: [loggedGuard],
     children: [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'projects', component: ProjectsListComponent},
+      { path: 'projects', component: ProjectsListComponent },
       { path: 'projects/add', component: AddProjectFormComponent },
+      {
+        path: 'project/:projectId',
+        component: ProjectLayoutComponent,
+        children: [
+          { path: '', redirectTo: 'epics', pathMatch: 'full' },
+          { path: 'epics', component: ProjectEpicsComponent },
+          { path: 'tasks', component: ProjectTasksComponent },
+          { path: 'members', component: ProjectMembersComponent },
+          { path: 'edit', component: EditProjectComponent },
+        ],
+      },
     ],
   },
 ];

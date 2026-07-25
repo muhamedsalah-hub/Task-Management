@@ -8,7 +8,7 @@ export const icons: Iconsdata[] = [
     height: '18',
     href: '#projects',
     title: 'Projects',
-    link: '/projects',
+    link: 'projects',
   },
   {
     id: 3,
@@ -16,7 +16,7 @@ export const icons: Iconsdata[] = [
     height: '18',
     href: '#epics',
     title: 'Epics',
-    link: '/epics',
+    link: 'epics',
   },
   {
     id: 4,
@@ -24,7 +24,7 @@ export const icons: Iconsdata[] = [
     height: '18',
     href: '#tasks',
     title: 'Tasks',
-    link: '/tasks',
+    link: 'tasks',
   },
   {
     id: 5,
@@ -32,7 +32,7 @@ export const icons: Iconsdata[] = [
     height: '18',
     href: '#members',
     title: 'Members',
-    link: '/members',
+    link: 'members',
   },
   {
     id: 6,
@@ -40,6 +40,6 @@ export const icons: Iconsdata[] = [
     height: '20',
     href: '#details',
     title: 'Details',
-    link: '/details',
+    link: 'edit',
   },
 ];

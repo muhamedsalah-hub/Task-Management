@@ -4,5 +4,5 @@ export interface Iconsdata {
   height: string;
   href?: string;
   title?: string;
-  link?: string;
+  link?: string ;
 }

@@ -11,7 +11,7 @@
   <div class="flex flex-col justify-center items-center space-y-6">
     @for (item of icons; track item.id) {
       <div
-        [routerLink]="item.link"
+        [routerLink]="getLink(item.link)"
         routerLinkActive="!text-[#0052CC] bg-white"
         class="flex items-center rounded-md cursor-pointer hover:bg-bgSurface-highest text-[#434654]"
         [ngClass]="{
@@ -40,8 +40,8 @@
   <!-- Footer -->
   <div
     class="my-5 flex flex-col space-y-8"
-    [class.w-56]=" isMobileSidebarOpen"
-    [class.w-60]=" !isDesktopCollapsed"
+    [class.w-56]="isMobileSidebarOpen"
+    [class.w-60]="!isDesktopCollapsed"
   >
     <div
       (click)="toggleDesktopEmission()"
@@ -66,7 +66,10 @@
     </div>
 
     <div class="flex items-center cursor-pointer hover:bg-bgSurface-highest">
-      <div (click)="logoutSubmission()" class="w-12 h-12 flex justify-center items-center">
+      <div
+        (click)="logoutSubmission()"
+        class="w-12 h-12 flex justify-center items-center"
+      >
         <svg width="18" height="18">
           <use href="#logout"></use>
         </svg>
@@ -77,5 +80,4 @@
       }
     </div>
   </div>
-
 </aside>
