@@ -5,7 +5,7 @@ import { SidebarComponent } from '../../components/shared/sidebar/sidebar.compon
 import { AuthService } from '../../core/services/auth.service';
 import { IconsComponent } from '../../components/shared/icons/icons.component';
 import { NgClass } from '../../../../node_modules/@angular/common';
-import { Router, RouterOutlet } from '@angular/router';
+import {  RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

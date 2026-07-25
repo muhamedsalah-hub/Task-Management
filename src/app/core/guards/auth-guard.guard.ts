@@ -9,7 +9,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   if (isPlatformBrowser(_PLATFORM_ID)) {
     const token = localStorage.getItem('token') || '';
     if (token) {
-      return _Router.createUrlTree(['/projects']);
+      return _Router.createUrlTree(['/Projects']);
     } else {
       return true;
     }

@@ -45,6 +45,8 @@ export const ProjectValidationRules = {
     return !!form.get('name')?.errors && !!form.get('name')?.touched;
   },
   descriptionValidations(form: FormGroup) {
-    return !!form.get('description')?.errors && !!form.get('description')?.touched;
+    return (
+      !!form.get('description')?.errors && !!form.get('description')?.touched
+    );
   },
 };

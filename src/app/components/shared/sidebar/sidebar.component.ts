@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { icons } from '../../../core/data/data';
 import { Iconsdata } from '../../../core/interfaces/Icons/types';
 import { NgClass } from '../../../../../node_modules/@angular/common';
+import { ProjectContextService } from '../../../core/services/project-context.service';
+import { icons } from '../../../core/data/data';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,6 +13,7 @@ import { NgClass } from '../../../../../node_modules/@angular/common';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
+  private readonly _ProjectContextService = inject(ProjectContextService);
   icons: Iconsdata[] = icons;
 
   @Input() isDesktopCollapsed!: boolean;
@@ -23,11 +25,22 @@ export class SidebarComponent {
   toggleDesktopEmission() {
     this.toggleDesktop.emit();
   }
-  closeMobileEmission(){
+  closeMobileEmission() {
     this.closeMobile.emit();
   }
-  logoutSubmission(){
-     this.logoutClicked.emit();
+  logoutSubmission() {
+    this.logoutClicked.emit();
   }
 
+  getLink(link?: string) {
+    if (link === 'projects') {
+      return ['/Projects'];
+    }
+
+    if (this._ProjectContextService.projectId()) {
+      return ['/projects', this._ProjectContextService.projectId(), link];
+    }
+
+    return null;
+  }
 }
