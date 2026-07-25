@@ -1,9 +1,7 @@
 import {
   Component,
   computed,
-  HostListener,
   inject,
-  OnDestroy,
   PLATFORM_ID,
   signal,
   WritableSignal,
@@ -15,9 +13,8 @@ import {
   isPlatformBrowser,
   NgClass,
 } from '@angular/common';
-import { catchError, finalize, map, of, startWith, switchMap, tap } from 'rxjs';
+import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
 import {
-  IProjects,
   IProjectsState,
 } from '../../../core/interfaces/Projects/types';
 import { Router, RouterLink } from '@angular/router';
@@ -43,15 +40,15 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class ProjectsListComponent {
   currentPage: WritableSignal<number> = signal(1);
-  isMobile:WritableSignal<boolean>=signal(false);
+  isMobile: WritableSignal<boolean> = signal(false);
   readonly _ProjectsService = inject(ProjectsService);
   readonly _PLATFORM_ID = inject(PLATFORM_ID);
   readonly _Router = inject(Router);
   readonly visiblePages = computed(() => {
     const current = this.currentPage();
     const last = this._ProjectsService.lastPage();
-    const start = Math.min(current, last - 1); //4
-    const end = Math.min(last, start + 1); //5
+    const start = Math.min(current, last - 1);
+    const end = Math.min(last, start + 1);
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   });
 
@@ -63,11 +60,18 @@ export class ProjectsListComponent {
 
   Projects$ = toObservable(this.currentPage).pipe(
     switchMap((page) => {
-      return this._ProjectsService.getProjects(page).pipe(
+      const request$ = this._ProjectsService.getProjects(page).pipe(
         tap((res) => {
           this._ProjectsService.totalProjects.set(
             Number(res.headers.get('content-range')?.split('/')[1] as string),
           );
+          if (!this._ProjectsService.cache().has(page)) {
+            this._ProjectsService.cache.update((cache) => {
+              const newCache = new Map(cache);
+              newCache.set(page, res);
+              return newCache;
+            });
+          }
         }),
         map(
           (res): IProjectsState => ({
@@ -76,15 +80,17 @@ export class ProjectsListComponent {
             projects: res.body,
           }),
         ),
-        startWith({
-          error: false,
-          loading: true,
-          projects: null,
-        } as IProjectsState),
         catchError(() =>
           of({ error: true, loading: false, projects: null } as IProjectsState),
         ),
       );
+      if (this._ProjectsService.cache().has(page)) {
+        return request$;
+      } else {
+        return request$.pipe(
+          startWith({ error: true, loading: true, projects: null }),
+        );
+      }
     }),
   );
 
