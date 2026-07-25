@@ -15,6 +15,7 @@ import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -38,6 +39,7 @@ export class SignUpComponent {
   private readonly _Router = inject(Router);
   private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
+  private readonly _Toastr = inject(ToastrService);
 
   signUpForm: FormGroup = this._FormBuilder.group(
     {
@@ -60,6 +62,7 @@ export class SignUpComponent {
         .SignUp(data)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
+          this._Toastr.success("User registered successfully")
           this._Router.navigate(['/projects']);
         });
     }

@@ -8,6 +8,7 @@ import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.compon
 import { AddProjectFormComponent } from './components/projects/add-project-form/add-project-form.component';
 import { AuthGuard } from './core/guards/auth-guard.guard';
 import { loggedGuard } from './core/guards/logged.guard';
+import { ProjectsListComponent } from './components/projects/projects-list/projects-list.component';
 
 export const routes: Routes = [
   {
@@ -28,7 +29,7 @@ export const routes: Routes = [
     canActivate: [loggedGuard],
     children: [
       { path: '', redirectTo: 'projects', pathMatch: 'full' },
-      { path: 'projects', component: AddProjectFormComponent},
+      { path: 'projects', component: ProjectsListComponent},
       { path: 'projects/add', component: AddProjectFormComponent },
     ],
   },

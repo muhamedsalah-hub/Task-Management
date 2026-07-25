@@ -2,15 +2,17 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, throwError } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const _Toastr = inject(ToastrService);
+  const _AuthService = inject(AuthService);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       if (err.status === 401) {
-        //logic
         _Toastr.error('Unauthorized');
+        _AuthService.logout();
       } else if (req.url.includes('signup')) {
         _Toastr.error(err.error.msg ?? 'Something went wrong');
       } else if (req.url.includes('token')) {
@@ -22,7 +24,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       } else if (req.url.includes('/rest/v1/projects')) {
         _Toastr.error(`Failed to create project : ${err.error.msg}`);
       }
-
       return throwError(() => err);
     }),
   );
