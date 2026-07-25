@@ -1,5 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import {
+  computed,
+  inject,
+  Injectable,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { environmet } from '../environment/environment';
 import { IProjects } from '../interfaces/Projects/types';
@@ -9,6 +15,9 @@ import { IProjects } from '../interfaces/Projects/types';
 })
 export class ProjectsService {
   private readonly _HttpClient = inject(HttpClient);
+  totalProjects: WritableSignal<number> = signal(0);
+  limit: WritableSignal<number> = signal(6);
+  lastPage = computed(() => Math.ceil(this.totalProjects() / this.limit()));
 
   createNewProject(body: {
     name: string;
@@ -20,9 +29,11 @@ export class ProjectsService {
     );
   }
 
-  getProjects(): Observable<IProjects[]> {
+  getProjects(currentPage: number = 1): Observable<HttpResponse<IProjects[]>> {
+    const offset = (currentPage - 1) * this.limit();
     return this._HttpClient.get<IProjects[]>(
-      `${environmet.baseUrl}/rest/v1/rpc/get_projects`,
+      `${environmet.baseUrl}/rest/v1/rpc/get_projects?limit=${this.limit()}&offset=${offset}`,
+      { observe: 'response' },
     );
   }
 }

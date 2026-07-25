@@ -14,6 +14,7 @@ import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AuthCardComponent } from '../shared/auth-card/auth-card.component';
 import { AuthValidationRules } from '../../../core/utils/validations';
 import { finalize } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -39,6 +40,7 @@ export class LoginComponent {
   readonly _AuthService = inject(AuthService);
   private readonly _Router = inject(Router);
   private readonly _FormBuilder = inject(FormBuilder);
+  private readonly _Toastr = inject(ToastrService);
 
   loginForm: FormGroup = this._FormBuilder.group({
     email: ['', this.validations.email],
@@ -52,6 +54,7 @@ export class LoginComponent {
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe((res) => {
+          this._Toastr.success("User logged in successfully")
           this._Router.navigate(['/projects']);
         });
     }

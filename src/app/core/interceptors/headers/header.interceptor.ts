@@ -28,8 +28,9 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
     isPlatformBrowser(_PLATFORM_ID)
   ) {
     const token = localStorage.getItem('token') || '';
-    req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    req = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}`, Prefer: `count=exact` },
+    });
   }
-
   return next(req);
 };

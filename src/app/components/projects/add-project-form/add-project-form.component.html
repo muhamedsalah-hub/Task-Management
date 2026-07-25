@@ -1,4 +1,5 @@
 <section class="bg-bgBackground min-h-screen flex flex-col space-y-8 p-6">
+  <!--      Project header           -->
   <div class="hidden lg:block">
     <span class="text-xs uppercase font-semibold tracking-wider text-gray-500"
       >Projects > <span class="text-bgPrimary">Add new project</span></span
@@ -24,6 +25,8 @@
         Define the scope and foundational details of your project.
       </p>
     </div>
+
+    <!--        Project Form                   -->
     <form
       [formGroup]="projectForm"
       (ngSubmit)="projectFormSubmission()"
@@ -128,6 +131,8 @@
         </button>
       </div>
     </form>
+
+    <!--        Footer Tip                  -->
     <div class="bg-bgSurface-low p-3 rounded-md">
       <span class="text-textSecondary font-bold text-sm">Pro Tip</span>
       <p class="text-gray-400 mt-1 text-sm">
