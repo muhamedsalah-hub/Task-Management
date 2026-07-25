@@ -4,11 +4,17 @@ import {
   HostListener,
   inject,
   OnDestroy,
+  PLATFORM_ID,
   signal,
   WritableSignal,
 } from '@angular/core';
 import { ProjectsService } from '../../../core/services/projects.service';
-import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
+import {
+  AsyncPipe,
+  DatePipe,
+  isPlatformBrowser,
+  NgClass,
+} from '@angular/common';
 import { catchError, finalize, map, of, startWith, switchMap, tap } from 'rxjs';
 import {
   IProjects,
@@ -37,8 +43,9 @@ import { toObservable } from '@angular/core/rxjs-interop';
 })
 export class ProjectsListComponent {
   currentPage: WritableSignal<number> = signal(1);
-  isMobile = window.matchMedia('(max-width:767px');
+  isMobile:WritableSignal<boolean>=signal(false);
   readonly _ProjectsService = inject(ProjectsService);
+  readonly _PLATFORM_ID = inject(PLATFORM_ID);
   readonly _Router = inject(Router);
   readonly visiblePages = computed(() => {
     const current = this.currentPage();
@@ -47,6 +54,12 @@ export class ProjectsListComponent {
     const end = Math.min(last, start + 1); //5
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   });
+
+  constructor() {
+    if (isPlatformBrowser(this._PLATFORM_ID)) {
+      this.isMobile.set(window.matchMedia('(max-width: 767px)').matches);
+    }
+  }
 
   Projects$ = toObservable(this.currentPage).pipe(
     switchMap((page) => {
@@ -78,7 +91,7 @@ export class ProjectsListComponent {
   nextButtonPage() {
     if (this.currentPage() !== this._ProjectsService.lastPage()) {
       this.currentPage.update((page) => page + 1);
-      if (this.isMobile.matches) {
+      if (this.isMobile()) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
@@ -87,7 +100,7 @@ export class ProjectsListComponent {
   prevButtonPage() {
     if (this.currentPage() !== 1) {
       this.currentPage.update((page) => page - 1);
-      if (this.isMobile.matches) {
+      if (this.isMobile()) {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
