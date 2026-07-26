@@ -14,9 +14,7 @@ import {
   NgClass,
 } from '@angular/common';
 import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
-import {
-  IProjectsState,
-} from '../../../../core/interfaces/Projects/types';
+import { IProjectsState } from '../../../../core/interfaces/Projects/types';
 import { Router, RouterLink } from '@angular/router';
 import { ProjectsSkeletonComponent } from '../../components/projects-skeleton/projects-skeleton.component';
 import { ErrorPageComponent } from '../../shared/error-page/error-page.component';
@@ -65,6 +63,7 @@ export class ProjectsListComponent {
           this._ProjectsService.totalProjects.set(
             Number(res.headers.get('content-range')?.split('/')[1] as string),
           );
+          
           if (!this._ProjectsService.cache().has(page)) {
             this._ProjectsService.cache.update((cache) => {
               const newCache = new Map(cache);
@@ -85,10 +84,14 @@ export class ProjectsListComponent {
         ),
       );
       if (this._ProjectsService.cache().has(page)) {
-        return request$;
+        return of({
+          loading: false,
+          error: false,
+          projects: this._ProjectsService.cache().get(page)!.body,
+        });
       } else {
         return request$.pipe(
-          startWith({ error: true, loading: true, projects: null }),
+          startWith({ error: false, loading: true, projects: null }),
         );
       }
     }),

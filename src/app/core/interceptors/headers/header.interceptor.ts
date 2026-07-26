@@ -13,7 +13,7 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
     req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
 
-  //Project Creation
+  //Project Creation && edit project
   if (
     req.url.includes('/rest/v1/projects') &&
     isPlatformBrowser(_PLATFORM_ID)

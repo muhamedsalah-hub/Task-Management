@@ -23,9 +23,22 @@ export class ProjectsService {
   createNewProject(body: {
     name: string;
     description: string;
-  }): Observable<any> {
-    return this._HttpClient.post(
+  }): Observable<null> {
+    return this._HttpClient.post<null>(
       `${environmet.baseUrl}/rest/v1/projects`,
+      body,
+    );
+  }
+
+  editProject(
+    body: {
+      name: string;
+      description: string;
+    },
+    projectId: string,
+  ): Observable<any> {
+    return this._HttpClient.patch<any>(
+      `${environmet.baseUrl}/rest/v1/projects?id=eq.${projectId}`,
       body,
     );
   }
@@ -40,6 +53,12 @@ export class ProjectsService {
     return this._HttpClient.get<IProjects[]>(
       `${environmet.baseUrl}/rest/v1/rpc/get_projects?limit=${this.limit()}&offset=${offset}`,
       { observe: 'response' },
+    );
+  }
+
+  getProjectById(projectId: string): Observable<IProjects[]> {
+    return this._HttpClient.get<IProjects[]>(
+      `${environmet.baseUrl}/rest/v1/rpc/get_projects?id=eq.${projectId}`,
     );
   }
 

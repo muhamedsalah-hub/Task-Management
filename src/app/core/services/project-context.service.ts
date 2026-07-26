@@ -1,18 +1,8 @@
-import {
-  inject,
-  Injectable,
-  OnInit,
-  signal,
-  WritableSignal,
-} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectContextService {
   projectId: WritableSignal<string | null> = signal(null);
-
-  private readonly _ActivatedRoute = inject(ActivatedRoute);
-
 }

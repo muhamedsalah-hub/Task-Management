@@ -1,1 +1,110 @@
-<p>edit-project works!</p>
+<app-project-form-layout
+  fTitle="Projects > Project Title >"
+  sTitle=" Edit"
+  header="Edit Project"
+  formHeader="Edit Project"
+>
+  <form
+    [formGroup]="projectForm"
+    (ngSubmit)="projectFormSubmission()"
+    class="flex flex-col space-y-5"
+  >
+    <div>
+      <div class="flex items-center space-x-1">
+        <label for="name" class="label-sm text-inputLabel">Project Title</label
+        ><span class="text-error">*</span>
+      </div>
+      <div
+        [ngClass]="{
+          'input-error': this.validations.nameValidations(projectForm),
+          input: !this.validations.nameValidations(projectForm),
+        }"
+      >
+        <input
+          class="title-md w-full outline-0"
+          id="name"
+          formControlName="name"
+          type="text"
+          placeholder="Enter project name"
+        />
+      </div>
+      <div class="mt-2">
+        @if (
+          projectForm.get("name")?.errors && projectForm.get("name")?.touched
+        ) {
+          @if (projectForm.get("name")?.getError("required")) {
+            <app-field-error message="Project title is required" />
+          } @else if (projectForm.get("name")?.getError("minlength")) {
+            <app-field-error
+              message="Project name must be at least 3 characters."
+            />
+          } @else if (projectForm.get("name")?.getError("maxlength")) {
+            <app-field-error
+              message="Project name must be 100 characters maximum."
+            />
+          }
+        }
+      </div>
+    </div>
+    <div>
+      <div class="flex justify-between items-center">
+        <label for="description" class="label-sm text-inputLabel"
+          >Description</label
+        >
+        <span
+          class="text-sm font-light text-textSecondary tracking-normal lowercase"
+          >( optional )</span
+        >
+      </div>
+
+      <div
+        [ngClass]="{
+          'input-error': this.validations.descriptionValidations(projectForm),
+          input: !this.validations.descriptionValidations(projectForm),
+        }"
+      >
+        <textarea
+          class="title-md w-full outline-0"
+          id="description"
+          formControlName="description"
+          type="text"
+          placeholder="Provide a high-level overview of the project's architectural objectives and key milestones..."
+          rows="6"
+        ></textarea>
+      </div>
+      <span class="flex justify-end mt-1 text-textSecondary label-sm"
+        >{{ projectForm.get("description")?.value?.length || 0 }}/500</span
+      >
+      @if (
+        projectForm.get("description")?.errors &&
+        projectForm.get("description")?.touched
+      ) {
+        @if (projectForm.get("description")?.getError("maxlength")) {
+          <app-field-error
+            message="Project name must be 500 characters maximum."
+          />
+        }
+      }
+    </div>
+    <div
+      class="flex flex-col space-y-2 lg:flex-row lg:justify-between lg:items-center"
+    >
+      <button
+        [ngClass]="{
+          'bg-gray-400': projectForm.invalid || isLoading,
+          'bg-bgPrimary cursor-pointer': projectForm.valid,
+        }"
+        class="text-lg btn-primary rounded-md w-full lg:w-fit lg:order-2"
+      >
+        Save Changes
+      </button>
+      <button
+        type="button"
+        [routerLink]="['/Projects']"
+        class="cursor-pointer text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
+      >
+        Back
+      </button>
+    </div>
+  </form>
+</app-project-form-layout>
