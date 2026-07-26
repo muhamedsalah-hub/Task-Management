@@ -70,7 +70,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.user = null;
-   this. _Router.navigate(['/login']);
+    this._Router.navigate(['/login']);
   }
 
   handleEmailSubmission(body: { email: string }): Observable<null> {
@@ -89,5 +89,4 @@ export class AuthService {
     const token = localStorage.getItem('token') || '';
     return !!token;
   }
-  
 }

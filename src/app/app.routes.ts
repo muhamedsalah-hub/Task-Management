@@ -1,19 +1,19 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { LoginComponent } from './components/Auth/login/login.component';
-import { SignUpComponent } from './components/Auth/sign-up/sign-up.component';
-import { ForgotPasswordComponent } from './components/Auth/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './components/Auth/reset-password/reset-password.component';
+import { LoginComponent } from './features/Auth/pages/login/login.component';
+import { SignUpComponent } from './features/Auth/pages/sign-up/sign-up.component';
+import { ResetPasswordComponent } from './features/Auth/pages/reset-password/reset-password.component';
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
-import { AddProjectFormComponent } from './components/projects/add-project-form/add-project-form.component';
 import { AuthGuard } from './core/guards/auth-guard.guard';
 import { loggedGuard } from './core/guards/logged.guard';
-import { ProjectsListComponent } from './components/projects/projects-list/projects-list.component';
-import { ProjectLayoutComponent } from './components/projects/project/project-layout/project-layout.component';
-import { ProjectEpicsComponent } from './components/projects/project/project-epics/project-epics.component';
-import { ProjectTasksComponent } from './components/projects/project/project-tasks/project-tasks.component';
-import { ProjectMembersComponent } from './components/projects/project/project-members/project-members.component';
-import { EditProjectComponent } from './components/projects/project/edit-project/edit-project.component';
+import { ProjectsListComponent } from './features/projects/pages/projects-list/projects-list.component';
+import { ProjectLayoutComponent } from './features/projects/layouts/project-layout/project-layout.component';
+import { ProjectEpicsComponent } from './features/projects/pages/project-epics/project-epics.component';
+import { ProjectTasksComponent } from './features/projects/pages/project-tasks/project-tasks.component';
+import { ProjectMembersComponent } from './features/projects/pages/project-members/project-members.component';
+import { EditProjectComponent } from './features/projects/pages/edit-project/edit-project.component';
+import { AddProjectComponent } from './features/projects/pages/add-project/add-project.component';
+import { ForgotPasswordComponent } from './features/Auth/pages/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
@@ -35,7 +35,7 @@ export const routes: Routes = [
     children: [
       { path: '', redirectTo: 'Projects', pathMatch: 'full' },
       { path: 'Projects', component: ProjectsListComponent },
-      { path: 'Projects/add', component: AddProjectFormComponent },
+      { path: 'Projects/add', component: AddProjectComponent },
       {
         path: 'projects/:projectId',
         component: ProjectLayoutComponent,
