@@ -30,7 +30,11 @@
             class="text-textPrimary"
             [class]="item.id === 1 ? 'headline-lg' : 'body-md font-bold!'"
           >
-            {{ item.title }}
+            @if (item.id <= 2) {
+              {{ item.title }}
+            } @else {
+              Project {{ item.title }}
+            }
           </span>
         }
       </div>
@@ -65,10 +69,11 @@
       }
     </div>
 
-    <div (click)="logoutSubmission()" class="flex items-center cursor-pointer hover:bg-bgSurface-highest">
-      <div
-        class="w-12 h-12 flex justify-center items-center"
-      >
+    <div
+      (click)="logoutSubmission()"
+      class="flex items-center cursor-pointer hover:bg-bgSurface-highest"
+    >
+      <div class="w-12 h-12 flex justify-center items-center">
         <svg width="18" height="18">
           <use href="#logout"></use>
         </svg>

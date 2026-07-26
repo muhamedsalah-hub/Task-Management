@@ -29,7 +29,6 @@ export class SidebarComponent {
     this.closeMobile.emit();
   }
   logoutSubmission() {
-    
     this.logoutClicked.emit();
   }
 
