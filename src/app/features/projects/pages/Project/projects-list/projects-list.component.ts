@@ -7,7 +7,6 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { ProjectsService } from '../../../../core/services/projects.service';
 import {
   AsyncPipe,
   DatePipe,
@@ -15,18 +14,19 @@ import {
   NgClass,
 } from '@angular/common';
 import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
-import { IProjectsState } from '../../../../core/interfaces/Projects/types';
 import { Router, RouterLink } from '@angular/router';
-import { ProjectsSkeletonComponent } from '../../components/projects-skeleton/projects-skeleton.component';
-import { ErrorPageComponent } from '../../shared/error-page/error-page.component';
+import { ProjectsService } from '../../../../../core/services/projects.service';
+import { EmptyProjectsComponent } from '../../../components/empty-projects/empty-projects.component';import { ProjectsSkeletonComponent } from '../../../components/projects-skeleton/projects-skeleton.component';
+import { ErrorPageComponent } from '../../../shared/error-page/error-page.component';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { EmptyProjectsComponent } from '../../components/empty-projects/empty-projects.component';
+import { IProjectsState } from '../../../../../core/interfaces/Projects/types';
+
 
 @Component({
   selector: 'app-projects-list',
   standalone: true,
   imports: [
-    AsyncPipe,
+  AsyncPipe,
     DatePipe,
     RouterLink,
     EmptyProjectsComponent,
@@ -37,6 +37,7 @@ import { EmptyProjectsComponent } from '../../components/empty-projects/empty-pr
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.css',
 })
+
 export class ProjectsListComponent implements OnInit {
   currentPage: WritableSignal<number> = signal(1);
   isMobile: WritableSignal<boolean> = signal(false);
@@ -120,3 +121,5 @@ export class ProjectsListComponent implements OnInit {
     }
   }
 }
+
+

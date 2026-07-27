@@ -8,11 +8,11 @@ import { AuthGuard } from './core/guards/auth-guard.guard';
 import { loggedGuard } from './core/guards/logged.guard';
 import { ProjectsListComponent } from './features/projects/pages/projects-list/projects-list.component';
 import { ProjectLayoutComponent } from './features/projects/layouts/project-layout/project-layout.component';
-import { ProjectEpicsComponent } from './features/projects/pages/project-epics/project-epics.component';
-import { ProjectTasksComponent } from './features/projects/pages/project-tasks/project-tasks.component';
+import { ProjectEpicsComponent } from './features/projects/pages/epics/project-epics/project-epics.component';
+import { ProjectTasksComponent } from './features/projects/pages/tasks/project-tasks/project-tasks.component';
 import { ProjectMembersComponent } from './features/projects/pages/project-members/project-members.component';
 import { EditProjectComponent } from './features/projects/pages/edit-project/edit-project.component';
-import { AddProjectComponent } from './features/projects/pages/add-project/add-project.component';
+import { AddProjectComponent } from './features/projects/pages/Project/add-project/add-project.component';
 import { ForgotPasswordComponent } from './features/Auth/pages/forgot-password/forgot-password.component';
 
 export const routes: Routes = [

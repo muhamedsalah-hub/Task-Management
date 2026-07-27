@@ -4,13 +4,14 @@ import {
   OnInit,
 } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
-import { NgClass } from '../../../../../../node_modules/@angular/common';
+
 import { finalize } from 'rxjs';
-import { projectFormBase } from '../../../../core/utils/classes';
-import { ProjectContextService } from '../../../../core/services/project-context.service';
-import { IProjects } from '../../../../core/interfaces/Projects/types';
+
 import { RouterLink } from "@angular/router";
+import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
+import { NgClass } from '@angular/common';
+import { projectFormBase } from '../../../../../core/utils/classes';
+import { ProjectContextService } from '../../../../../core/services/project-context.service';
 
 @Component({
   selector: 'app-edit-project',

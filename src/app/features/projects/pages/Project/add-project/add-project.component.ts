@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
+import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { finalize } from 'rxjs';
-import { projectFormBase } from '../../../../core/utils/classes';
+import { projectFormBase } from '../../../../../core/utils/classes';
 
 @Component({
   selector: 'app-add-project',

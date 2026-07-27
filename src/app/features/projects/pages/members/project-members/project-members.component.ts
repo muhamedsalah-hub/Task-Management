@@ -5,14 +5,16 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { ProjectContextService } from '../../../../core/services/project-context.service';
-import { MembersService } from '../../../../core/services/members.service';
+
 import { catchError, map, of, startWith, tap } from 'rxjs';
 import { AsyncPipe, isPlatformBrowser } from '@angular/common';
-import { TrimTextPipe } from '../../../../core/pipes/trim-text.pipe';
-import { IMembersState } from '../../../../core/interfaces/Projects/types';
-import { MembersSkeletonComponent } from '../../components/members-skeleton/members-skeleton.component';
-import { ErrorPageComponent } from '../../shared/error-page/error-page.component';
+import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
+import { MembersSkeletonComponent } from '../../../components/members-skeleton/members-skeleton.component';
+import { ErrorPageComponent } from '../../../shared/error-page/error-page.component';
+import { ProjectContextService } from '../../../../../core/services/project-context.service';
+import { MembersService } from '../../../../../core/services/members.service';
+import { IMembersState } from '../../../../../core/interfaces/Projects/types';
+
 
 @Component({
   selector: 'app-project-members',
