@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   inject,
+  OnInit,
   PLATFORM_ID,
   signal,
   WritableSignal,
@@ -36,7 +37,7 @@ import { EmptyProjectsComponent } from '../../components/empty-projects/empty-pr
   templateUrl: './projects-list.component.html',
   styleUrl: './projects-list.component.css',
 })
-export class ProjectsListComponent {
+export class ProjectsListComponent implements OnInit {
   currentPage: WritableSignal<number> = signal(1);
   isMobile: WritableSignal<boolean> = signal(false);
   readonly _ProjectsService = inject(ProjectsService);
@@ -50,9 +51,13 @@ export class ProjectsListComponent {
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   });
 
-  constructor() {
+  ngOnInit() {
     if (isPlatformBrowser(this._PLATFORM_ID)) {
-      this.isMobile.set(window.matchMedia('(max-width: 767px)').matches);
+      const mediaQuery = window.matchMedia('(max-width: 767px)');
+      this.isMobile.set(mediaQuery.matches);
+      mediaQuery.addEventListener('change', (event) => {
+        this.isMobile.set(event.matches);
+      });
     }
   }
 
@@ -63,7 +68,7 @@ export class ProjectsListComponent {
           this._ProjectsService.totalProjects.set(
             Number(res.headers.get('content-range')?.split('/')[1] as string),
           );
-          
+
           if (!this._ProjectsService.cache().has(page)) {
             this._ProjectsService.cache.update((cache) => {
               const newCache = new Map(cache);

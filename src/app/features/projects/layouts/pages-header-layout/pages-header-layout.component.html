@@ -1,0 +1,24 @@
+<section class="bg-bgBackground min-h-screen flex flex-col space-y-8 p-6">
+  <!--      Project header           -->
+  <div>
+    <div class="hidden lg:block">
+      <span class="text-xs uppercase font-semibold tracking-wider text-gray-500"
+        >{{ fTitle }}<span class="text-bgPrimary">{{ sTitle }}</span></span
+      >
+    </div>
+    <div class="md:flex md:justify-between md:items-center">
+      <h1 class="headline-lg text-center text-textPrimary">{{ header }}</h1>
+      <button
+        class="hidden md:flex justify-center items-center space-x-2 rounded-xs btn-primary"
+      >
+        <svg width="19" height="14" viewBox="0 0 19 14">
+          <use [attr.href]="button.includes('Invite') ? '#invite' : ''"></use>
+        </svg>
+        <span>{{ button }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!--              Form Content                -->
+  <ng-content />
+</section>
