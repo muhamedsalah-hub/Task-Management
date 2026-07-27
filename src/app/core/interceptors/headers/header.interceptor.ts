@@ -32,5 +32,18 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
       setHeaders: { Authorization: `Bearer ${token}`, Prefer: `count=exact` },
     });
   }
+
+ //Get Project Members
+  if (
+    req.url.includes('/rest/v1/get_project_members') &&
+    isPlatformBrowser(_PLATFORM_ID)
+  ) {
+    const token = localStorage.getItem('token') || '';
+    req = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}`, Prefer: `count=exact` },
+    });
+  }
+
+
   return next(req);
 };

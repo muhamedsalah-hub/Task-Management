@@ -11,3 +11,22 @@ export interface IProjectsState {
   error: boolean;
   projects: IProjects[] | null;
 }
+
+export interface IProjectMembers {
+  member_id: string;
+  project_id: string;
+  user_id: string;
+  role: string;
+  email: string;
+  metadata: {
+    name: string;
+    email: string;
+    department: string;
+  };
+}
+
+export interface IMembersState {
+  loading: boolean;
+  error: boolean;
+  members: IProjectMembers[] | null;
+}

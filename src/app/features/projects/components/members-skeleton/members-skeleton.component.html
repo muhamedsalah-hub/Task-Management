@@ -1,0 +1,14 @@
+<div class="flex flex-col space-y-4">
+  @for (item of [1, 2, 3, 4]; track $index) {
+    <div class="bg-white animate-pulse rounded-lg p-4 flex justify-between">
+      <div class="flex space-x-1 items-center">
+        <div class="bg-skeleton animate-pulse w-12 h-12 rounded-xl"></div>
+        <div class="flex flex-col space-y-1 justify-center">
+          <span class="bg-skeleton animate-pulse w-28 h-3"></span>
+          <span class="bg-skeleton animate-pulse w-40 h-3"></span>
+        </div>
+      </div>
+      <div class="bg-skeleton animate-pulse w-8 h-3"></div>
+    </div>
+  }
+</div>
