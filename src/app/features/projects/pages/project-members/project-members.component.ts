@@ -5,7 +5,6 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { PagesHeaderLayoutComponent } from '../../layouts/pages-header-layout/pages-header-layout.component';
 import { ProjectContextService } from '../../../../core/services/project-context.service';
 import { MembersService } from '../../../../core/services/members.service';
 import { catchError, map, of, startWith, tap } from 'rxjs';
@@ -13,14 +12,12 @@ import { AsyncPipe, isPlatformBrowser } from '@angular/common';
 import { TrimTextPipe } from '../../../../core/pipes/trim-text.pipe';
 import { IMembersState } from '../../../../core/interfaces/Projects/types';
 import { MembersSkeletonComponent } from '../../components/members-skeleton/members-skeleton.component';
-import { EmptyMembersComponent } from '../../components/empty-members/empty-members.component';
 import { ErrorPageComponent } from '../../shared/error-page/error-page.component';
 
 @Component({
   selector: 'app-project-members',
   standalone: true,
   imports: [
-    PagesHeaderLayoutComponent,
     AsyncPipe,
     TrimTextPipe,
     MembersSkeletonComponent,
@@ -51,7 +48,7 @@ export class ProjectMembersComponent {
       startWith({ loading: true, error: false, members: null }),
       catchError(() => of({ loading: false, error: true, members: null })),
     );
-    
+
   ngOnInit() {
     if (isPlatformBrowser(this._PLATFORM_ID)) {
       const mediaQuery = window.matchMedia('(max-width:767px');

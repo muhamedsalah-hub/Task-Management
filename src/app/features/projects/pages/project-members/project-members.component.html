@@ -1,9 +1,26 @@
-<app-pages-header-layout
-  fTitle="Projects > Project Name >"
-  sTitle=" Members"
-  header="Project Members"
-  button="Invite Memmber"
->
+<section class="bg-bgBackground min-h-screen flex flex-col space-y-8 p-6">
+  <!--      Members header           -->
+  <div>
+    <div class="hidden lg:block">
+      <span class="text-xs uppercase font-semibold tracking-wider text-gray-500"
+        >Projects > Project Name ><span class="text-bgPrimary"
+          >Members</span
+        ></span
+      >
+    </div>
+    <div class="md:flex md:justify-between md:items-center">
+      <h1 class="headline-lg text-center text-textPrimary">Project Members</h1>
+      <button
+        class="hidden md:flex justify-center items-center space-x-2 rounded-xs btn-primary"
+      >
+        <svg width="19" height="14" viewBox="0 0 19 14">
+          <use attr="#invite"></use>
+        </svg>
+        <span>Invite Members</span>
+      </button>
+    </div>
+  </div>
+
   <!--              Members Content                       -->
   @if (members$ | async; as state) {
     @if (state.loading) {
@@ -13,8 +30,7 @@
         <app-error-page />
       </div>
     } @else if (state.members?.length) {
-
-       <!--          Members Mobile view             -->
+      <!--          Members Mobile view             -->
 
       <div class="flex md:hidden flex-col space-y-4">
         @for (member of state.members; track member.member_id) {
@@ -89,21 +105,27 @@
                     <div
                       class="bg-bgInput h-12 rounded-xl w-12 flex items-center justify-center"
                     >
-                      <span class="text-bgPrimary font-bold">{{ member.metadata.name |trimText}}</span>
+                      <span class="text-bgPrimary font-bold">{{
+                        member.metadata.name | trimText
+                      }}</span>
                     </div>
                     <div class="flex flex-col space-y-1 justify-center">
                       <span class="text-textPrimary text-sm font-bold">{{
                         member.metadata.name
                       }}</span>
                       <span class="text-textSecondary font-medium text-xs">{{
-                       member.metadata.email
+                        member.metadata.email
                       }}</span>
                     </div>
                   </div>
                 </td>
                 <td class="py-9">
-                  <div class="w-fit rounded-xl label-sm bg-bgPrimary text-white py-1 px-3">
-                    <span class="title-sm">{{ member.metadata.department }}</span>
+                  <div
+                    class="w-fit rounded-xl label-sm bg-bgPrimary text-white py-1 px-3"
+                  >
+                    <span class="title-sm">{{
+                      member.metadata.department
+                    }}</span>
                   </div>
                 </td>
                 <td class="p-8">
@@ -127,4 +149,4 @@
       </div>
     }
   }
-</app-pages-header-layout>
+</section>

@@ -2,10 +2,7 @@ import {
   Component,
   inject,
   OnInit,
-  signal,
-  WritableSignal,
 } from '@angular/core';
-import { ProjectFormLayoutComponent } from '../../layouts/project-form-layout/project-form-layout.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
 import { NgClass } from '../../../../../../node_modules/@angular/common';
@@ -19,7 +16,6 @@ import { RouterLink } from "@angular/router";
   selector: 'app-edit-project',
   standalone: true,
   imports: [
-    ProjectFormLayoutComponent,
     ReactiveFormsModule,
     FieldErrorComponent,
     NgClass,

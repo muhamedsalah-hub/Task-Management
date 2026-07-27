@@ -1,29 +1,19 @@
 import { Component } from '@angular/core';
-import {  ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
 import { RouterLink } from '@angular/router';
 import { NgClass } from '@angular/common';
 import { finalize } from 'rxjs';
-import { ProjectFormLayoutComponent } from '../../layouts/project-form-layout/project-form-layout.component';
 import { projectFormBase } from '../../../../core/utils/classes';
 
 @Component({
   selector: 'app-add-project',
   standalone: true,
-  imports: [
-    ReactiveFormsModule,
-    FieldErrorComponent,
-    RouterLink,
-    NgClass,
-    ProjectFormLayoutComponent,
-  ],
+  imports: [ReactiveFormsModule, FieldErrorComponent, RouterLink, NgClass],
   templateUrl: './add-project.component.html',
   styleUrl: './add-project.component.css',
 })
 export class AddProjectComponent extends projectFormBase {
-
-
-  
   override projectFormSubmission() {
     this.isLoading = true;
     if (this.projectForm.valid) {
