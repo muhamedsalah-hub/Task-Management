@@ -1,6 +1,6 @@
 <app-pages-header-layout
-  fTitle="Projects > Project Name "
-  sTitle="Members"
+  fTitle="Projects > Project Name >"
+  sTitle=" Members"
   header="Project Members"
   button="Invite Memmber"
 >
@@ -9,67 +9,122 @@
     @if (state.loading) {
       <app-members-skeleton />
     } @else if (state.error) {
-     <div class="flex items-center justify-center flex-1">
+      <div class="flex items-center justify-center flex-1">
         <app-error-page />
       </div>
     } @else if (state.members?.length) {
-      @if (isMobile()) {
-        <div class="flex flex-col space-y-4">
-          @for (member of state.members; track member.member_id) {
-            <div
-              class="bg-white rounded-lg p-4 flex justify-between items-center"
-            >
-              <div class="flex space-x-1 items-center">
-                <div
-                  class="bg-bgInput h-12 rounded-xl w-12 flex items-center justify-center"
-                >
-                  <span class="text-bgPrimary font-bold">{{
-                    member.metadata.name | trimText
-                  }}</span>
-                </div>
-                <div class="flex flex-col space-y-1 justify-center">
-                  <span class="text-textPrimary text-sm font-bold">{{
-                    member.metadata.name
-                  }}</span>
-                  <span class="text-textSecondary font-medium text-xs">{{
-                    member.metadata.email
-                  }}</span>
-                </div>
+
+       <!--          Members Mobile view             -->
+
+      <div class="flex md:hidden flex-col space-y-4">
+        @for (member of state.members; track member.member_id) {
+          <div
+            class="bg-white rounded-lg p-4 flex justify-between items-center"
+          >
+            <div class="flex space-x-1 items-center">
+              <div
+                class="bg-bgInput h-12 rounded-xl w-12 flex items-center justify-center"
+              >
+                <span class="text-bgPrimary font-bold">{{
+                  member.metadata.name | trimText
+                }}</span>
               </div>
-              <div class="flex flex-col space-y-2 items-center">
-                <div
-                  class="flex items-center justify-center label-sm bg-bgInput py-0.5 px-2"
-                >
-                  <span class="title-sm">{{ member.metadata.department }}</span>
-                </div>
-                <div class="self-end hover:bg-bgSurface-low cursor-pointer">
-                  <svg
-                    width="3"
-                    height="12"
-                    viewBox="0 0 3 12"
-                    aria-hidden="true"
-                  >
-                    <use href="#action"></use>
-                  </svg>
-                </div>
+              <div class="flex flex-col space-y-1 justify-center">
+                <span class="text-textPrimary text-sm font-bold">{{
+                  member.metadata.name
+                }}</span>
+                <span class="text-textSecondary font-medium text-xs">{{
+                  member.metadata.email
+                }}</span>
               </div>
             </div>
-          }
-
-          <!--           Fixed button to invite in mobile view                    -->
-          <div
-            class="md:hidden cursor-pointer fixed rounded-xl bottom-35 right-6 flex justify-center items-center w-10 h-10 btn-primary"
-          >
-            <span class="text-xl text-white">
-              <svg width="19" height="14" viewBox="0 0 19 14">
-                <use href="#invite"></use>
-              </svg>
-            </span>
+            <div class="flex flex-col space-y-2 items-center">
+              <div
+                class="flex items-center justify-center label-sm bg-bgInput py-0.5 px-2"
+              >
+                <span class="title-sm">{{ member.metadata.department }}</span>
+              </div>
+              <div class="self-end hover:bg-bgSurface-low cursor-pointer">
+                <svg
+                  width="3"
+                  height="12"
+                  viewBox="0 0 3 12"
+                  aria-hidden="true"
+                >
+                  <use href="#action"></use>
+                </svg>
+              </div>
+            </div>
           </div>
-        </div>
-      }
-    }
+        }
 
-    <!--          Members Desktop view ( Table )               -->
+        <!--           Fixed button to invite in mobile view                    -->
+        <div
+          class="md:hidden cursor-pointer fixed rounded-xl bottom-35 right-6 flex justify-center items-center w-10 h-10 btn-primary"
+        >
+          <span class="text-xl text-white">
+            <svg width="19" height="14" viewBox="0 0 19 14">
+              <use href="#invite"></use>
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      <!--          Members Desktop view ( Table )               -->
+
+      <div class="hidden md:flex justify-center my-5">
+        <table class="w-196 border-4 border-gray-100">
+          <thead class="bg-[#E0E8FF4D]">
+            <tr class="title-sm text-textSecondary font-bold">
+              <td class="w-96 py-5 px-8">Member</td>
+              <td class="w-46 py-5 px-8">Role</td>
+              <td class="w-42 text-end py-5 px-8">Actions</td>
+            </tr>
+          </thead>
+          @for (member of state.members; track member.member_id) {
+            <tbody class="border-b border-b-gray-200">
+              <tr class="bg-white">
+                <td class="p-8">
+                  <div class="flex space-x-2 items-center">
+                    <div
+                      class="bg-bgInput h-12 rounded-xl w-12 flex items-center justify-center"
+                    >
+                      <span class="text-bgPrimary font-bold">{{ member.metadata.name |trimText}}</span>
+                    </div>
+                    <div class="flex flex-col space-y-1 justify-center">
+                      <span class="text-textPrimary text-sm font-bold">{{
+                        member.metadata.name
+                      }}</span>
+                      <span class="text-textSecondary font-medium text-xs">{{
+                       member.metadata.email
+                      }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-9">
+                  <div class="w-fit rounded-xl label-sm bg-bgPrimary text-white py-1 px-3">
+                    <span class="title-sm">{{ member.metadata.department }}</span>
+                  </div>
+                </td>
+                <td class="p-8">
+                  <div
+                    class="w-full flex justify-end hover:bg-bgSurface-low cursor-pointer"
+                  >
+                    <svg
+                      width="4"
+                      height="16"
+                      viewBox="0 0 3 12"
+                      aria-hidden="true"
+                    >
+                      <use href="#action"></use>
+                    </svg>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          }
+        </table>
+      </div>
+    }
   }
 </app-pages-header-layout>
