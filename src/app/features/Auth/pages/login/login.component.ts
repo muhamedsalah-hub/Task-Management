@@ -53,7 +53,7 @@ export class LoginComponent {
       this._AuthService
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
-        .subscribe((res) => {
+        .subscribe(() => {
           this._Toastr.success("User logged in successfully")
           this._Router.navigate(['/Projects']);
         });

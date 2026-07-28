@@ -29,17 +29,13 @@ import { IMembersState } from '../../../../../core/interfaces/Projects/types';
   styleUrl: './project-members.component.css',
 })
 export class ProjectMembersComponent {
-  private readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _MembersService = inject(MembersService);
   private readonly _PLATFORM_ID = inject(PLATFORM_ID);
   isMobile: WritableSignal<boolean> = signal(false);
 
   members$ = this._MembersService
-    .getProjectMembers(this._ProjectContextService.projectId() as string)
+    .getProjectMembers()
     .pipe(
-      tap((res) => {
-        console.log(res);
-      }),
       map(
         (res): IMembersState => ({
           error: false,
