@@ -13,10 +13,7 @@ import {
 import { AuthValidationRules } from '../../../../core/utils/validations';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {
-  isPlatformBrowser,
-  NgClass,
-} from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
@@ -31,8 +28,8 @@ import { finalize } from 'rxjs';
     ReactiveFormsModule,
     NgClass,
     RouterLink,
-    FieldErrorComponent
-],
+    FieldErrorComponent,
+  ],
   templateUrl: './reset-password.component.html',
   styleUrl: './reset-password.component.css',
 })
@@ -42,7 +39,6 @@ export class ResetPasswordComponent {
   readonly faEye = faEye;
 
   token: null | string = null;
-  isReady: boolean = false;
   isLoading: boolean = false;
 
   private readonly _Router = inject(Router);
@@ -56,7 +52,6 @@ export class ResetPasswordComponent {
     this.token =
       this._ActivatedRoute.snapshot.queryParamMap.get('access_token');
     if (isPlatformBrowser(this._PlatformId)) {
-      this.isReady = true;
       if (this.token) {
         localStorage.setItem('token', this.token);
       }
@@ -86,4 +81,5 @@ export class ResetPasswordComponent {
         });
     }
   }
+  
 }

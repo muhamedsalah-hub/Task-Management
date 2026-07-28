@@ -10,7 +10,6 @@ import { ProjectContextService } from '../../../../core/services/project-context
   styleUrl: './project-layout.component.css'
 })
 export class ProjectLayoutComponent {
-
   private readonly _ActivatedRoute=inject(ActivatedRoute);
   private readonly _ProjectContextService=inject(ProjectContextService);
 

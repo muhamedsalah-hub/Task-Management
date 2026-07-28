@@ -6,14 +6,15 @@ import { ResetPasswordComponent } from './features/Auth/pages/reset-password/res
 import { BlankLayoutComponent } from './layouts/blank-layout/blank-layout.component';
 import { AuthGuard } from './core/guards/auth-guard.guard';
 import { loggedGuard } from './core/guards/logged.guard';
-import { ProjectsListComponent } from './features/projects/pages/projects-list/projects-list.component';
 import { ProjectLayoutComponent } from './features/projects/layouts/project-layout/project-layout.component';
 import { ProjectEpicsComponent } from './features/projects/pages/epics/project-epics/project-epics.component';
 import { ProjectTasksComponent } from './features/projects/pages/tasks/project-tasks/project-tasks.component';
-import { ProjectMembersComponent } from './features/projects/pages/project-members/project-members.component';
-import { EditProjectComponent } from './features/projects/pages/edit-project/edit-project.component';
 import { AddProjectComponent } from './features/projects/pages/Project/add-project/add-project.component';
 import { ForgotPasswordComponent } from './features/Auth/pages/forgot-password/forgot-password.component';
+import { ProjectsListComponent } from './features/projects/pages/Project/projects-list/projects-list.component';
+import { ProjectMembersComponent } from './features/projects/pages/members/project-members/project-members.component';
+import { EditProjectComponent } from './features/projects/pages/Project/edit-project/edit-project.component';
+import { AddEpicComponent } from './features/projects/pages/epics/add-epic/add-epic.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,7 @@ export const routes: Routes = [
         children: [
           { path: '', redirectTo: 'epics', pathMatch: 'full' },
           { path: 'epics', component: ProjectEpicsComponent },
+          { path: 'epics/new', component: AddEpicComponent },
           { path: 'tasks', component: ProjectTasksComponent },
           { path: 'members', component: ProjectMembersComponent },
           { path: 'edit', component: EditProjectComponent },
