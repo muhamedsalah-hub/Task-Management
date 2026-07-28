@@ -33,9 +33,9 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
- //Get Project Members
+  //Get Project Members
   if (
-    req.url.includes('/rest/v1/get_project_members') &&
+    req.url.includes('rest/v1/get_project_members') &&
     isPlatformBrowser(_PLATFORM_ID)
   ) {
     const token = localStorage.getItem('token') || '';
@@ -44,6 +44,13 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
     });
   }
 
+  //Add project Epic
+  if (req.url.includes('rest/v1/epics') && isPlatformBrowser(_PLATFORM_ID)) {
+    const token = localStorage.getItem('token') || '';
+    req = req.clone({
+      setHeaders: { Authorization: `Bearer ${token}` },
+    });
+  }
 
   return next(req);
 };

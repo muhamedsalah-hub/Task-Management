@@ -50,3 +50,14 @@ export const ProjectValidationRules = {
     );
   },
 };
+
+export const EpicValidationRules = {
+  title: [
+    Validators.required,
+    Validators.minLength(3),
+  ],
+  titleValidations(form:FormGroup){
+    return !!form.get('title')?.errors && !!form.get('title')?.touched
+  }
+};
+

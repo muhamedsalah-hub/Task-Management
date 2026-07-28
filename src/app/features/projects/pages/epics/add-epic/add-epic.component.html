@@ -1,0 +1,161 @@
+<section class="bg-bgBackground min-h-screen flex flex-col space-y-8 p-6">
+  <!--      Project header           -->
+
+  <div>
+    <span
+      class="hidden md:block text-xs uppercase font-semibold tracking-wider text-gray-500"
+      >Projects > project name >epics ><span class="text-bgPrimary">Add New Project</span></span
+    >
+    <div class="flex flex-col space-y-2">
+      <h1 class="headline-lg text-textPrimary">Create New Epic</h1>
+      <p class="text-textSecondary text-sm">
+        Define a high-level goal and organizational structure for your
+        architectural phase.
+      </p>
+    </div>
+  </div>
+
+  <div class="md:self-center md:rounded-lg md:bg-white md:p-8 lg:w-4xl">
+    <!--              Form Content                -->
+
+    <form
+      [formGroup]="epicForm"
+      (ngSubmit)="epicSubmission()"
+      class="flex flex-col space-y-5"
+    >
+      <div
+        class="flex flex-col space-y-1 lg:flex-row lg:justify-between lg:items-start"
+      >
+        <div class="flex items-center space-x-1">
+          <label for="name" class="label-sm text-inputLabel">Title</label
+          ><span class="text-error">*</span>
+        </div>
+        <div>
+          <div
+            [ngClass]="{
+              'input-error': validations.titleValidations(epicForm),
+              input: !validations.titleValidations(epicForm),
+            }"
+            class="lg:w-145"
+          >
+            <input
+              class="title-md outline-0"
+              id="name"
+              formControlName="title"
+              type="text"
+              placeholder="e.g. Structural Schematic Phase"
+            />
+          </div>
+          <div class="mt-2">
+            @if (
+              epicForm.get("title")?.errors && epicForm.get("title")?.touched
+            ) {
+              @if (epicForm.get("title")?.getError("required")) {
+                <app-field-error message="Epic title is required" />
+              } @else if (epicForm.get("title")?.getError("minlength")) {
+                <app-field-error
+                  message="Epic title must be at least 3 characters."
+                />
+              }
+            }
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col space-y-1 lg:flex-row lg:justify-between lg:items-start"
+      >
+        <div
+          class="flex justify-between items-center lg:flex-col lg:justify-center lg:items-start"
+        >
+          <label for="description" class="label-sm text-inputLabel"
+            >Description</label
+          >
+          <span
+            class="text-sm font-light text-textSecondary tracking-normal lowercase"
+            >( optional )</span
+          >
+        </div>
+
+        <div class="input lg:w-145">
+          <textarea
+            class="title-md md:w-64 outline-0"
+            id="description"
+            formControlName="description"
+            type="text"
+            placeholder="Describe the scope and objectives of this epic..."
+            rows="5"
+          ></textarea>
+        </div>
+      </div>
+      <div
+        class="flex flex-col space-y-5 space-x-4 lg:flex-row lg:justify-between lg:items-baseline"
+      >
+        <div class="lg:w-full">
+          <label for="assignee" class="label-sm text-inputLabel"
+            >Assignee</label
+          >
+          <div class="input py-4">
+            <select
+              id="assignee"
+              formControlName="assignee_id"
+              class="w-full cursor-pointer outline-0"
+            >
+              <option selected disabled [ngValue]="null">
+                Select a member
+              </option>
+              @for (member of members$ | async; track member.member_id) {
+                <option [value]="member.user_id">
+                  {{ member.metadata.name }}
+                </option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="flex flex-col lg:w-full">
+          <div class="flex flex-col">
+            <label for="deadline" class="label-sm text-inputLabel">
+              deadline
+            </label>
+            <mat-form-field appearance="outline" class="custom-date-input">
+              <input
+                id="deadline"
+                class="outline-0 w-300"
+                matInput
+                [matDatepicker]="picker"
+                [min]="today()"
+                placeholder="MM/DD/YYYY"
+                formControlName="deadline"
+              />
+
+              <mat-datepicker-toggle matIconSuffix [for]="picker">
+              </mat-datepicker-toggle>
+
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="flex flex-col space-y-5 lg:flex-row lg:justify-between lg:items-center"
+      >
+        <button
+          [ngClass]="{
+            'bg-gray-400': epicForm.invalid || isLoading(),
+            'bg-bgPrimary cursor-pointer': epicForm.valid,
+          }"
+          class="text-lg btn-primary rounded-md w-full lg:w-fit lg:order-2"
+        >
+          Create Epic
+        </button>
+        <button
+          type="button"
+          class="cursor-pointer text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

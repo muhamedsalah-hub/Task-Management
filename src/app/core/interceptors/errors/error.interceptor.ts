@@ -23,6 +23,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         _Toastr.error(err.error.msg ?? 'Something went wrong');
       } else if (req.url.includes('/rest/v1/projects')) {
         _Toastr.error(`Failed to create project : ${err.error.msg}`);
+      } else if (req.url.includes('/rest/v1/epics')) {
+        _Toastr.error(`Failed to create epic : ${err.error.msg}`);
       }
       return throwError(() => err);
     }),
