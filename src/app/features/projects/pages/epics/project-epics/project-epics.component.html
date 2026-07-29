@@ -1,1 +1,185 @@
-<p>project-epics works!</p>
+<section class="bg-bgBackground min-h-screen flex flex-col space-y-8 p-6">
+  <!--        Epic header               -->
+  <div>
+    <span
+      class="hidden md:block text-xs uppercase font-semibold tracking-wider text-gray-500"
+      >Projects > project name ><span class="text-bgPrimary">epics</span></span
+    >
+    <div class="md:flex justify-between items-center">
+      <h1 class="hidden md:block headline-lg text-textPrimary">
+        Project Epics
+      </h1>
+
+      <!--         Epic Creation button & Search in desktop                -->
+      <div class="md:flex md:items-center md:space-x-8">
+        <div class="input flex items-center md:w-80 space-x-2">
+          <svg width="14" height="14" viewBox="0 0 11 11">
+            <use href="#search"></use>
+          </svg>
+          <input
+            placeholder="Search Epics..."
+            type="search"
+            class="h-full w-full outline-0"
+          />
+        </div>
+        <button
+          [routerLink]="['new']"
+          class="hidden md:block btn-primary cursor-pointer text-xl rounded-sm"
+        >
+          + New Epic
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!--           Main Content             -->
+  @if (Epics$ | async; as state) {
+    @if (state.loading) {
+      <app-epics-skeleton />
+    } @else if (state.error) {
+      <div class="flex-1 flex justify-center items-center">
+        <app-error-page />
+      </div>
+    } @else if (!state.epics?.length) {
+      <div class="flex-1 flex justify-center items-center">
+        <app-empty-epics />
+      </div>
+    } @else {
+      <!--            Project Epics List               -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        @for (epic of state?.epics; track epic.id) {
+          <div
+            class="cursor-pointer md:border-l-6 md:border-green-950 bg-white rounded-md p-5 justify-between flex flex-col space-y-5"
+          >
+            <div class="flex justify-between">
+              <h2
+                class="label-sm bg-[#DAE2FF] md:bg-success rounded-xs py-1 px-2 text-bgPrimary md:text-black"
+              >
+                {{ epic.epic_id }}
+              </h2>
+
+              <div>
+                <svg width="16" height="4" viewBox="0 0 16 4">
+                  <use href="#horizontalAction"></use>
+                </svg>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="headline-lg text-textPrimary">{{ epic.title }}</h4>
+            </div>
+
+            <div class="flex justify-between items-center">
+              <div class="flex space-x-3 items-center">
+                <div
+                  class="bg-bgPrimary md:bg-[#65DCA4] p-2 h-7 rounded-xl w-7 flex items-center justify-center"
+                >
+                  <span class="text-white md:text-black text-xs font-bold">{{
+                    epic.assignee.name | trimText
+                  }}</span>
+                </div>
+                <div class="flex flex-col space-y-1 justify-center">
+                  <span class="text-textSecondary text-xs font-medium"
+                    >Assignee</span
+                  >
+                  <span class="text-textPrimary font-bold text-sm">{{
+                    epic.assignee.name
+                  }}</span>
+                </div>
+              </div>
+              <div class="flex flex-col md:hidden space-x-1">
+                <span class="label-sm text-textSecondary self-end"
+                  >deadline</span
+                >
+                <span
+                  class="text-sm text-textPrimary font-medium tracking-wide"
+                  >{{ epic.deadline | date: "MMM dd,YYYY" }}</span
+                >
+              </div>
+            </div>
+
+            <hr class="w-full hidden md:block border border-gray-100" />
+
+            <div class="hidden md:flex justify-between items-center">
+              <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-1">
+                    <svg width="12" height="10" viewBox="0 0 12 10">
+                        <use href="#createdBy"></use>
+                    </svg>
+                    <span class="text-sm text-textSecondary">Created by:</span>
+                </div>
+                <span class="text-md font-semibold text-textPrimary">{{epic.created_by.name}}</span>
+              </div>
+              <div class="flex items-center justify-center space-x-1">
+                <svg width="11" height="12" viewBox="0 0 11 12">
+                  <use href="#calendar"></use>
+                </svg>
+                <span class="text-sm text-textSecondary">{{
+                  epic.created_at | date: "dd MMM YYYY"
+                }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  }
+
+  <!--          Projects Pagination               -->
+  <!-- <div
+          class="flex p-12 flex-col md:flex-row space-y-4 justify-between items-center"
+        >
+          <div>
+            <span class="text-textSecondary text-md"
+              >Showing {{ _ProjectsService.limit() }} of
+              {{ _ProjectsService.totalProjects() }} active projects</span
+            >
+          </div>
+          <div class="flex items-center space-x-1 justify-center">
+            <button
+              (click)="prevButtonPage()"
+              [class.cursor-pointer]="currentPage() !== 1"
+              [class.cursor-no-drop]="currentPage() === 1"
+              class="paginated-btn"
+            >
+              <svg width="5" height="7" viewBox="0 0 5 7">
+                <use href="#paginationArrowLeft"></use>
+              </svg>
+            </button>
+            <div class="flex justify-center space-x-1">
+              @for (page of visiblePages(); track page) {
+                <button
+                  [ngClass]="{
+                    'bg-bgPrimary text-white': page === currentPage(),
+                  }"
+                  class="paginated-btn"
+                >
+                  {{ page }}
+                </button>
+              }
+            </div>
+            <button
+              (click)="nextButtonPage()"
+              [class.cursor-pointer]="
+                currentPage() !== _ProjectsService.lastPage()
+              "
+              [class.cursor-no-drop]="
+                currentPage() === _ProjectsService.lastPage()
+              "
+              class="paginated-btn"
+            >
+              <svg fill="#434654" width="5" height="7" viewBox="0 0 5 7">
+                <use href="#paginationArrowRight"></use>
+              </svg>
+            </button>
+          </div>
+        </div> -->
+
+  <!--        Fixed button in mobile for epic creation                      -->
+  <div
+    [routerLink]="['new']"
+    class="md:hidden cursor-pointer fixed rounded-xl bottom-35 right-6 flex justify-center items-center w-14 h-14 btn-primary"
+  >
+    <span class="text-xl text-white">+</span>
+  </div>
+</section>

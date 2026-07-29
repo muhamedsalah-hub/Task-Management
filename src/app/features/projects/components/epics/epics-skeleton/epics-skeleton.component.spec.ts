@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmptyMembersComponent } from './empty-members.component';
+import { EpicsSkeletonComponent } from './epics-skeleton.component';
 
-describe('EmptyMembersComponent', () => {
-  let component: EmptyMembersComponent;
-  let fixture: ComponentFixture<EmptyMembersComponent>;
+describe('EpicsSkeletonComponent', () => {
+  let component: EpicsSkeletonComponent;
+  let fixture: ComponentFixture<EpicsSkeletonComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmptyMembersComponent]
+      imports: [EpicsSkeletonComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EmptyMembersComponent);
+    fixture = TestBed.createComponent(EpicsSkeletonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

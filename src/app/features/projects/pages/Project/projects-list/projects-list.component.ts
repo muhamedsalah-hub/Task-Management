@@ -16,7 +16,7 @@ import {
 import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
 import { Router, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../../../../core/services/projects.service';
-import { EmptyProjectsComponent } from '../../../components/empty-projects/empty-projects.component';import { ProjectsSkeletonComponent } from '../../../components/projects-skeleton/projects-skeleton.component';
+import { EmptyProjectsComponent } from '../../../components/projects/empty-projects/empty-projects.component';import { ProjectsSkeletonComponent } from '../../../components/projects/projects-skeleton/projects-skeleton.component';
 import { ErrorPageComponent } from '../../../shared/error-page/error-page.component';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { IProjectsState } from '../../../../../core/interfaces/Projects/types';

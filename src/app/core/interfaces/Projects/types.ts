@@ -1,3 +1,8 @@
+interface IState {
+  loading: boolean;
+  error: boolean;
+}
+
 export interface IProjects {
   id: string;
   name: string;
@@ -6,9 +11,7 @@ export interface IProjects {
   created_at: string;
 }
 
-export interface IProjectsState {
-  loading: boolean;
-  error: boolean;
+export interface IProjectsState extends IState {
   projects: IProjects[] | null;
 }
 
@@ -25,8 +28,22 @@ export interface IProjectMembers {
   };
 }
 
-export interface IMembersState {
-  loading: boolean;
-  error: boolean;
+export interface IMembersState extends IState {
   members: IProjectMembers[] | null;
+}
+
+export interface IProjectEpics {
+  id: string;
+  project_id: string;
+  title: string;
+  description: string;
+  created_at: string;
+  deadline: string;
+  epic_id: string;
+  created_by: { sub: string; name: string; email: string; department: string };
+  assignee: { sub: string; name: string; email: string; department: string };
+}
+
+export interface IEpicsState extends IState {
+  epics: IProjectEpics[] | null;
 }

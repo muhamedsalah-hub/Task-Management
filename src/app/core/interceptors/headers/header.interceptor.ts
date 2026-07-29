@@ -7,49 +7,44 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
   const _PLATFORM_ID = inject(PLATFORM_ID);
   req = req.clone({ setHeaders: { apikey: environmet.apiKey } });
 
-  //Reset password
-  if (req.url.includes('auth/v1/user') && isPlatformBrowser(_PLATFORM_ID)) {
+  if (isPlatformBrowser(_PLATFORM_ID)) {
     const token = localStorage.getItem('token') || '';
-    req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
-  }
 
-  //Project Creation && edit project
-  if (
-    req.url.includes('/rest/v1/projects') &&
-    isPlatformBrowser(_PLATFORM_ID)
-  ) {
-    const token = localStorage.getItem('token') || '';
-    req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
-  }
+    //Reset password
+    if (req.url.includes('auth/v1/user')) {
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    }
 
-  //Get Projects
-  if (
-    req.url.includes('/rest/v1/rpc/get_projects') &&
-    isPlatformBrowser(_PLATFORM_ID)
-  ) {
-    const token = localStorage.getItem('token') || '';
-    req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}`, Prefer: `count=exact` },
-    });
-  }
+    //Project Creation && edit project
+    if (req.url.includes('/rest/v1/projects')) {
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    }
 
-  //Get Project Members
-  if (
-    req.url.includes('rest/v1/get_project_members') &&
-    isPlatformBrowser(_PLATFORM_ID)
-  ) {
-    const token = localStorage.getItem('token') || '';
-    req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}`, Prefer: `count=exact` },
-    });
-  }
+    //Get Projects
+    if (req.url.includes('/rest/v1/rpc/get_projects')) {
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    }
 
-  //Add project Epic
-  if (req.url.includes('rest/v1/epics') && isPlatformBrowser(_PLATFORM_ID)) {
-    const token = localStorage.getItem('token') || '';
-    req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` },
-    });
+    //Get Project Members
+    if (req.url.includes('rest/v1/get_project_members')) {
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    }
+
+    //Add project Epic
+    if (req.url.includes('rest/v1/epics')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+    
+    //Get project Epics
+    if (req.url.includes('rest/v1/project_epics')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+
+
   }
 
   return next(req);

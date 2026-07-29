@@ -28,7 +28,8 @@ import { FieldErrorComponent } from '../../../../../shared/field-error/field-err
     ReactiveFormsModule,
     NgClass,
     FieldErrorComponent,
-  ],
+    RouterLink
+],
   providers: [provideNativeDateAdapter(), DatePipe],
   templateUrl: './add-epic.component.html',
   styleUrls: ['./add-epic.component.css'],
