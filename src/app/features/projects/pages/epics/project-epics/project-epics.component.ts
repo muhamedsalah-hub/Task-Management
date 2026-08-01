@@ -30,7 +30,6 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
 export class ProjectEpicsComponent {
   readonly _EpicService = inject(EpicService);
   currentPage: WritableSignal<number> = signal(1);
-  numOfItems: WritableSignal<number> = signal(0);
 
   Epics$ = toObservable(this.currentPage).pipe(
     switchMap((page) => {
@@ -39,8 +38,6 @@ export class ProjectEpicsComponent {
           this._EpicService.totalEpics.set(
             Number(res.headers.get('content-range')?.split('/')[1]),
           );
-          this.numOfItems.set(res.body?.length || 0);
-
           if (!this._EpicService.cache().has(page)) {
             this._EpicService.cache.update((oldCache) => {
               const newCache = new Map(oldCache);

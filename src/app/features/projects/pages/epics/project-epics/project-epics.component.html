@@ -128,7 +128,7 @@
 
         <!--          Projects Pagination               -->
         <app-pagination
-          [numOfItemsPerPage]="numOfItems()"
+          [numOfItemsPerPage]="state.epics?.length || 0"
           [total]="_EpicService.totalEpics()"
           [currentPage]="this.currentPage()"
           [lastPage]="_EpicService.lastPage()"

@@ -47,4 +47,8 @@ export class EpicService {
       { observe: 'response' },
     );
   }
+
+  clearCache() {
+    this.cache().clear();
+  }
 }
