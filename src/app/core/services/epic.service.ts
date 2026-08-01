@@ -48,6 +48,12 @@ export class EpicService {
     );
   }
 
+  getProjectEpicById(epicId: string): Observable<IProjectEpics[]> {
+    return this._HttpClient.get<IProjectEpics[]>(
+      `${environmet.baseUrl}/rest/v1/project_epics?project_id=eq.${this._ProjectContextService.projectId()}&epic_id=eq.${epicId}`,
+    );
+  }
+
   clearCache() {
     this.cache().clear();
   }

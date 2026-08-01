@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   standalone: true,
 })
 export class TrimTextPipe implements PipeTransform {
-  transform(value: string, ...args: unknown[]): any {
+  transform(value: string | undefined, ...args: unknown[]): any {
     if(!value) return ;
     const firstName = value.split(' ')[0] ;
     const lastName = value.split(' ')[1];

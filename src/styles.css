@@ -1,13 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
 
 @font-face {
   font-family: "Inter";
   src: url("./assets/fonts/Inter/static/Inter_18pt-Regular.ttf");
   font-display: swap;
 }
-
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -29,6 +28,7 @@ body {
   --bg-input: #d7e2ff;
   --bg-input-error: #ffdad6;
   --input-label: #737685;
+  --bg-avatar: #dae2ff;
   --placeholder-color: #6b7280;
   --placeholder-error-color: #93000a;
   --text-primary: #041b3c;
@@ -41,7 +41,6 @@ body {
   --warning: #ffb300;
   --font: "Inter", sans-serif;
 }
-
 @theme {
   --color-bgPrimary: var(--bg-primary);
   --color-bgPrimary-container: var(--bg-primary-container);
@@ -49,6 +48,7 @@ body {
   --color-bgSurface-low: var(--bg-surface-low);
   --color-bgBackground: var(--bg-background);
   --color-bgInput: var(--bg-input);
+  --color-bgAvatar: var(--bg-avatar);
   --color-textPrimary: var(--text-primary);
   --color-textSecondary: var(--text-secondary);
   --color-inputLabel: var(--input-label);
@@ -158,7 +158,6 @@ body {
   }
 }
 
-
 .custom-date-input {
   width: 100%;
 }
@@ -171,11 +170,11 @@ body {
 /* make it look like your .input div */
 .custom-date-input .mat-mdc-text-field-wrapper {
   background-color: var(--bg-input);
-    border-radius: 0.25rem;
-    font-size: 1rem;
-    font-weight: 400;
-    width: 100%;
-    color: var(--text-primary);
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  font-weight: 400;
+  width: 100%;
+  color: var(--text-primary);
 }
 
 /* remove Material padding */
@@ -196,4 +195,3 @@ body {
 .custom-date-input .mat-mdc-form-field-subscript-wrapper {
   display: none;
 }
-
