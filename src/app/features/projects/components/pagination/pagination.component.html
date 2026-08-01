@@ -1,0 +1,45 @@
+<div
+  class="flex p-12 flex-col md:flex-row space-y-4 justify-between items-center"
+>
+  <div>
+    <span class="text-textSecondary text-md"
+      >Showing {{ numOfItemsPerPage }} of {{ total }} active <div fxFlex="value%" fxFlexOffset="offsetpx">
+        
+      </div></span
+    >
+  </div>
+  <div class="flex items-center space-x-1 justify-center">
+    <button
+      (click)="prevButtonPage()"
+      [class.cursor-pointer]="currentPage !== 1"
+      [class.cursor-no-drop]="currentPage === 1"
+      class="paginated-btn"
+    >
+      <svg width="5" height="7" viewBox="0 0 5 7">
+        <use href="#paginationArrowLeft"></use>
+      </svg>
+    </button>
+    <div class="flex justify-center space-x-1">
+      @for (page of visiblePages(); track page) {
+        <button
+          [ngClass]="{
+            'bg-bgPrimary text-white': page === currentPage,
+          }"
+          class="paginated-btn"
+        >
+          {{ page }}
+        </button>
+      }
+    </div>
+    <button
+      (click)="nextButtonPage()"
+      [class.cursor-pointer]="currentPage !== lastPage"
+      [class.cursor-no-drop]="currentPage === lastPage"
+      class="paginated-btn"
+    >
+      <svg fill="#434654" width="5" height="7" viewBox="0 0 5 7">
+        <use href="#paginationArrowRight"></use>
+      </svg>
+    </button>
+  </div>
+</div>

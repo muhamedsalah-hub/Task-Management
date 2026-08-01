@@ -22,12 +22,14 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
 
     //Get Projects
     if (req.url.includes('/rest/v1/rpc/get_projects')) {
-      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}`, Prefer: 'count=exact' } });
     }
 
     //Get Project Members
     if (req.url.includes('rest/v1/get_project_members')) {
-      req = req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
     }
 
     //Add project Epic
@@ -36,15 +38,13 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
         setHeaders: { Authorization: `Bearer ${token}` },
       });
     }
-    
+
     //Get project Epics
     if (req.url.includes('rest/v1/project_epics')) {
       req = req.clone({
-        setHeaders: { Authorization: `Bearer ${token}` },
+        setHeaders: { Authorization: `Bearer ${token}`, Prefer: 'count=exact' },
       });
     }
-
-
   }
 
   return next(req);
