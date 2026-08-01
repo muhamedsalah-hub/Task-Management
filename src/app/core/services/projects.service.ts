@@ -15,8 +15,8 @@ import { IProjects } from '../interfaces/Projects/types';
 })
 export class ProjectsService {
   private readonly _HttpClient = inject(HttpClient);
+  readonly limit: WritableSignal<number> = signal(6);
   totalProjects: WritableSignal<number> = signal(0);
-  limit: WritableSignal<number> = signal(6);
   lastPage = computed(() => Math.ceil(this.totalProjects() / this.limit()));
   cache = signal(new Map<number, HttpResponse<IProjects[]>>());
 

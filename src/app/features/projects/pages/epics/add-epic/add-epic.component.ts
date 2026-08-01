@@ -28,7 +28,8 @@ import { FieldErrorComponent } from '../../../../../shared/field-error/field-err
     ReactiveFormsModule,
     NgClass,
     FieldErrorComponent,
-  ],
+    RouterLink
+],
   providers: [provideNativeDateAdapter(), DatePipe],
   templateUrl: './add-epic.component.html',
   styleUrls: ['./add-epic.component.css'],
@@ -67,7 +68,9 @@ export class AddEpicComponent {
         .createProjectEpic(body)
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe(() => {
+          this._EpicService.clearCache();
           this._ToastrService.success('Epic created successfully');
+          this.epicForm.reset();
         });
     }
   }
