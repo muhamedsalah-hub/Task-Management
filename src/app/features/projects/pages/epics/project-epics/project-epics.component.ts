@@ -1,15 +1,27 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EpicService } from '../../../../../core/services/epic.service';
-import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  map,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
-import { IEpicsState } from '../../../../../core/interfaces/Projects/types';
+import {
+  IEpicsState,
+  IProjectEpics,
+} from '../../../../../core/interfaces/Projects/types';
 import { EpicsSkeletonComponent } from '../../../components/epics/epics-skeleton/epics-skeleton.component';
 import { ErrorPageComponent } from '../../../components/error-page/error-page.component';
 import { EmptyEpicsComponent } from '../../../components/epics/empty-epics/empty-epics.component';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
 
 @Component({
   selector: 'app-project-epics',
@@ -23,6 +35,7 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
     TrimTextPipe,
     DatePipe,
     PaginationComponent,
+    EpicDetailsPopupComponent,
   ],
   templateUrl: './project-epics.component.html',
   styleUrl: './project-epics.component.css',
@@ -30,9 +43,14 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
 export class ProjectEpicsComponent {
   readonly _EpicService = inject(EpicService);
   currentPage: WritableSignal<number> = signal(1);
+  isOpen: WritableSignal<boolean> = signal(false);
+  EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
 
-  Epics$ = toObservable(this.currentPage).pipe(
-    switchMap((page) => {
+  Epics$ = combineLatest([
+    toObservable(this.currentPage),
+    this._EpicService.refreshSubject.asObservable().pipe(startWith(undefined)),
+  ]).pipe(
+    switchMap(([page, _]) => {
       const request$ = this._EpicService.getProjectEpics(page).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(
@@ -82,5 +100,23 @@ export class ProjectEpicsComponent {
 
   prevPage() {
     this.currentPage.update((p) => p - 1);
+  }
+
+  closePopup() {
+    this.isOpen.set(false);
+  }
+
+  openPopup() {
+    this.isOpen.set(true);
+  }
+
+  getEpicDetails(epicId: string) {
+    this._EpicService
+      .getProjectEpicById(epicId)
+      .pipe(map((res) => res[0]))
+      .subscribe((epic) => {
+        this.EpicDetails.set(epic);
+        this.openPopup();
+      });
   }
 }

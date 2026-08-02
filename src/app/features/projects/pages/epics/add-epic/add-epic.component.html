@@ -100,7 +100,7 @@
               formControlName="assignee_id"
               class="w-full cursor-pointer outline-0"
             >
-              <option selected disabled [ngValue]="null">
+              <option selected [ngValue]="null">
                 Select a member
               </option>
               @for (member of members$ | async; track member.member_id) {

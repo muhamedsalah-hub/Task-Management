@@ -46,10 +46,11 @@
       </div>
     } @else {
       <!--            Project Epics List               -->
-      <div class="flex-1 flex flex-col justify-between">
+      <div class="flex-1 flex flex-col justify-between items">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           @for (epic of state?.epics; track epic.id) {
             <div
+              (click)="getEpicDetails(epic.epic_id)"
               class="cursor-pointer md:border-l-6 md:border-green-950 bg-white rounded-md p-5 justify-between flex flex-col space-y-5"
             >
               <div class="flex justify-between">
@@ -137,6 +138,15 @@
         />
       </div>
     }
+  }
+
+  <!--                  Epic details PopUp                             -->
+  @if (isOpen()) {
+    <app-epic-details-popup
+      (closePopUpEmitter)="closePopup()"
+      (OpenPopUpEmitter)="openPopup()"
+      [EpicDetails]="EpicDetails()!"
+    />
   }
 
   <!--        Fixed button in mobile for epic creation                      -->

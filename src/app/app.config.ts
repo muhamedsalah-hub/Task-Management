@@ -15,6 +15,9 @@ import { headerInterceptor } from './core/interceptors/headers/header.intercepto
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { errorInterceptor } from './core/interceptors/errors/error.interceptor';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MY_DATE_FORMATS } from './core/utils/date';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -31,5 +34,6 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-top-left',
     }),
+    provideNativeDateAdapter(MY_DATE_FORMATS)
   ],
 };
