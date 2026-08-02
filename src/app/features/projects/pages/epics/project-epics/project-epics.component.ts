@@ -1,7 +1,15 @@
 import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EpicService } from '../../../../../core/services/epic.service';
-import { catchError, map, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  map,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IEpicsState,
@@ -13,7 +21,7 @@ import { EmptyEpicsComponent } from '../../../components/epics/empty-epics/empty
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
-import { EpicDetailsPopupComponent } from "../../../components/epics/epic-details-popup/epic-details-popup.component";
+import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
 
 @Component({
   selector: 'app-project-epics',
@@ -27,8 +35,8 @@ import { EpicDetailsPopupComponent } from "../../../components/epics/epic-detail
     TrimTextPipe,
     DatePipe,
     PaginationComponent,
-    EpicDetailsPopupComponent
-],
+    EpicDetailsPopupComponent,
+  ],
   templateUrl: './project-epics.component.html',
   styleUrl: './project-epics.component.css',
 })
@@ -38,8 +46,11 @@ export class ProjectEpicsComponent {
   isOpen: WritableSignal<boolean> = signal(false);
   EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
 
-  Epics$ = toObservable(this.currentPage).pipe(
-    switchMap((page) => {
+  Epics$ = combineLatest([
+    toObservable(this.currentPage),
+    this._EpicService.refreshSubject.asObservable().pipe(startWith(undefined)),
+  ]).pipe(
+    switchMap(([page, _]) => {
       const request$ = this._EpicService.getProjectEpics(page).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(
@@ -104,8 +115,6 @@ export class ProjectEpicsComponent {
       .getProjectEpicById(epicId)
       .pipe(map((res) => res[0]))
       .subscribe((epic) => {
-        console.log(epic);
-        
         this.EpicDetails.set(epic);
         this.openPopup();
       });

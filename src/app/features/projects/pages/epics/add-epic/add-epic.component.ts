@@ -5,7 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { finalize, startWith, tap } from 'rxjs';
+import { finalize } from 'rxjs';
 import { MembersService } from '../../../../../core/services/members.service';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
@@ -13,13 +13,14 @@ import { EpicValidationRules } from '../../../../../core/utils/validations';
 import { EpicService } from '../../../../../core/services/epic.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgClass } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
 
 @Component({
   selector: 'app-add-epic',
   standalone: true,
   imports: [
+    AsyncPipe,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
