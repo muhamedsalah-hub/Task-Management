@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { BottomNavbarComponent } from '../../features/projects/components/bottom-navbar/bottom-navbar.component';
-import { SidebarComponent } from '../../features/projects/components/sidebar/sidebar.component';
 import { AuthService } from '../../core/services/auth.service';
 import { IconsComponent } from '../../shared/icons/icons.component';
 import { NgClass } from '../../../../node_modules/@angular/common';
 import {  RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { TopNavBarComponent } from '../../features/projects/components/top-navbar/top-navbar.component';
+import { TopNavBarComponent } from '../../features/projects/layouts/top-navbar/top-navbar.component';
+import { BottomNavbarComponent } from '../../features/projects/layouts/bottom-navbar/bottom-navbar.component';
+import { SidebarComponent } from '../../features/projects/layouts/sidebar/sidebar.component';
 
 @Component({
   selector: 'app-blank-layout',
