@@ -78,7 +78,6 @@ export class EpicDetailsPopupComponent implements OnInit {
       .updateProjectEpic(epicId, this.editEpicForm.value)
       .subscribe(() => {
         this.closePopUp();
-        this._EpicService.clearCache();
         this._EpicService.refreshEpics();
       });
   }

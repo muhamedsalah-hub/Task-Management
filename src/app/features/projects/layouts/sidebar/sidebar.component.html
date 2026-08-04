@@ -12,6 +12,7 @@
     @for (item of icons; track item.id) {
       <div
         [routerLink]="getLink(item.link)"
+        (click)="closeMobileEmission()"
         routerLinkActive="!text-[#0052CC] bg-white"
         class="flex items-center rounded-md cursor-pointer hover:bg-bgSurface-highest text-[#434654]"
         [ngClass]="{

@@ -18,12 +18,10 @@ export class EpicService {
   private readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _HttpClient = inject(HttpClient);
   readonly limit: WritableSignal<number> = signal(3);
-   refreshSubject = new Subject<void>();
+  refreshSubject = new Subject<void>();
   refresh$ = this.refreshSubject.asObservable();
   totalEpics: WritableSignal<number> = signal(0);
   lastPage = computed(() => Math.ceil(this.totalEpics() / this.limit()));
-  cache = signal(new Map<number, HttpResponse<IProjectEpics[]>>());
-
 
   createProjectEpic(body: {
     title: string;
@@ -38,10 +36,6 @@ export class EpicService {
   getProjectEpics(
     currentPage: number = 1,
   ): Observable<HttpResponse<IProjectEpics[]>> {
-    const cached = this.cache().get(currentPage);
-    if (cached) {
-      return of(cached);
-    }
     const offset = (currentPage - 1) * this.limit();
 
     return this._HttpClient.get<IProjectEpics[]>(
@@ -69,10 +63,6 @@ export class EpicService {
       `${environmet.baseUrl}/rest/v1/epics?epic_id=eq.${epicId}`,
       body,
     );
-  }
-
-  clearCache() {
-    this.cache().clear();
   }
 
   refreshEpics() {

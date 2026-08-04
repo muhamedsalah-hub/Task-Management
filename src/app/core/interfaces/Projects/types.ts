@@ -1,3 +1,5 @@
+import { FormControl } from '@angular/forms';
+
 interface IState {
   loading: boolean;
   error: boolean;
@@ -46,4 +48,24 @@ export interface IProjectEpics {
 
 export interface IEpicsState extends IState {
   epics: IProjectEpics[] | null;
+}
+
+type IStatus =
+  | 'TO_DO'
+  | 'IN_PROGRESS'
+  | 'BLOCKED'
+  | 'IN_REVIEW'
+  | 'READY_FOR_QA'
+  | 'REOPENED'
+  | 'READY_FOR_PRODUCTION'
+  | 'DONE';
+
+export interface IAddTaskForm {
+  project_id: FormControl<string>;
+  epic_id: FormControl<string | null>;
+  title: FormControl<string>;
+  description: FormControl<string | null>;
+  assignee_id: FormControl<string | null>;
+  due_date: FormControl<Date | null>;
+  status: FormControl<IStatus>;
 }
