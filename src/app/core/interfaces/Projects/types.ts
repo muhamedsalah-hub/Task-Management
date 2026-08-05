@@ -70,4 +70,35 @@ export interface IAddTaskForm {
   status: FormControl<IStatus>;
 }
 
+export interface ITasks {
+  id: string;
+  project_id: string;
+  epic_id: string;
+  title: string;
+  description: string;
+  status: string;
+  created_at: string;
+  due_date: string;
+  task_id: string;
+  epic: {
+    id: string;
+    title: string;
+    epic_id: string;
+  };
+  created_by: {
+    id: string;
+    name: string;
+    email: string;
+    department: string;
+  };
+  assignee: {
+    id: string;
+    name: string;
+    email: string;
+    department: string;
+  };
+}
 
+export interface ITasksState extends IState {
+  tasks: ITasks[] | null;
+}
