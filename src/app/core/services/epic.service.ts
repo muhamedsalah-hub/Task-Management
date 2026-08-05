@@ -25,12 +25,18 @@ export class EpicService {
 
   createProjectEpic(body: {
     title: string;
-    description: string;
+    description: string ;
     assignee_id: string;
     project_id: string;
     deadline: string;
   }) {
     return this._HttpClient.post(`${environmet.baseUrl}/rest/v1/epics`, body);
+  }
+
+  getAllProjectEpics(): Observable<IProjectEpics[]> {
+    return this._HttpClient.get<IProjectEpics[]>(
+      `${environmet.baseUrl}/rest/v1/project_epics?project_id=eq.${this._ProjectContextService.projectId()}`,
+    );
   }
 
   getProjectEpics(

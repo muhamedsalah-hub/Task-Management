@@ -50,7 +50,7 @@ export interface IEpicsState extends IState {
   epics: IProjectEpics[] | null;
 }
 
-type IStatus =
+export type IStatus =
   | 'TO_DO'
   | 'IN_PROGRESS'
   | 'BLOCKED'
@@ -69,3 +69,5 @@ export interface IAddTaskForm {
   due_date: FormControl<Date | null>;
   status: FormControl<IStatus>;
 }
+
+
