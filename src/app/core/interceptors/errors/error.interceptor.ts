@@ -27,6 +27,8 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         _Toastr.error(`Failed to create epic. : ${err.error.msg}`);
       } else if (req.url.includes('/rest/v1/epics') && req.method === 'PATCH') {
         _Toastr.error(`Failed to update epic : Please try again later`);
+      } else if (req.url.includes('/rest/v1/tasks')) {
+        _Toastr.error(`Failed to create task : ${err.error.msg}`);
       }
       return throwError(() => err);
     }),

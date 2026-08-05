@@ -22,6 +22,7 @@ import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from '../../../components/pagination/pagination.component';
 import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
+import { ProjectContextService } from '../../../../../core/services/project-context.service';
 
 @Component({
   selector: 'app-project-epics',
@@ -42,6 +43,7 @@ import { EpicDetailsPopupComponent } from '../../../components/epics/epic-detail
 })
 export class ProjectEpicsComponent {
   readonly _EpicService = inject(EpicService);
+  readonly _ProjectContextService = inject(ProjectContextService);
   currentPage: WritableSignal<number> = signal(1);
   isOpen: WritableSignal<boolean> = signal(false);
   EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
@@ -50,19 +52,12 @@ export class ProjectEpicsComponent {
     toObservable(this.currentPage),
     this._EpicService.refreshSubject.asObservable().pipe(startWith(undefined)),
   ]).pipe(
-    switchMap(([page, _]) => {
-      const request$ = this._EpicService.getProjectEpics(page).pipe(
+    switchMap(([currentPage, _]) => {
+      return this._EpicService.getProjectEpics(currentPage).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(
             Number(res.headers.get('content-range')?.split('/')[1]),
           );
-          if (!this._EpicService.cache().has(page)) {
-            this._EpicService.cache.update((oldCache) => {
-              const newCache = new Map(oldCache);
-              newCache.set(page, res);
-              return newCache;
-            });
-          }
         }),
         map(
           (res): IEpicsState => ({
@@ -71,26 +66,16 @@ export class ProjectEpicsComponent {
             epics: res.body,
           }),
         ),
+        startWith({
+          error: false,
+          loading: true,
+          epics: null,
+        } as IEpicsState),
+
         catchError(() =>
           of({ error: true, loading: false, epics: null } as IEpicsState),
         ),
       );
-
-      if (this._EpicService.cache().has(page)) {
-        return of({
-          error: false,
-          epics: this._EpicService.cache().get(page)?.body,
-          loading: false,
-        });
-      } else {
-        return request$.pipe(
-          startWith({
-            error: false,
-            loading: true,
-            epics: null,
-          } as IEpicsState),
-        );
-      }
     }),
   );
 

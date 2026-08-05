@@ -25,9 +25,11 @@ export class SidebarComponent {
   toggleDesktopEmission() {
     this.toggleDesktop.emit();
   }
+  
   closeMobileEmission() {
     this.closeMobile.emit();
   }
+
   logoutSubmission() {
     this.logoutClicked.emit();
   }

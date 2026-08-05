@@ -19,6 +19,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MembersService } from '../../../../../core/services/members.service';
 import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
 import { EpicService } from '../../../../../core/services/epic.service';
+import { Router } from '@angular/router';
+import { ProjectContextService } from '../../../../../core/services/project-context.service';
 
 @Component({
   selector: 'app-epic-details-popup',
@@ -28,10 +30,8 @@ import { EpicService } from '../../../../../core/services/epic.service';
     DatePipe,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatDatepickerModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDatepickerModule,
     AsyncPipe,
     FieldErrorComponent,
   ],
@@ -41,8 +41,10 @@ import { EpicService } from '../../../../../core/services/epic.service';
 export class EpicDetailsPopupComponent implements OnInit {
   readonly validations = EpicValidationRules;
   today: WritableSignal<Date> = signal(new Date());
+  private readonly _Router = inject(Router);
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _EpicService = inject(EpicService);
+  private readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _MembersService = inject(MembersService);
   @Input({ required: true }) EpicDetails!: IProjectEpics | null;
   @Output() closePopUpEmitter = new EventEmitter<void>();
@@ -78,8 +80,14 @@ export class EpicDetailsPopupComponent implements OnInit {
       .updateProjectEpic(epicId, this.editEpicForm.value)
       .subscribe(() => {
         this.closePopUp();
-        this._EpicService.clearCache();
         this._EpicService.refreshEpics();
       });
+  }
+
+  navigateTo() {
+    this._Router.navigate(
+      ['projects', this._ProjectContextService.projectId(), 'tasks', 'new'],
+      { queryParams: { epic_id: this.EpicDetails?.epic_id } },
+    );
   }
 }

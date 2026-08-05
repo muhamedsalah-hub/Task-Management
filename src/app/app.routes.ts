@@ -15,6 +15,7 @@ import { ProjectsListComponent } from './features/projects/pages/Project/project
 import { ProjectMembersComponent } from './features/projects/pages/members/project-members/project-members.component';
 import { EditProjectComponent } from './features/projects/pages/Project/edit-project/edit-project.component';
 import { AddEpicComponent } from './features/projects/pages/epics/add-epic/add-epic.component';
+import { AddTaskComponent } from './features/projects/pages/tasks/add-task/add-task.component';
 
 export const routes: Routes = [
   {
@@ -44,8 +45,9 @@ export const routes: Routes = [
           { path: '', redirectTo: 'epics', pathMatch: 'full' },
           { path: 'epics', component: ProjectEpicsComponent },
           { path: 'epics/new', component: AddEpicComponent },
-          { path: 'tasks', component: ProjectTasksComponent },
           { path: 'members', component: ProjectMembersComponent },
+          { path: 'tasks', component: ProjectTasksComponent },
+          { path: 'tasks/new', component: AddTaskComponent },
           { path: 'edit', component: EditProjectComponent },
         ],
       },
