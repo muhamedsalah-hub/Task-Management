@@ -19,6 +19,7 @@
             width="16"
             height="16"
             viewBox="0 0 16 16"
+            class="cursor-pointer"
           >
             <use href="#close"></use>
           </svg>
@@ -140,39 +141,139 @@
           </div>
         </div>
 
-        <!--        Epic tasks               -->
-        <div class="flex flex-col space-y-1">
-          <div class="flex justify-between items-center">
-            <span class="label-sm text-inputLabel">Tasks</span>
-            <div class="py-0.5 px-3 bg-[#E0E8FF] rounded-xl">
-              <span class="label-sm text-inputLabel">0 tasks</span>
-            </div>
-          </div>
-
-          <div
-            class="flex flex-col text-center space-y-5 bg-bgSurface-low justify-center items-center p-8 border-2 border-gray-200 border-dashed"
-          >
-            <div
-              class="w-12 h-12 flex items-center justify-center rounded-xl bg-bgAvatar"
+        <!--         Epic Tasks                -->
+        @if (tasksState()?.loading) {
+          <div class="p-6 flex flex-col space-y-2 items-center justify-self-center self-center">
+            <svg
+              class="animate-spin"
+              width="20"
+              height="20"
+              viewBox="0 0 512 512"
             >
-              <svg width="18" height="16" viewBox="0 0 18 16">
-                <use href="#AddTaskIcon"></use>
-              </svg>
-            </div>
-            <p class="wrap-break-word text-textSecondary text-sm">
-              No tasks have been added to this epic yet
-            </p>
-            <button (click)="navigateTo()" type="button" class="btn-primary cursor-pointer">+ Add Task</button>
+          <use href="#spinner"></use>  
+          </svg>
+            <span class="text-textSecondary">Loading Tasks...</span>
           </div>
-        </div>
+        } @else if (tasksState()?.error) {
+          <div class="p-6 flex space-x-2 items-center self-center justify-self-center">
+            <svg width="12" height="12">
+              <use href="#warning"></use>
+            </svg>
+            <span class="text-error">Failed to Load Tasks</span>
+          </div>
+        } @else if (tasksState()?.tasks?.length) {
+          <div class="flex flex-col space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="label-sm text-inputLabel">Tasks</span>
+              <div class="py-0.5 px-3 bg-[#E0E8FF] rounded-xl">
+                <span class="lg:hidden block label-sm text-inputLabel"
+                  >{{ tasksState()?.tasks?.length }} tasks</span
+                >
+              </div>
+              <button
+                (click)="navigateTo()"
+                type="button"
+                class="lg:block hidden py-1.5 px-3 text-bgPrimary font-semibold"
+              >
+                + Add Task
+              </button>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+              @for (task of tasksState()?.tasks; track task.id) {
+                <div
+                  class="flex flex-col p-4 border border-gray-100 rounded-lg space-y-3"
+                >
+                  <h3 class="font-semibold text-textPrimary">
+                    {{ task.title }}
+                  </h3>
+                  <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                      @if (task.assignee.name) {
+                        <div
+                          class="flex bg-bgPrimary text-white items-center justify-center w-5 h-5 rounded-xl"
+                        >
+                          <span class="text-[8px]">{{
+                            task.assignee.name | trimText
+                          }}</span>
+                        </div>
+                        <span class="text-sm text-textSecondary font-medium">{{
+                          task.assignee.name
+                        }}</span>
+                      } @else {
+                        <div
+                          class="w-5 h-5 bg-[#E8EDFF] rounded-sm flex justify-center items-center"
+                        >
+                          <svg width="8" height="8" viewBox="0 0 8 8">
+                            <use href="#user"></use>
+                          </svg>
+                        </div>
+
+                        <span class="text-sm text-textSecondary font-medium"
+                          >unassigned</span
+                        >
+                      }
+                    </div>
+                    <div class="flex flex-col space-y-1">
+                      @if (task.due_date) {
+                        <span
+                          class="hidden text-textSecondary lg:block label-sm"
+                          >Due date</span
+                        >
+                        <div class="flex items-center space-x-1.5">
+                          <svg width="11" height="12" viewBox="0 0 11 12">
+                            <use href="#calendar"></use>
+                          </svg>
+                          <span
+                            class="text-textSecondary text-xs font-semibold"
+                            >{{ task.due_date | date: "dd MMM YYYY" }}</span
+                          >
+                        </div>
+                      } @else {
+                        <span
+                          class="hidden text-textSecondary lg:block label-sm"
+                          >Due date</span
+                        >
+                        <div class="flex items-center space-x-1.5">
+                          <svg width="12" height="12" viewBox="0 0 12 12">
+                            <use href="#warning"></use>
+                          </svg>
+                          <span class="text-error text-xs font-semibold"
+                            >OVERDUE</span
+                          >
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+              }
+              <div
+                (click)="navigateTo()"
+                class="flex lg:hidden items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg space-x-2"
+              >
+                <svg width="15" height="15" viewBox="0 0 15 15">
+                  <use href="#circularPlus"></use>
+                </svg>
+                <span class="label-sm text-textSecondary">Add new task</span>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <!--        Empty tasks               -->
+          <app-empty-tasks (navigate)="navigateTo()" />
+        }
       </div>
 
       <!--          save Button                 -->
-      <div class="flex justify-between items-center px-6 py-4">
-        <button (click)="closePopUp()" class="btn-secondary mr-2" type="button">
+      <div class="hidden lg:flex justify-between items-center px-6 py-4">
+        <button
+          (click)="closePopUp()"
+          class="btn-secondary mr-2 cursor-pointer"
+          type="button"
+        >
           Cancel
         </button>
-        <button class="btn-primary" type="submit">Save</button>
+        <button class="btn-primary cursor-pointer" type="submit">Save</button>
       </div>
     </form>
   </div>

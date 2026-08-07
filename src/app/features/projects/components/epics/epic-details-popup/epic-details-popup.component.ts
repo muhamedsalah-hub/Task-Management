@@ -8,7 +8,11 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { IProjectEpics } from '../../../../../core/interfaces/Projects/types';
+import {
+  IProjectEpics,
+  ITasks,
+  ITasksState,
+} from '../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,8 +23,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MembersService } from '../../../../../core/services/members.service';
 import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
 import { EpicService } from '../../../../../core/services/epic.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
+import { TasksService } from '../../../../../core/services/tasks.service';
+import { catchError, map, of, startWith, tap } from 'rxjs';
+import { EmptyTasksComponent } from '../../tasks/empty-tasks/empty-tasks.component';
 
 @Component({
   selector: 'app-epic-details-popup',
@@ -34,6 +41,7 @@ import { ProjectContextService } from '../../../../../core/services/project-cont
     MatInputModule,
     AsyncPipe,
     FieldErrorComponent,
+    EmptyTasksComponent,
   ],
   templateUrl: './epic-details-popup.component.html',
   styleUrl: './epic-details-popup.component.css',
@@ -41,14 +49,16 @@ import { ProjectContextService } from '../../../../../core/services/project-cont
 export class EpicDetailsPopupComponent implements OnInit {
   readonly validations = EpicValidationRules;
   today: WritableSignal<Date> = signal(new Date());
+  readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _Router = inject(Router);
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _EpicService = inject(EpicService);
-  private readonly _ProjectContextService = inject(ProjectContextService);
+  private readonly _TasksService = inject(TasksService);
   private readonly _MembersService = inject(MembersService);
   @Input({ required: true }) EpicDetails!: IProjectEpics | null;
   @Output() closePopUpEmitter = new EventEmitter<void>();
   @Output() openPopUpEmitter = new EventEmitter<void>();
+  tasksState: WritableSignal<ITasksState | null> = signal(null);
 
   members$ = this._MembersService.getProjectMembers();
   editEpicForm: FormGroup = this._FormBuilder.group({
@@ -65,6 +75,20 @@ export class EpicDetailsPopupComponent implements OnInit {
       assignee_id: this.EpicDetails?.assignee?.sub,
       deadline: this.EpicDetails?.deadline,
     });
+    this._TasksService
+      .getEpicTasks(this.EpicDetails?.id as string)
+      .pipe(
+        map(
+          (res): ITasksState => ({ error: false, loading: false, tasks: res }),
+        ),
+        catchError(() =>
+          of({ error: true, loading: false, tasks: null } as ITasksState),
+        ),
+        startWith({ error: true, loading: false, tasks: null } as ITasksState),
+      )
+      .subscribe((res) => {
+        this.tasksState.set(res);
+      });
   }
 
   closePopUp() {
@@ -87,7 +111,7 @@ export class EpicDetailsPopupComponent implements OnInit {
   navigateTo() {
     this._Router.navigate(
       ['projects', this._ProjectContextService.projectId(), 'tasks', 'new'],
-      { queryParams: { epic_id: this.EpicDetails?.epic_id } },
+      { queryParams: { epic_id: this.EpicDetails?.id } },
     );
   }
 }

@@ -97,7 +97,7 @@
           >
             <option selected [value]="null">Select an Epic</option>
             @for (epic of epics$ | async; track epic.id) {
-              <option [value]="epic.epic_id">
+              <option [value]="epic.id">
                 {{ epic.epic_id }} {{ epic.title | maxLengthString }}
               </option>
             }
