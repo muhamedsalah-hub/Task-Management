@@ -102,3 +102,14 @@ export interface ITasks {
 export interface ITasksState extends IState {
   tasks: ITasks[] | null;
 }
+
+export enum statusValues{
+  'TODO' ='TO_DO',
+  'IN PROGRESS' = 'IN_PROGRESS',
+   'BLOCKED' ='BLOCKED',
+   'IN REVIEW' ='IN_REVIEW',
+   'READY_FOR QA' ='READY_FOR_QA',
+   'REOPENED' ='REOPENED',
+   'READY FOR PRODUCTION'= 'READY_FOR_PRODUCTION',
+   'DONE' ='DONE',
+}

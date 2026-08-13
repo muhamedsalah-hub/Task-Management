@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmptyTasksComponent } from './empty-tasks.component';
+import { EmptyTasksComponent } from './empty-EpicTasks.component';
 
 describe('EmptyTasksComponent', () => {
   let component: EmptyTasksComponent;

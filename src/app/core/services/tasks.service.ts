@@ -20,13 +20,22 @@ export class TasksService {
     assignee_id: string | null;
     due_date: string | null;
     status: IStatus;
-  }):Observable<null> {
-    return this._HtppClient.post<null>(`${environmet.baseUrl}/rest/v1/tasks`, body);
+  }): Observable<null> {
+    return this._HtppClient.post<null>(
+      `${environmet.baseUrl}/rest/v1/tasks`,
+      body,
+    );
   }
 
-  getEpicTasks(epicId:string):Observable<ITasks[]> {
+  getEpicTasks(epicId: string): Observable<ITasks[]> {
     return this._HtppClient.get<ITasks[]>(
       `${environmet.baseUrl}/rest/v1/project_tasks?epic_id=eq.${epicId}`,
+    );
+  }
+
+  getAllProjectTasks(): Observable<ITasks[]> {
+    return this._HtppClient.get<ITasks[]>(
+      `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}`,
     );
   }
 }

@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import {
   IProjectEpics,
-  ITasks,
   ITasksState,
 } from '../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
@@ -27,7 +26,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
 import { TasksService } from '../../../../../core/services/tasks.service';
 import { catchError, map, of, startWith, tap } from 'rxjs';
-import { EmptyTasksComponent } from '../../tasks/empty-tasks/empty-tasks.component';
+import { EmptyTasksComponent } from '../../tasks/epics/empty-EpicTasks/empty-EpicTasks.component';
 
 @Component({
   selector: 'app-epic-details-popup',

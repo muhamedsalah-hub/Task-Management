@@ -13,6 +13,7 @@
       <div
         [routerLink]="getLink(item.link)"
         (click)="closeMobileEmission()"
+        [queryParams]="item.id === 4 ? { view: 'board' } : {}"
         routerLinkActive="!text-[#0052CC] bg-white"
         class="flex items-center rounded-md cursor-pointer hover:bg-bgSurface-highest text-[#434654]"
         [ngClass]="{

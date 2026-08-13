@@ -46,6 +46,13 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
       });
     }
 
+    //Get project Tasks
+    if (req.url.includes('rest/v1/project_tasks')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+
     //Create tasks
     if (req.url.includes('rest/v1/tasks')) {
       req = req.clone({
