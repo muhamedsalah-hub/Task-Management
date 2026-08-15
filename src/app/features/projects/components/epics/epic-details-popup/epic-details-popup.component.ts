@@ -60,6 +60,7 @@ export class EpicDetailsPopupComponent implements OnInit {
   tasksState: WritableSignal<ITasksState | null> = signal(null);
 
   members$ = this._MembersService.getProjectMembers();
+
   editEpicForm: FormGroup = this._FormBuilder.group({
     title: [null, this.validations.title],
     description: [null],
@@ -74,6 +75,7 @@ export class EpicDetailsPopupComponent implements OnInit {
       assignee_id: this.EpicDetails?.assignee?.sub,
       deadline: this.EpicDetails?.deadline,
     });
+
     this._TasksService
       .getEpicTasks(this.EpicDetails?.id as string)
       .pipe(
@@ -83,7 +85,7 @@ export class EpicDetailsPopupComponent implements OnInit {
         catchError(() =>
           of({ error: true, loading: false, tasks: null } as ITasksState),
         ),
-        startWith({ error: true, loading: false, tasks: null } as ITasksState),
+        startWith({ error: false, loading: true, tasks: null } as ITasksState),
       )
       .subscribe((res) => {
         this.tasksState.set(res);
@@ -110,7 +112,10 @@ export class EpicDetailsPopupComponent implements OnInit {
   navigateTo() {
     this._Router.navigate(
       ['projects', this._ProjectContextService.projectId(), 'tasks', 'new'],
-      { queryParams: { epic_id: this.EpicDetails?.id } },
+      {
+        queryParams: { epic_id: this.EpicDetails?.id },
+        queryParamsHandling: 'merge',
+      },
     );
   }
 }

@@ -156,7 +156,12 @@
           + Create Task
         </button>
         <button
-          [routerLink]="['..']"
+          [routerLink]="[
+            '/projects',
+            _ProjectContextService.projectId(),
+            'tasks',
+          ]"
+          [queryParams]="{ view: 'board' }"
           type="button"
           class="cursor-pointer text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
         >

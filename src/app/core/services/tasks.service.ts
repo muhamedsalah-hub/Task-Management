@@ -38,4 +38,10 @@ export class TasksService {
       `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}`,
     );
   }
+
+  getProjectTasksByStatus(status:string): Observable<ITasks[]> {
+    return this._HtppClient.get<ITasks[]>(
+      `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}&status=eq.${status}`,
+    );
+  }
 }

@@ -1,6 +1,6 @@
 <div>
   <div
-    class="bg-white lg:w-2xl z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    class="bg-white max-h-3/4 overflow-auto lg:w-2xl z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
   >
     <!--           Header                  -->
     <form
@@ -142,20 +142,25 @@
         </div>
 
         <!--         Epic Tasks                -->
+
         @if (tasksState()?.loading) {
-          <div class="p-6 flex flex-col space-y-2 items-center justify-self-center self-center">
+          <div
+            class="p-6 flex flex-col space-y-2 items-center justify-self-center self-center"
+          >
             <svg
               class="animate-spin"
               width="20"
               height="20"
               viewBox="0 0 512 512"
             >
-          <use href="#spinner"></use>  
-          </svg>
+              <use href="#spinner"></use>
+            </svg>
             <span class="text-textSecondary">Loading Tasks...</span>
           </div>
         } @else if (tasksState()?.error) {
-          <div class="p-6 flex space-x-2 items-center self-center justify-self-center">
+          <div
+            class="p-6 flex space-x-2 items-center self-center justify-self-center"
+          >
             <svg width="12" height="12">
               <use href="#warning"></use>
             </svg>
@@ -173,7 +178,7 @@
               <button
                 (click)="navigateTo()"
                 type="button"
-                class="lg:block hidden py-1.5 px-3 text-bgPrimary font-semibold"
+                class="lg:block hidden cursor-pointer py-1.5 px-3 text-bgPrimary font-semibold"
               >
                 + Add Task
               </button>

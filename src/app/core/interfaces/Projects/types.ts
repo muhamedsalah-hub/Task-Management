@@ -103,13 +103,13 @@ export interface ITasksState extends IState {
   tasks: ITasks[] | null;
 }
 
-export enum statusValues{
-  'TODO' ='TO_DO',
-  'IN PROGRESS' = 'IN_PROGRESS',
-   'BLOCKED' ='BLOCKED',
-   'IN REVIEW' ='IN_REVIEW',
-   'READY_FOR QA' ='READY_FOR_QA',
-   'REOPENED' ='REOPENED',
-   'READY FOR PRODUCTION'= 'READY_FOR_PRODUCTION',
-   'DONE' ='DONE',
+export interface IGroupedStatus {
+  TO_DO: ITasks[];
+  IN_PROGRESS: ITasks[];
+  BLOCKED: ITasks[];
+  IN_REVIEW: ITasks[];
+  READY_FOR_QA: ITasks[];
+  REOPENED:ITasks[];
+  READY_FOR_PRODUCTION:ITasks[];
+  DONE: ITasks[];
 }

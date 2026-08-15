@@ -4,6 +4,7 @@ import {
   EventEmitter,
   inject,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   PLATFORM_ID,
@@ -63,4 +64,5 @@ export class PaginationComponent implements OnInit {
     const end = Math.min(this.lastPage, start + 1);
     return Array.from({ length: end - start + 1 }, (_, i) => start + i);
   }
+
 }
