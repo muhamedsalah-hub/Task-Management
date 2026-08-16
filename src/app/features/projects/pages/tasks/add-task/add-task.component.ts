@@ -54,7 +54,6 @@ export class AddTaskComponent implements OnInit {
   epics$ = this._EpicService.getAllProjectEpics();
   members$ = this._MembersService.getProjectMembers();
 
-
   addTaskForm = this._FormBuilder.group<IAddTaskForm>({
     project_id: this._FormBuilder.nonNullable.control(
       this._ProjectContextService.projectId() as string,
@@ -88,6 +87,7 @@ export class AddTaskComponent implements OnInit {
         .subscribe(() => {
           this._ToastrService.success('Task is created successfully');
           this._TasksService.refreshTasks();
+          this._TasksService.clearCache();
         });
     }
   }
