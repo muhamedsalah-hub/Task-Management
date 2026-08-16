@@ -15,6 +15,7 @@
         (click)="closeMobileEmission()"
         [queryParams]="item.id === 4 ? { view: 'board' } : {}"
         routerLinkActive="!text-[#0052CC] bg-white"
+        [routerLinkActiveOptions]="{ paths: 'exact', queryParams: 'ignored', matrixParams: 'ignored', fragment: 'ignored' }"
         class="flex items-center rounded-md cursor-pointer hover:bg-bgSurface-highest text-[#434654]"
         [ngClass]="{
           'w-52': isMobileSidebarOpen,

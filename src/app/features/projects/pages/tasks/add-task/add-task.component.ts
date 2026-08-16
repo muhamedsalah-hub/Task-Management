@@ -42,6 +42,7 @@ import { statusValues } from '../../../../../core/data/data';
   styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent implements OnInit {
+  readonly statusValues = statusValues;
   readonly today = signal(new Date());
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
@@ -53,7 +54,6 @@ export class AddTaskComponent implements OnInit {
   epics$ = this._EpicService.getAllProjectEpics();
   members$ = this._MembersService.getProjectMembers();
 
-  readonly statusValues = statusValues;
 
   addTaskForm = this._FormBuilder.group<IAddTaskForm>({
     project_id: this._FormBuilder.nonNullable.control(
@@ -87,6 +87,7 @@ export class AddTaskComponent implements OnInit {
         .createEpicTask({ ...body, due_date: formatedDate })
         .subscribe(() => {
           this._ToastrService.success('Task is created successfully');
+          this._TasksService.refreshTasks();
         });
     }
   }

@@ -1,1 +1,79 @@
-<p>list-view-tasks works!</p>
+@if (tasks$ | async; as state) {
+  <div class="my-5 flex-1 flex flex-col">
+    <table class="w-full">
+      <thead>
+        <tr class="label-sm text-textSecondary font-bold *:py-4 *:px-6">
+          <td>TASK ID</td>
+          <td>TITLE</td>
+          <td>STATUS</td>
+          <td>DUE DATE</td>
+          <td>ASSIGNEE</td>
+        </tr>
+      </thead>
+      @for (task of state.tasks; track task.id) {
+        <tbody class="border-2 border-gray-100">
+          <tr class="bg-white *:p-6">
+            <td>
+              <span class="text-bgPrimary">{{ task.task_id }}</span>
+            </td>
+            <td>
+              <span class="text-textPrimary font-semibold title-md">{{
+                task.title
+              }}</span>
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'bg-success': task.status === 'DONE',
+                  'bg-bgInputError text-error': task.status === 'BLOCKED',
+                  'bg-[#CDDDFF] text-textPrimary':
+                    task.status !== 'BLOCKED' && task.status !== 'DONE',
+                }"
+                class="w-fit rounded-xl label-sm py-1 px-3"
+              >
+                <span class="title-sm">{{
+                  task.status.replaceAll("_", " ")
+                }}</span>
+              </div>
+            </td>
+            <td>
+              <span class="text-textSecondary text-sm">{{
+                task.due_date | date: "dd MMM YYYY"
+              }}</span>
+            </td>
+            <td>
+              <div class="flex space-x-2 items-center">
+                <div
+                  [ngClass]="{
+                    'bg-success': task.status === 'DONE',
+                    'bg-bgInputError text-error': task.status === 'BLOCKED',
+                    'bg-[#CDDDFF] text-textPrimary':
+                      task.status !== 'BLOCKED' && task.status !== 'DONE',
+                  }"
+                  class="h-10 w-10 rounded-xl flex items-center justify-center"
+                >
+                  <span class="font-bold text-sm">{{
+                    task.assignee.name | trimText
+                  }}</span>
+                </div>
+                <div>
+                  <span class="text-textPrimary text-sm">{{
+                    task.assignee.name
+                  }}</span>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      }
+    </table>
+    <app-pagination
+      [currentPage]="currentPage()"
+      [lastPage]="_TasksService.lastPage()"
+      [total]="_TasksService.totalTasks()"
+      [numOfItemsPerPage]="state.tasks?.length!"
+      (nextButton)="nextPage()"
+      (prevButton)="prevPage()"
+    />
+  </div>
+}

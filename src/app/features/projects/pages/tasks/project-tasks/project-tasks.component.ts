@@ -62,9 +62,8 @@ export class ProjectTasksComponent implements OnInit {
   private readonly _Router = inject(Router);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   readonly _ProjectContextService = inject(ProjectContextService);
-  tasks$ = this._TasksService.getAllProjectTasks().pipe(
+  tasks$ = this._TasksService.tasks$.pipe(
     tap((tasks) => {
-      console.log(tasks);
       const groupedValues: IGroupedStatus = {
         TO_DO: [],
         DONE: [],
@@ -80,7 +79,7 @@ export class ProjectTasksComponent implements OnInit {
         prev[status].push(curr);
         return prev;
       }, groupedValues);
-      
+
       this.groupedTasks.set(
         new Map(
           Object.entries(groupedObject) as [keyof IGroupedStatus, ITasks[]][],

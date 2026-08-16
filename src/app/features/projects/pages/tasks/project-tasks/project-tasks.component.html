@@ -56,8 +56,8 @@
   </div>
 
   <!--           Main Content at mobile View            -->
-  <div class="lg:hidden">
-    @if (tasks$ | async; as state) {
+  @if (tasks$ | async; as state) {
+    <div class="lg:hidden">
       @if (state.loading) {
         <app-project-tasks-skeleton />
       } @else if (state.error) {
@@ -116,13 +116,21 @@
           }
         </div>
       }
-    }
-  </div>
+    </div>
 
-  @if (selectedView() === "board") {
-    <app-board-view-tasks [groupedTasks]="groupedTasks()" />
-  } @else if (selectedView() === "list"){
-    <app-list-view-tasks />
+    @if (state.error) {
+      <div class="flex-1 flex justify-center items-center">
+        <app-error-page />
+      </div>
+    } @else if (state.tasks?.length) {
+      @if (selectedView() === "board") {
+        <app-board-view-tasks [groupedTasks]="groupedTasks()" />
+      } @else if (selectedView() === "list") {
+        <div class="flex-1">
+          <app-list-view-tasks />
+        </div>
+      }
+    }
   }
 
   <!--           Main Content at Desktop List view                              -->

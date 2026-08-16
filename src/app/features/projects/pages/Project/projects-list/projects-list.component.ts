@@ -27,48 +27,51 @@ import { PaginationComponent } from '../../../components/pagination/pagination.c
 })
 export class ProjectsListComponent {
   currentPage: WritableSignal<number> = signal(1);
-  numOfItems: WritableSignal<number> = signal(0);
   readonly _ProjectsService = inject(ProjectsService);
   readonly _Router = inject(Router);
 
   Projects$ = toObservable(this.currentPage).pipe(
     switchMap((page) => {
-      const request$ = this._ProjectsService.getProjects(page).pipe(
-        tap((res) => {
-          this._ProjectsService.totalProjects.set(
-            Number(res.headers.get('content-range')?.split('/')[1] as string),
-          );
-          this.numOfItems.set(res.body?.length || 0);
-
-          if (!this._ProjectsService.cache().has(page)) {
-            this._ProjectsService.cache.update((cache) => {
-              const newCache = new Map(cache);
-              newCache.set(page, res);
-              return newCache;
-            });
-          }
-        }),
-        map(
-          (res): IProjectsState => ({
-            error: false,
-            loading: false,
-            projects: res.body,
-          }),
-        ),
-        catchError(() =>
-          of({ error: true, loading: false, projects: null } as IProjectsState),
-        ),
-      );
-
       if (this._ProjectsService.cache().has(page)) {
         return of({
           loading: false,
           error: false,
           projects: this._ProjectsService.cache().get(page)!.body,
         });
+
       } else {
-        return request$.pipe(
-          startWith({ error: false, loading: true, projects: null }),
+        return this._ProjectsService.getProjects(page).pipe(
+          tap((res) => {
+            this._ProjectsService.totalProjects.set(
+              Number(res.headers.get('content-range')?.split('/')[1] as string),
+            );
+            if (!this._ProjectsService.cache().has(page)) {
+              this._ProjectsService.cache.update((cache) => {
+                const newCache = new Map(cache);
+                newCache.set(page, res);
+                return newCache;
+              });
+            }
+          }),
+          map(
+            (res): IProjectsState => ({
+              error: false,
+              loading: false,
+              projects: res.body,
+            }),
+          ),
+          startWith({
+            error: false,
+            loading: true,
+            projects: null,
+          } as IProjectsState),
+          catchError(() =>
+            of({
+              error: true,
+              loading: false,
+              projects: null,
+            } as IProjectsState),
+          ),
         );
       }
     }),
