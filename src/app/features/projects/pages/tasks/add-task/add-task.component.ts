@@ -11,7 +11,10 @@ import {
 } from '@angular/forms';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
-import { IAddTaskForm } from '../../../../../core/interfaces/Projects/types';
+import {
+  IAddTaskForm,
+  IStatus,
+} from '../../../../../core/interfaces/Projects/types';
 import { MembersService } from '../../../../../core/services/members.service';
 import { EpicService } from '../../../../../core/services/epic.service';
 import { pipe, tap } from 'rxjs';
@@ -19,6 +22,7 @@ import { MaxLengthStringPipe } from '../../../../../core/pipes/max-length-string
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
 import { TasksService } from '../../../../../core/services/tasks.service';
 import { ToastrService } from 'ngx-toastr';
+import { statusValues } from '../../../../../core/data/data';
 
 @Component({
   selector: 'app-add-task',
@@ -38,27 +42,17 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './add-task.component.css',
 })
 export class AddTaskComponent implements OnInit {
+  readonly statusValues = statusValues;
   readonly today = signal(new Date());
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   private readonly _MembersService = inject(MembersService);
   private readonly _ToastrService = inject(ToastrService);
-  private readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _TasksService = inject(TasksService);
   private readonly _EpicService = inject(EpicService);
+  readonly _ProjectContextService = inject(ProjectContextService);
   epics$ = this._EpicService.getAllProjectEpics();
   members$ = this._MembersService.getProjectMembers();
-
-  readonly statusValues = [
-    'TO_DO',
-    'IN_PROGRESS',
-    'BLOCKED',
-    'IN_REVIEW',
-    'READY_FOR_QA',
-    'REOPENED',
-    'READY_FOR_PRODUCTION',
-    'DONE',
-  ];
 
   addTaskForm = this._FormBuilder.group<IAddTaskForm>({
     project_id: this._FormBuilder.nonNullable.control(
@@ -73,9 +67,13 @@ export class AddTaskComponent implements OnInit {
   });
 
   ngOnInit() {
-    const epic_id = this._ActivatedRoute.snapshot.queryParamMap.get("epic_id")
+    const epic_id = this._ActivatedRoute.snapshot.queryParamMap.get('epic_id');
+    const status = this._ActivatedRoute.snapshot.queryParamMap.get('status');
     if (epic_id) {
       this.addTaskForm.patchValue({ epic_id });
+    }
+    if (status) {
+      this.addTaskForm.patchValue({ status } as { status: IStatus });
     }
   }
 
@@ -88,6 +86,8 @@ export class AddTaskComponent implements OnInit {
         .createEpicTask({ ...body, due_date: formatedDate })
         .subscribe(() => {
           this._ToastrService.success('Task is created successfully');
+          this._TasksService.refreshTasks();
+          this._TasksService.clearCache();
         });
     }
   }

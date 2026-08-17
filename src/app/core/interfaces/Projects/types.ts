@@ -102,3 +102,14 @@ export interface ITasks {
 export interface ITasksState extends IState {
   tasks: ITasks[] | null;
 }
+
+export interface IGroupedStatus {
+  TO_DO: ITasks[];
+  IN_PROGRESS: ITasks[];
+  BLOCKED: ITasks[];
+  IN_REVIEW: ITasks[];
+  READY_FOR_QA: ITasks[];
+  REOPENED:ITasks[];
+  READY_FOR_PRODUCTION:ITasks[];
+  DONE: ITasks[];
+}

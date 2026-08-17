@@ -105,8 +105,8 @@
         <app-pagination
           [numOfItemsPerPage]="state.projects?.length || 0"
           [total]="_ProjectsService.totalProjects()"
-          [currentPage]="this.currentPage()"
-          [lastPage]="this._ProjectsService.lastPage()"
+          [currentPage]="currentPage()"
+          [lastPage]="_ProjectsService.lastPage()"
           (nextButton)="NextPage()"
           (prevButton)="PrevPage()"
         />

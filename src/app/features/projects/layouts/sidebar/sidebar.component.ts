@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, signal, WritableSignal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Iconsdata } from '../../../../core/interfaces/Icons/types';
 import { NgClass } from '@angular/common';
@@ -14,6 +14,7 @@ import { icons } from '../../../../core/data/data';
 })
 export class SidebarComponent {
   private readonly _ProjectContextService = inject(ProjectContextService);
+  isMobile=window.matchMedia('(min-width)=');
   icons: Iconsdata[] = icons;
 
   @Input() isDesktopCollapsed!: boolean;
@@ -21,6 +22,7 @@ export class SidebarComponent {
   @Output() toggleDesktop = new EventEmitter();
   @Output() closeMobile = new EventEmitter();
   @Output() logoutClicked = new EventEmitter();
+
 
   toggleDesktopEmission() {
     this.toggleDesktop.emit();
@@ -45,4 +47,5 @@ export class SidebarComponent {
 
     return null;
   }
+
 }

@@ -53,6 +53,7 @@ body {
   --color-textSecondary: var(--text-secondary);
   --color-inputLabel: var(--input-label);
   --color-inputError: var(--placeholder-error-color);
+  --color-bgInputError: var(--bg-input-error);
   --color-success: var(--success);
   --color-error: var(--error);
   --color-warning: var(--warning);

@@ -1,0 +1,37 @@
+<div class="flex flex-col space-y-3 pb-16">
+  @for (item of [1, 2, 3, 4]; track item) {
+    <div class="bg-white flex flex-col space-y-3 p-4 animate-pulse">
+      
+      <!-- Task ID + Status -->
+      <div class="flex justify-between items-center">
+        <div class="h-4 w-20 bg-skeleton rounded"></div>
+        <div class="h-6 w-16 bg-skeleton rounded"></div>
+      </div>
+
+      <!-- Task title -->
+      <div class="space-y-2">
+        <div class="h-5 w-3/4 bg-skeleton rounded"></div>
+        <div class="h-5 w-1/2 bg-skeleton rounded"></div>
+      </div>
+
+      <!-- User + Due date + Action -->
+      <div class="flex justify-between items-center">
+        <div class="flex space-x-3 items-center">
+          
+          <!-- Avatar -->
+          <div class="w-7 h-7 bg-skeleton rounded-xl"></div>
+
+          <!-- Due date -->
+          <div class="flex flex-col space-y-2">
+            <div class="h-3 w-16 bg-skeleton rounded"></div>
+            <div class="h-4 w-24 bg-skeleton rounded"></div>
+          </div>
+        </div>
+
+        <!-- Action -->
+        <div class="h-4 w-1 bg-skeleton rounded"></div>
+      </div>
+
+    </div>
+  }
+</div>

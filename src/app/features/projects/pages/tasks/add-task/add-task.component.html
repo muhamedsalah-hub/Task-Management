@@ -31,7 +31,7 @@
         <div>
           <div class="input">
             <input
-              class="title-md outline-0"
+              class="title-md w-full outline-0"
               id="name"
               formControlName="title"
               type="text"
@@ -156,7 +156,12 @@
           + Create Task
         </button>
         <button
-          [routerLink]="['..']"
+          [routerLink]="[
+            '/projects',
+            _ProjectContextService.projectId(),
+            'tasks',
+          ]"
+          [queryParams]="{ view: 'board' }"
           type="button"
           class="cursor-pointer text-lg btn-secondary rounded-md w-full lg:w-fit lg:order-1"
         >

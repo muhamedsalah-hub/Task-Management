@@ -1,0 +1,92 @@
+<div class="flex space-x-6">
+  @for (groupedTask of groupedTasks; track $index) {
+    <div class="flex w-72 flex-col space-y-3">
+      <div class="flex justify-between items-center">
+        <div class="flex space-x-1 items-center">
+          <span class="label-sm text-textSecondary">{{
+            groupedTask[0].replaceAll("_", " ")
+          }}</span>
+          <div
+            [ngClass]="{
+              'bg-success': groupedTask[0] === 'DONE',
+              'bg-bgInputError text-error': groupedTask[0] === 'BLOCKED',
+              'bg-[#CDDDFF] text-textPrimary':
+                groupedTask[0] !== 'BLOCKED' && groupedTask[0] !== 'DONE',
+            }"
+            class="w-5 p-2 h-5 flex justify-center items-center"
+          >
+            <span class="text-xs font-medium">{{ groupedTask[1].length }}</span>
+          </div>
+        </div>
+        <button
+          [routerLink]="['new']"
+          [queryParams]="{ status: groupedTask[0] }"
+          [queryParamsHandling]="'merge'"
+          class="text-gray-500 text-xl cursor-pointer"
+        >
+          +
+        </button>
+      </div>
+
+      <div
+        class="flex items-center cursor-pointer justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg space-x-2"
+      >
+        <svg width="15" height="15" viewBox="0 0 15 15">
+          <use href="#circularPlus"></use>
+        </svg>
+        <span
+          [routerLink]="['new']"
+          [queryParamsHandling]="'merge'"
+          [queryParams]="{ status: groupedTask[0] }"
+          class="label-sm text-gray-500"
+          >Add new task</span
+        >
+      </div>
+
+      <div class="flex flex-col space-y-3">
+        @for (task of groupedTask[1]; track task.id) {
+          <div
+            [ngClass]="{
+              'bg-white': groupedTask[0] !== 'BLOCKED',
+              'bg-[#FFDAD633]': groupedTask[0] === 'BLOCKED',
+              'border-s-6 border-bgPrimary': groupedTask[0] === 'IN_PROGRESS',
+            }"
+            class="flex flex-col space-y-6 p-4 rounded-xl"
+          >
+            <h3 class="title-md text-textPrimary font-medium">
+              {{ task.title }}
+            </h3>
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-1.5">
+                @if (groupedTask[0] === "BLOCKED") {
+                  <span class="text-red-600 text-sm">⚠️</span>
+                  <span class="text-error label-sm">Delayed</span>
+                } @else if (groupedTask[0] === "IN_PROGRESS") {
+                  <span class="font-bold text-bgPrimary">TODAY</span>
+                } @else {
+                  <svg width="11" height="12" viewBox="0 0 11 12">
+                    <use href="#calendar"></use>
+                  </svg>
+                  <span class="text-textSecondary text-xs">
+                    {{ task.due_date | date: "dd MMM" }}
+                  </span>
+                }
+              </div>
+              <div
+                [ngClass]="{
+                  'bg-bgPrimary text-white': groupedTask[0] === 'IN_PROGRESS',
+                  'bg-[#E0E8FF] text-bgPrimary': groupedTask[0] !== 'IN_PROGRESS',
+                }"
+                class="w-6 h-6 flex rounded-xl justify-center items-center p-3"
+              >
+                <span class="text-xs font-bold">{{
+                  task.created_by.name | trimText
+                }}</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
