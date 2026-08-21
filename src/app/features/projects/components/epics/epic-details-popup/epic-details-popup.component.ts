@@ -13,7 +13,7 @@ import {
   ITasksState,
 } from '../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { EpicValidationRules } from '../../../../../core/utils/validations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -27,6 +27,8 @@ import { ProjectContextService } from '../../../../../core/services/project-cont
 import { TasksService } from '../../../../../core/services/tasks.service';
 import { catchError, map, of, startWith, tap } from 'rxjs';
 import { EmptyTasksComponent } from '../../tasks/epics/empty-EpicTasks/empty-EpicTasks.component';
+import { TaskDetailsModalService } from '../../shared/services/task-details-modal.service';
+import { TaskDetailsPopUpComponent } from "../../shared/task-details-pop-up/task-details-pop-up.component";
 
 @Component({
   selector: 'app-epic-details-popup',
@@ -41,13 +43,17 @@ import { EmptyTasksComponent } from '../../tasks/epics/empty-EpicTasks/empty-Epi
     AsyncPipe,
     FieldErrorComponent,
     EmptyTasksComponent,
-  ],
+    TaskDetailsPopUpComponent,
+    NgClass
+],
+  providers:[TaskDetailsModalService],
   templateUrl: './epic-details-popup.component.html',
   styleUrl: './epic-details-popup.component.css',
 })
 export class EpicDetailsPopupComponent implements OnInit {
   readonly validations = EpicValidationRules;
   today: WritableSignal<Date> = signal(new Date());
+  readonly _TaskDetailsModalService = inject(TaskDetailsModalService);
   readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _Router = inject(Router);
   private readonly _FormBuilder = inject(FormBuilder);
@@ -118,4 +124,5 @@ export class EpicDetailsPopupComponent implements OnInit {
       },
     );
   }
+
 }

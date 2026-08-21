@@ -21,7 +21,7 @@ import {
   ITasksState,
 } from '../../../../../core/interfaces/Projects/types';
 import { ProjectTasksSkeletonComponent } from '../../../components/tasks/projects/project-tasks-skeleton/project-tasks-skeleton.component';
-import { ErrorPageComponent } from '../../../components/error-page/error-page.component';
+import { ErrorPageComponent } from '../../../components/shared/error-page/error-page.component';
 import { EmptyProjectTasksComponent } from '../../../components/tasks/projects/empty-project-tasks/empty-project-tasks.component';
 import { statusValues } from '../../../../../core/data/data';
 import { BoardViewTasksComponent } from '../../../components/tasks/projects/board-view-tasks/board-view-tasks.component';

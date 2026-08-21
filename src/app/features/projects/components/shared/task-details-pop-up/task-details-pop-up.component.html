@@ -1,0 +1,45 @@
+<div class="fixed bg-[#EEEFF3] rounded-t-xl z-50 bottom-0 right-0 left-0 px-6 py-3">
+  <div class="flex justify-between items-center">
+    <h3>Task-123</h3>
+    <svg
+      (click)="_TaskDetailsModalService.closeModal()"
+      width="16"
+      height="16"
+      viewBox="0 0 16 16"
+      class="cursor-pointer"
+    >
+      <use href="#close"></use>
+    </svg>
+  </div>
+  <div>
+    <h4>
+      Implementation title
+    </h4>
+    <div class="flex space-x-2 items-center">
+      <span>Completed</span>
+      <span>EPIC-102</span>
+    </div>
+
+  </div>
+  <div class="flex justify-between items-center space-x-3">
+    <div class="flex-1 bg-[#F1F3FF] p-4 rounded-xl">
+      <span class="title-sm text-textSecondary font-medium">Assignee</span>
+      <div class="flex items-center space-x-2">
+        <div class="h-6 w-6 bg-bgAvatar p-2 flex items-center justify-center rounded-full">
+          <span class="text-bgPrimary text-xs font-semibold">MS</span>
+        </div>
+        <span class="text-textPrimary">Mohamed Salah</span>
+      </div>
+    </div>
+    <div class="flex-1 bg-[#F1F3FF] p-4 rounded-xl">
+      <span class="title-sm text-textSecondary font-medium">DUE DATE</span>
+      <div class="flex items-center space-x-2">
+        <svg width="12" height="12">
+          <use href="#calendar2"></use>
+        </svg>
+        <span class="text-textPrimary">Mohamed Salah</span>
+      </div>
+    </div>
+  </div>
+ 
+</div>

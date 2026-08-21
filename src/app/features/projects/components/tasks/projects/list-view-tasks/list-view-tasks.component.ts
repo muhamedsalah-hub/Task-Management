@@ -5,7 +5,7 @@ import { map, of, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { ITasksState } from '../../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../../core/pipes/trim-text.pipe';
-import { PaginationComponent } from '../../../pagination/pagination.component';
+import { PaginationComponent } from '../../../shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-list-view-tasks',

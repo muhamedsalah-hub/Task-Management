@@ -16,11 +16,11 @@ import {
   IProjectEpics,
 } from '../../../../../core/interfaces/Projects/types';
 import { EpicsSkeletonComponent } from '../../../components/epics/epics-skeleton/epics-skeleton.component';
-import { ErrorPageComponent } from '../../../components/error-page/error-page.component';
+import { ErrorPageComponent } from '../../../components/shared/error-page/error-page.component';
 import { EmptyEpicsComponent } from '../../../components/epics/empty-epics/empty-epics.component';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
 
