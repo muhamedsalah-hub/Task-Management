@@ -5,6 +5,7 @@ import {
   catchError,
   combineLatest,
   map,
+  merge,
   of,
   startWith,
   switchMap,
@@ -48,11 +49,11 @@ export class ProjectEpicsComponent {
   isOpen: WritableSignal<boolean> = signal(false);
   EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
 
-  Epics$ = combineLatest([
+  Epics$ = merge(
     toObservable(this.currentPage),
-    this._EpicService.refreshSubject.asObservable().pipe(startWith(undefined)),
-  ]).pipe(
-    switchMap(([currentPage, _]) => {
+    this._EpicService.refresh$.pipe(map(()=>this.currentPage())),
+  ).pipe(
+    switchMap((currentPage) => {
       return this._EpicService.getProjectEpics(currentPage).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(
