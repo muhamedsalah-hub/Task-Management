@@ -141,7 +141,7 @@
   }
 
   <!--                  Epic details PopUp                             -->
-  @if (true) {
+  @if (isOpen()) {
     <app-epic-details-popup
       (closePopUpEmitter)="closePopup()"
       (OpenPopUpEmitter)="openPopup()"

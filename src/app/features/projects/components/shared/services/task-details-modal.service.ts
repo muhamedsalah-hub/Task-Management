@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 @Injectable()
 export class TaskDetailsModalService {
-  isOpen = signal<boolean>(false);
+  isOpen = signal<boolean>(true);
 
   closeModal() {
     this.isOpen.set(false);

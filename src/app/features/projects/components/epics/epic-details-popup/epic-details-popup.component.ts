@@ -44,7 +44,8 @@ import { TaskDetailsPopUpComponent } from "../../shared/task-details-pop-up/task
     FieldErrorComponent,
     EmptyTasksComponent,
     TaskDetailsPopUpComponent,
-    NgClass
+    NgClass,
+    RouterLink
 ],
   providers:[TaskDetailsModalService],
   templateUrl: './epic-details-popup.component.html',
