@@ -62,6 +62,7 @@ export class ProjectTasksComponent implements OnInit {
   private readonly _Router = inject(Router);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   readonly _ProjectContextService = inject(ProjectContextService);
+
   tasks$ = this._TasksService.tasks$.pipe(
     tap((tasks) => {
       const groupedValues: IGroupedStatus = {

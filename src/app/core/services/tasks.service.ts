@@ -30,7 +30,6 @@ export class TasksService {
   cache = signal(new Map<number, HttpResponse<ITasks[]>>());
 
   private readonly refreshTasks$ = new Subject<void>();
-
   tasks$ = this.refreshTasks$.pipe(
     startWith(undefined),
     switchMap(() => this.getAllProjectTasks()),
@@ -81,6 +80,13 @@ export class TasksService {
   getTask(taskId: string | null): Observable<ITasks[]> {
     return this._HtppClient.get<ITasks[]>(
       `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}&id=eq.${taskId}`,
+    );
+  }
+
+  updateTaskStatus(status: string, taskId: string): Observable<null> {
+    return this._HtppClient.patch<null>(
+      `${environmet.baseUrl}/rest/v1/tasks?id=eq.${taskId}`,
+      { status },
     );
   }
 

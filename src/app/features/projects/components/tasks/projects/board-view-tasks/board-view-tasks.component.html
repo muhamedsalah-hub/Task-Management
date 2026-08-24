@@ -1,6 +1,11 @@
-<div class="hidden lg:flex space-x-6">
+<div cdkDropListGroup class="hidden lg:flex space-x-6">
   @for (groupedTask of groupedTasks; track $index) {
-    <div class="flex w-72 flex-col space-y-3">
+    <div
+      cdkDropList
+      [cdkDropListData]="groupedTask[0]"
+      (cdkDropListDropped)="drop($event)"
+      class="flex w-72 flex-col space-y-3"
+    >
       <div class="flex justify-between items-center">
         <div class="flex space-x-1 items-center">
           <span class="label-sm text-textSecondary">{{
@@ -43,16 +48,19 @@
         >
       </div>
 
+      <!--     Each status tasks           -->
       <div class="flex flex-col space-y-3">
         @for (task of groupedTask[1]; track task.id) {
           <div
+            cdkDrag
+            [cdkDragData]="task"
             (click)="_TaskDetailsModalService.openModal()"
             [ngClass]="{
               'bg-white': groupedTask[0] !== 'BLOCKED',
               'bg-[#FFDAD633]': groupedTask[0] === 'BLOCKED',
               'border-s-6 border-bgPrimary': groupedTask[0] === 'IN_PROGRESS',
             }"
-            class="flex flex-col cursor-pointer space-y-6 p-4 rounded-xl"
+            class="flex flex-col cursor-pointer cursor- space-y-6 p-4 rounded-xl"
           >
             <h3 class="title-md text-textPrimary font-medium">
               {{ task.title }}
