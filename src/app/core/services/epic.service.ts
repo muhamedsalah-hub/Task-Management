@@ -32,7 +32,7 @@ export class EpicService {
   }) {
     return this._HttpClient.post(`${environmet.baseUrl}/rest/v1/epics`, body);
   }
-
+  
   getAllProjectEpics(): Observable<IProjectEpics[]> {
     return this._HttpClient.get<IProjectEpics[]>(
       `${environmet.baseUrl}/rest/v1/project_epics?project_id=eq.${this._ProjectContextService.projectId()}`,

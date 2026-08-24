@@ -55,7 +55,7 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
       });
     }
 
-    //Create tasks
+    //Create tasks & update task status
     if (req.url.includes('rest/v1/tasks')) {
       req = req.clone({
         setHeaders: { Authorization: `Bearer ${token}` },
