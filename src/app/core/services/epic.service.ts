@@ -25,7 +25,7 @@ export class EpicService {
 
   createProjectEpic(body: {
     title: string;
-    description: string ;
+    description: string;
     assignee_id: string;
     project_id: string;
     deadline: string;
@@ -41,11 +41,12 @@ export class EpicService {
 
   getProjectEpics(
     currentPage: number = 1,
+    title: string = '',
   ): Observable<HttpResponse<IProjectEpics[]>> {
     const offset = (currentPage - 1) * this.limit();
 
     return this._HttpClient.get<IProjectEpics[]>(
-      `${environmet.baseUrl}/rest/v1/project_epics?project_id=eq.${this._ProjectContextService.projectId()}&limit=${this.limit()}&offset=${offset}`,
+      `${environmet.baseUrl}/rest/v1/project_epics?project_id=eq.${this._ProjectContextService.projectId()}&limit=${this.limit()}&offset=${offset}&title=ilike.%25${title}%25`,
       { observe: 'response' },
     );
   }
