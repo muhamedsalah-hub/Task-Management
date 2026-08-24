@@ -5,6 +5,7 @@ import {
   catchError,
   combineLatest,
   map,
+  merge,
   of,
   startWith,
   switchMap,
@@ -16,11 +17,11 @@ import {
   IProjectEpics,
 } from '../../../../../core/interfaces/Projects/types';
 import { EpicsSkeletonComponent } from '../../../components/epics/epics-skeleton/epics-skeleton.component';
-import { ErrorPageComponent } from '../../../components/error-page/error-page.component';
+import { ErrorPageComponent } from '../../../components/shared/error-page/error-page.component';
 import { EmptyEpicsComponent } from '../../../components/epics/empty-epics/empty-epics.component';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
 
@@ -48,11 +49,11 @@ export class ProjectEpicsComponent {
   isOpen: WritableSignal<boolean> = signal(false);
   EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
 
-  Epics$ = combineLatest([
+  Epics$ = merge(
     toObservable(this.currentPage),
-    this._EpicService.refreshSubject.asObservable().pipe(startWith(undefined)),
-  ]).pipe(
-    switchMap(([currentPage, _]) => {
+    this._EpicService.refresh$.pipe(map(()=>this.currentPage())),
+  ).pipe(
+    switchMap((currentPage) => {
       return this._EpicService.getProjectEpics(currentPage).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(

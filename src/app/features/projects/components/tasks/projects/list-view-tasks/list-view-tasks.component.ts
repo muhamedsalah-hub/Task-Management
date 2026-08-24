@@ -5,17 +5,28 @@ import { map, of, startWith, switchMap, tap } from 'rxjs';
 import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { ITasksState } from '../../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../../core/pipes/trim-text.pipe';
-import { PaginationComponent } from '../../../pagination/pagination.component';
+import { PaginationComponent } from '../../../shared/pagination/pagination.component';
+import { TaskDetailsModalService } from '../../../shared/services/task-details-modal.service';
+import { TaskDetailsPopUpComponent } from '../../../shared/task-details-pop-up/task-details-pop-up.component';
 
 @Component({
   selector: 'app-list-view-tasks',
   standalone: true,
-  imports: [AsyncPipe, NgClass, DatePipe, TrimTextPipe, PaginationComponent],
+  imports: [
+    AsyncPipe,
+    NgClass,
+    DatePipe,
+    TrimTextPipe,
+    PaginationComponent,
+    TaskDetailsPopUpComponent,
+  ],
+  providers: [TaskDetailsModalService],
   templateUrl: './list-view-tasks.component.html',
   styleUrl: './list-view-tasks.component.css',
 })
 export class ListViewTasksComponent {
   readonly _TasksService = inject(TasksService);
+  readonly _TaskDetailsModalService = inject(TaskDetailsModalService);
   currentPage = signal<number>(1);
 
   tasks$ = toObservable(this.currentPage).pipe(

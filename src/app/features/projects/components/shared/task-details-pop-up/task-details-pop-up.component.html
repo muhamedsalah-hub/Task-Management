@@ -1,0 +1,162 @@
+<div
+  class="fixed z-50 bottom-0 left-0 right-0 w-full rounded-t-2xl lg:w-225 lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:rounded-2xl max-h-3/4 lg:h-full overflow-y-auto"
+>
+  <form class="flex flex-col lg:flex-row">
+    <!-- Left Side -->
+    <div class="bg-white py-6 px-5 lg:px-8 flex-1 flex flex-col space-y-5">
+      <div class="flex justify-between items-center">
+        <div class="flex items-center space-x-3">
+          <div>
+            <input
+              type="text"
+              class="w-fit text-bgPrimary py-0.5 px-2 bg-bgAvatar rounded-xs outline-0"
+            />
+          </div>
+
+          <select
+            id="epic"
+            class="text-sm py-0.5 px-2 border flex w-fit border-gray-200 rounded-lg cursor-pointer outline-0"
+          >
+            <option value="ok">ok</option>
+          </select>
+        </div>
+        <div class="block lg:hidden">
+          <svg
+            (click)="close()"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            class="cursor-pointer"
+          >
+            <use href="#close"></use>
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-textPrimary text-xl font-semibold">Title</h4>
+      </div>
+
+      <div class="flex flex-col space-y-3">
+        <label for="desc" class="label-sm text-textSecondary font-semibold">
+          Description
+        </label>
+
+        <textarea
+          class="border border-gray-100 outline-0 h-40 lg:h-120 resize-none rounded-xl p-3 text-textPrimary"
+          id="desc"
+        >
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fugiat reiciendis, aliquid ut nam adipisci excepturi hic possimus mollitia est, recusandae tempora enim alias dicta necessitatibus eos, velit animi.</textarea
+        >
+      </div>
+    </div>
+
+    <!-- Right Side -->
+    <div
+      class="flex flex-col space-y-5 px-5 lg:px-8 py-6 bg-bgSurface-low *:w-full lg:*:w-63.75"
+    >
+      <!-- Status -->
+      <div class="flex flex-col space-y-3">
+        <label for="status" class="label-sm text-textSecondary font-semibold">
+          Status
+        </label>
+
+        <div class="cursor-pointer bg-success py-2.5 px-3 rounded-sm">
+          <select id="status" class="w-full cursor-pointer outline-0">
+            <option value="Done">Completed</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Assignee -->
+      <div class="flex flex-col space-y-3">
+        <label for="assignee" class="label-sm text-textSecondary font-semibold">
+          Assignee
+        </label>
+
+        <div
+          class="flex space-x-1 items-center bg-white cursor-pointer py-2.5 px-3 rounded-md outline-0 border border-gray-200"
+        >
+          <div
+            class="h-6 w-6 p-2 font-semibold bg-bgAvatar text-xs rounded-xl text-textSecondary flex justify-center items-center"
+          >
+            MS
+          </div>
+
+          <select
+            class="w-full outline-0 cursor-pointer text-textPrimary"
+            id="assignee"
+          >
+            <option value="mohaemd salah">Mohamed Salah</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Reporter -->
+      <div class="flex flex-col space-y-3">
+        <span class="label-sm text-textSecondary font-semibold">
+          Reporter
+        </span>
+
+        <div class="flex space-x-3 items-center">
+          <div
+            class="h-6 w-6 p-3 font-semibold text-textPrimary bg-bgAvatar text-xs rounded-xl flex justify-center items-center"
+          >
+            MS
+          </div>
+
+          <span class="text-textPrimary"> Mohamed Salah </span>
+        </div>
+      </div>
+
+      <!-- Due Date -->
+      <div class="flex flex-col space-y-3">
+        <label for="deadline" class="label-sm text-textSecondary font-semibold">
+          Due date
+        </label>
+
+        <div
+          (click)="picker.open()"
+          class="text-sm py-2.5 cursor-pointer px-3 border border-gray-200 rounded-lg bg-white"
+        >
+          <div class="flex items-center space-x-1">
+            <svg width="14" height="15" viewBox="0 0 14 15">
+              <use href="#calendar2"></use>
+            </svg>
+
+            <input
+              [value]=""
+              id="deadline"
+              class="w-full cursor-pointer outline-0 text-textPrimary"
+              [matDatepicker]="picker"
+            />
+
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <!-- Created At -->
+      <div class="flex justify-between items-center">
+        <span class="label-sm font-semibold text-textSecondary">
+          Created AT
+        </span>
+
+        <span class="text-textPrimary"> date </span>
+      </div>
+
+      <!-- Close Button -->
+      <div
+        class="flex-1 w-96 lg:w-fit flex items-end justify-center lg:justify-end"
+      >
+        <button
+          (click)="close()"
+          type="button"
+          class="cursor-pointer py-2 px-4 bg-bgAvatar w-full lg:w-fit text-xs text-textPrimary font-semibold rounded-sm"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,6 +1,11 @@
 <div>
+  <!--                    Epic details                                -->
   <div
-    class="bg-white max-h-3/4 overflow-auto lg:w-2xl z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    [ngClass]="{
+      hidden: _TaskDetailsModalService.isOpen(),
+      block: !_TaskDetailsModalService.isOpen(),
+    }"
+    class="bg-white overflow-y-auto max-h-3/4 lg:w-2xl z-50 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
   >
     <!--           Header                  -->
     <form
@@ -107,7 +112,7 @@
 
         <div class="flex items-center space-x-4 justify-between">
           <div class="flex-1 flex flex-col space-y-1">
-            <span class="label-sm text-inputLabel">Deadline</span>
+            <label class="label-sm text-inputLabel">Deadline</label>
             <div
               (click)="picker.open()"
               class="text-sm p-2 border border-gray-200 rounded-lg"
@@ -141,8 +146,8 @@
           </div>
         </div>
 
+        
         <!--         Epic Tasks                -->
-
         @if (tasksState()?.loading) {
           <div
             class="p-6 flex flex-col space-y-2 items-center justify-self-center self-center"
@@ -168,6 +173,9 @@
           </div>
         } @else if (tasksState()?.tasks?.length) {
           <div class="flex flex-col space-y-4">
+
+
+            <!--        Tasks headers                    -->
             <div class="flex justify-between items-center">
               <span class="label-sm text-inputLabel">Tasks</span>
               <div class="py-0.5 px-3 bg-[#E0E8FF] rounded-xl">
@@ -184,10 +192,15 @@
               </button>
             </div>
 
+
+            <!--      Tasks List                  -->
             <div class="flex flex-col space-y-3">
               @for (task of tasksState()?.tasks; track task.id) {
                 <div
-                  class="flex flex-col p-4 border border-gray-100 rounded-lg space-y-3"
+                  (click)="_TaskDetailsModalService.openModal()"
+                  [routerLink]="[]"
+                  [queryParams]="{taskId:task.id}"
+                  class="flex flex-col p-4 cursor-pointer border border-gray-100 rounded-lg space-y-3"
                 >
                   <h3 class="font-semibold text-textPrimary">
                     {{ task.title }}
@@ -283,9 +296,17 @@
     </form>
   </div>
 
+  <!--        Task Details Modal                 -->
+  @if (_TaskDetailsModalService.isOpen()) {
+    <app-task-details-pop-up
+      (closeModal)="_TaskDetailsModalService.closeModal()"
+    />
+  }
+
   <!--          Drawback shadow                  -->
   <div
     (click)="closePopUp()"
+    (click)="_TaskDetailsModalService.closeModal()"
     class="absolute z-40 my-0 inset-0 bg-black/50"
   ></div>
 </div>

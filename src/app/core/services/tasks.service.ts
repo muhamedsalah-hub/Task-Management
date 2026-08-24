@@ -30,6 +30,7 @@ export class TasksService {
   cache = signal(new Map<number, HttpResponse<ITasks[]>>());
 
   private readonly refreshTasks$ = new Subject<void>();
+
   tasks$ = this.refreshTasks$.pipe(
     startWith(undefined),
     switchMap(() => this.getAllProjectTasks()),
@@ -74,6 +75,12 @@ export class TasksService {
     return this._HtppClient.get<ITasks[]>(
       `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}&limit=${this.limit()}&offset=${offset}`,
       { observe: 'response' },
+    );
+  }
+
+  getTask(taskId: string | null): Observable<ITasks[]> {
+    return this._HtppClient.get<ITasks[]>(
+      `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}&id=eq.${taskId}`,
     );
   }
 

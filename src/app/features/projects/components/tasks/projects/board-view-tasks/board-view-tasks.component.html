@@ -1,4 +1,4 @@
-<div class="flex space-x-6">
+<div class="hidden lg:flex space-x-6">
   @for (groupedTask of groupedTasks; track $index) {
     <div class="flex w-72 flex-col space-y-3">
       <div class="flex justify-between items-center">
@@ -46,12 +46,13 @@
       <div class="flex flex-col space-y-3">
         @for (task of groupedTask[1]; track task.id) {
           <div
+            (click)="_TaskDetailsModalService.openModal()"
             [ngClass]="{
               'bg-white': groupedTask[0] !== 'BLOCKED',
               'bg-[#FFDAD633]': groupedTask[0] === 'BLOCKED',
               'border-s-6 border-bgPrimary': groupedTask[0] === 'IN_PROGRESS',
             }"
-            class="flex flex-col space-y-6 p-4 rounded-xl"
+            class="flex flex-col cursor-pointer space-y-6 p-4 rounded-xl"
           >
             <h3 class="title-md text-textPrimary font-medium">
               {{ task.title }}
@@ -75,7 +76,8 @@
               <div
                 [ngClass]="{
                   'bg-bgPrimary text-white': groupedTask[0] === 'IN_PROGRESS',
-                  'bg-[#E0E8FF] text-bgPrimary': groupedTask[0] !== 'IN_PROGRESS',
+                  'bg-[#E0E8FF] text-bgPrimary':
+                    groupedTask[0] !== 'IN_PROGRESS',
                 }"
                 class="w-6 h-6 flex rounded-xl justify-center items-center p-3"
               >
@@ -88,5 +90,17 @@
         }
       </div>
     </div>
+  }
+
+  @if (_TaskDetailsModalService.isOpen()) {
+    <app-task-details-pop-up
+      (closeModal)="_TaskDetailsModalService.closeModal()"
+    />
+
+    <!--          Drawback shadow                  -->
+    <div
+      (click)="_TaskDetailsModalService.closeModal()"
+      class="absolute z-40 my-0 inset-0 bg-black/50"
+    ></div>
   }
 </div>

@@ -5,10 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { ProjectsService } from '../../../../../core/services/projects.service';
 import { EmptyProjectsComponent } from '../../../components/projects/empty-projects/empty-projects.component';
 import { ProjectsSkeletonComponent } from '../../../components/projects/projects-skeleton/projects-skeleton.component';
-import { ErrorPageComponent } from '../../../components/error-page/error-page.component';
+import { ErrorPageComponent } from '../../../components/shared/error-page/error-page.component';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { IProjectsState } from '../../../../../core/interfaces/Projects/types';
-import { PaginationComponent } from '../../../components/pagination/pagination.component';
+import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 
 @Component({
   selector: 'app-projects-list',
