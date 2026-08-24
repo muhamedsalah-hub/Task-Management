@@ -4,6 +4,8 @@ import { EpicService } from '../../../../../core/services/epic.service';
 import {
   catchError,
   combineLatest,
+  debounceTime,
+  distinctUntilChanged,
   map,
   merge,
   of,
@@ -24,6 +26,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
 import { PaginationComponent } from '../../../components/shared/pagination/pagination.component';
 import { EpicDetailsPopupComponent } from '../../../components/epics/epic-details-popup/epic-details-popup.component';
 import { ProjectContextService } from '../../../../../core/services/project-context.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-project-epics',
@@ -38,6 +41,7 @@ import { ProjectContextService } from '../../../../../core/services/project-cont
     DatePipe,
     PaginationComponent,
     EpicDetailsPopupComponent,
+    FormsModule,
   ],
   templateUrl: './project-epics.component.html',
   styleUrl: './project-epics.component.css',
@@ -48,13 +52,19 @@ export class ProjectEpicsComponent {
   currentPage: WritableSignal<number> = signal(1);
   isOpen: WritableSignal<boolean> = signal(false);
   EpicDetails: WritableSignal<IProjectEpics | null> = signal(null);
+  searchedEpic = signal<string>('');
 
-  Epics$ = merge(
+  Epics$ = combineLatest([
     toObservable(this.currentPage),
-    this._EpicService.refresh$.pipe(map(()=>this.currentPage())),
-  ).pipe(
-    switchMap((currentPage) => {
-      return this._EpicService.getProjectEpics(currentPage).pipe(
+    toObservable(this.searchedEpic).pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      tap(() => this.currentPage.set(1)),
+    ),
+    this._EpicService.refresh$.pipe(startWith(undefined)),
+  ]).pipe(
+    switchMap(([currentPage, search]) => {
+      return this._EpicService.getProjectEpics(currentPage, search).pipe(
         tap((res) => {
           this._EpicService.totalEpics.set(
             Number(res.headers.get('content-range')?.split('/')[1]),

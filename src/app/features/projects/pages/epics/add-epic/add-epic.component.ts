@@ -12,7 +12,7 @@ import { EpicValidationRules } from '../../../../../core/utils/validations';
 import { EpicService } from '../../../../../core/services/epic.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgClass } from '@angular/common';
-import {  RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { FieldErrorComponent } from '../../../../../shared/field-error/field-error.component';
 
 @Component({
@@ -47,7 +47,7 @@ export class AddEpicComponent {
   members$ = this._MembersService.getProjectMembers();
 
   epicForm: FormGroup = this._FormBuilder.group({
-    title: ['', this.validations.title],
+    title: [null, this.validations.title],
     description: [null],
     assignee_id: [null],
     project_id: [this._ProjectContextService.projectId()],
@@ -68,7 +68,12 @@ export class AddEpicComponent {
         .pipe(finalize(() => this.isLoading.set(false)))
         .subscribe(() => {
           this._ToastrService.success('Epic created successfully');
-          this.epicForm.reset();
+          this.epicForm.patchValue({
+            title: null,
+            description: null,
+            assignee_id: null,
+            deadline: new Date(),
+          });
         });
     }
   }
