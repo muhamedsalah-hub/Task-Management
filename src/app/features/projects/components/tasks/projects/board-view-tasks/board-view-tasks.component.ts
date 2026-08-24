@@ -44,9 +44,13 @@ export class BoardViewTasksComponent {
   readonly _TaskDetailsModalService = inject(TaskDetailsModalService);
 
   drop(event: CdkDragDrop<keyof IGroupedStatus>) {
+    if (event.container.data === event.previousContainer.data) {
+      return;
+    }
+
     this._TasksService
       .updateTaskStatus(event.container.data, event.item.data.id)
-      .subscribe(() => {
+      .subscribe(() => {  
         this._TasksService.refreshTasks();
       });
   }
