@@ -13,7 +13,19 @@ import {
   DatePipe,
   NgClass,
 } from '../../../../../../../node_modules/@angular/common';
-import { catchError, map, of, startWith, tap } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  merge,
+  of,
+  shareReplay,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { TrimTextPipe } from '../../../../../core/pipes/trim-text.pipe';
 import {
   IGroupedStatus,
@@ -30,6 +42,7 @@ import { MatOption } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-project-tasks',
@@ -58,40 +71,55 @@ export class ProjectTasksComponent implements OnInit {
 
   selectedView: WritableSignal<'board' | 'list'> = signal('board');
   groupedTasks = signal(new Map<keyof IGroupedStatus, ITasks[]>());
+  searchedTask = signal<string>('');
   private readonly _TasksService = inject(TasksService);
   private readonly _Router = inject(Router);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   readonly _ProjectContextService = inject(ProjectContextService);
 
-  tasks$ = this._TasksService.tasks$.pipe(
-    tap((tasks) => {
-      const groupedValues: IGroupedStatus = {
-        TO_DO: [],
-        DONE: [],
-        IN_PROGRESS: [],
-        BLOCKED: [],
-        IN_REVIEW: [],
-        READY_FOR_PRODUCTION: [],
-        READY_FOR_QA: [],
-        REOPENED: [],
-      };
-      const groupedObject = tasks.reduce((prev, curr) => {
-        const status = curr.status as keyof IGroupedStatus;
-        prev[status].push(curr);
-        return prev;
-      }, groupedValues);
-
-      this.groupedTasks.set(
-        new Map(
-          Object.entries(groupedObject) as [keyof IGroupedStatus, ITasks[]][],
-        ),
-      );
-    }),
-    map((tasks): ITasksState => ({ error: false, loading: false, tasks })),
-    startWith({ error: false, loading: true, tasks: null } as ITasksState),
-    catchError(() =>
-      of({ error: true, loading: false, tasks: null } as ITasksState),
+  tasks$ = merge(
+    toObservable(this.searchedTask).pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
     ),
+    this._TasksService.refresh$.pipe(map(() => this.searchedTask())),
+  ).pipe(
+    switchMap((search) =>
+      this._TasksService.getAllProjectTasks(search).pipe(
+        tap((tasks) => {
+          const groupedValues: IGroupedStatus = {
+            TO_DO: [],
+            DONE: [],
+            IN_PROGRESS: [],
+            BLOCKED: [],
+            IN_REVIEW: [],
+            READY_FOR_PRODUCTION: [],
+            READY_FOR_QA: [],
+            REOPENED: [],
+          };
+          const groupedObject = tasks.reduce((prev, curr) => {
+            const status = curr.status as keyof IGroupedStatus;
+            prev[status].push(curr);
+            return prev;
+          }, groupedValues);
+
+          this.groupedTasks.set(
+            new Map(
+              Object.entries(groupedObject) as [
+                keyof IGroupedStatus,
+                ITasks[],
+              ][],
+            ),
+          );
+        }),
+        map((tasks): ITasksState => ({ error: false, loading: false, tasks })),
+        startWith({ error: false, loading: true, tasks: null } as ITasksState),
+        catchError(() =>
+          of({ error: true, loading: false, tasks: null } as ITasksState),
+        ),
+      ),
+    ),
+    shareReplay(1),
   );
 
   ngOnInit() {
