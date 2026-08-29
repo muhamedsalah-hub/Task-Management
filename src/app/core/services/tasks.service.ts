@@ -30,11 +30,7 @@ export class TasksService {
   cache = signal(new Map<number, HttpResponse<ITasks[]>>());
 
   private readonly refreshTasks$ = new Subject<void>();
-  tasks$ = this.refreshTasks$.pipe(
-    startWith(undefined),
-    switchMap(() => this.getAllProjectTasks()),
-    shareReplay(1),
-  );
+  readonly refresh$ = this.refreshTasks$.asObservable();
 
   createEpicTask(body: {
     project_id: string;
@@ -57,9 +53,9 @@ export class TasksService {
     );
   }
 
-  getAllProjectTasks(): Observable<ITasks[]> {
+  getAllProjectTasks(task:string=''): Observable<ITasks[]> {
     return this._HtppClient.get<ITasks[]>(
-      `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}`,
+      `${environmet.baseUrl}/rest/v1/project_tasks?project_id=eq.${this._ProjectContextService.projectId()}&title=ilike.%25${task}%25`,
     );
   }
 

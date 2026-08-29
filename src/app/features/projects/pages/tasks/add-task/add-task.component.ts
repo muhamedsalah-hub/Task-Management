@@ -86,7 +86,6 @@ export class AddTaskComponent implements OnInit {
         .createEpicTask({ ...body, due_date: formatedDate })
         .subscribe(() => {
           this._ToastrService.success('Task is created successfully');
-          this._TasksService.refreshTasks();
           this._TasksService.clearCache();
         });
     }

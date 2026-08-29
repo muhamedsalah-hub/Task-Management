@@ -24,7 +24,10 @@
       <div
         class="flex flex-col lg:flex-row lg:items-center space-y-4 lg:space-x-3 lg:space-y-0"
       >
-        <div class="input flex items-center md:w-80 space-x-2">
+        <div
+          [ngClass]="{ hidden: selectedView() === 'list' }"
+          class="input flex items-center md:w-80 space-x-2"
+        >
           <svg width="14" height="14" viewBox="0 0 11 11">
             <use href="#search"></use>
           </svg>
@@ -32,6 +35,7 @@
             placeholder="Search tasks..."
             type="search"
             class="h-full w-full outline-0"
+            [(ngModel)]="searchedTask"
           />
         </div>
         <button
