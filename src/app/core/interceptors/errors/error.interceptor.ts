@@ -29,8 +29,6 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
         _Toastr.error(`Failed to update epic : Please try again later`);
       } else if (req.url.includes('/rest/v1/tasks') && req.method == 'POST') {
         _Toastr.error(`Failed to create task, try again later`);
-      } else if (req.url.includes('/rest/v1/tasks') && req.method == 'PATCH') {
-        _Toastr.error(`Failed to drag and drop task, try again later`);
       }
       return throwError(() => err);
     }),

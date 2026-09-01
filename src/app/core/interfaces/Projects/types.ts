@@ -109,7 +109,18 @@ export interface IGroupedStatus {
   BLOCKED: ITasks[];
   IN_REVIEW: ITasks[];
   READY_FOR_QA: ITasks[];
-  REOPENED:ITasks[];
-  READY_FOR_PRODUCTION:ITasks[];
+  REOPENED: ITasks[];
+  READY_FOR_PRODUCTION: ITasks[];
   DONE: ITasks[];
+}
+
+export interface IUpdateTaskForm extends Omit<IAddTaskForm, 'project_id'> {}
+
+export interface ITaskBody {
+  epic_id?: string | null;
+  title?: string;
+  description?: string | null;
+  assignee_id?: string | null;
+  due_date?: Date | null;
+  status?: IStatus;
 }

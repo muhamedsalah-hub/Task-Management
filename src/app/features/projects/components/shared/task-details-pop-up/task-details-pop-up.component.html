@@ -1,23 +1,31 @@
 <div
   class="fixed z-50 bottom-0 left-0 right-0 w-full rounded-t-2xl lg:w-225 lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2 lg:rounded-2xl max-h-3/4 lg:h-full overflow-y-auto"
 >
-  <form class="flex flex-col lg:flex-row">
+  <form [formGroup]="taskDetailsForm" class="flex flex-col lg:flex-row">
     <!-- Left Side -->
     <div class="bg-white py-6 px-5 lg:px-8 flex-1 flex flex-col space-y-5">
       <div class="flex justify-between items-center">
         <div class="flex items-center space-x-3">
           <div>
-            <input
-              type="text"
-              class="w-fit text-bgPrimary py-0.5 px-2 bg-bgAvatar rounded-xs outline-0"
-            />
+            <h3
+              class="w-fit text-bgPrimary py-0.5 px-2 bg-bgAvatar text-sm font-bold rounded-xs"
+            >
+              {{ task()?.task_id }}
+            </h3>
           </div>
 
           <select
             id="epic"
-            class="text-sm py-0.5 px-2 border flex w-fit border-gray-200 rounded-lg cursor-pointer outline-0"
+            class="text-sm py-0.5 text-textSecondary font-bold px-2 border flex w-fit border-gray-200 rounded-lg cursor-pointer outline-0"
+            formControlName="epic_id"
+            (blur)="saveChanges('epic_id')"
           >
-            <option value="ok">ok</option>
+            @for (epic of epics$ | async; track epic.id) {
+              <option [value]="epic.id">
+                {{ epic.epic_id }} ({{ epic.title }})
+              </option>
+              <option></option>
+            }
           </select>
         </div>
         <div class="block lg:hidden">
@@ -33,21 +41,30 @@
         </div>
       </div>
 
+      <!--  title  -->
       <div>
-        <h4 class="text-textPrimary text-xl font-semibold">Title</h4>
+        <input
+          class="text-textPrimary outline-0 text-xl font-semibold"
+          formControlName="title"
+          (blur)="saveChanges('title')"
+        />
       </div>
 
+      <hr class="border-gray-200" />
+
+      <!--   description      -->
       <div class="flex flex-col space-y-3">
         <label for="desc" class="label-sm text-textSecondary font-semibold">
           Description
         </label>
 
         <textarea
-          class="border border-gray-100 outline-0 h-40 lg:h-120 resize-none rounded-xl p-3 text-textPrimary"
+          class="border border-gray-100 outline-0 h-32 lg:h-96 resize-none rounded-xl p-3 text-textPrimary"
           id="desc"
+          formControlName="description"
+          (blur)="saveChanges('description')"
         >
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fugiat reiciendis, aliquid ut nam adipisci excepturi hic possimus mollitia est, recusandae tempora enim alias dicta necessitatibus eos, velit animi.</textarea
-        >
+        </textarea>
       </div>
     </div>
 
@@ -61,9 +78,27 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fug
           Status
         </label>
 
-        <div class="cursor-pointer bg-success py-2.5 px-3 rounded-sm">
-          <select id="status" class="w-full cursor-pointer outline-0">
-            <option value="Done">Completed</option>
+        <div
+          [ngClass]="{
+            'bg-success': taskDetailsForm.get('status')?.value === 'DONE',
+            'bg-bgInputError text-error':
+              taskDetailsForm.get('status')?.value === 'BLOCKED',
+            'bg-[#CDDDFF] text-textPrimary':
+              taskDetailsForm.get('status')?.value !== 'BLOCKED' &&
+              taskDetailsForm.get('status')?.value !== 'DONE',
+          }"
+          class="cursor-pointer py-2.5 px-3 rounded-sm"
+        >
+          <select
+            formControlName="status"
+            id="status"
+            class="w-full cursor-pointer outline-0"
+          >
+            @for (status of statusValues; track $index) {
+              <option class="text-black bg-white" [value]="status">
+                {{ status.replaceAll("_", " ") }}
+              </option>
+            }
           </select>
         </div>
       </div>
@@ -74,22 +109,16 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fug
           Assignee
         </label>
 
-        <div
-          class="flex space-x-1 items-center bg-white cursor-pointer py-2.5 px-3 rounded-md outline-0 border border-gray-200"
+        <select
+          class="bg-white cursor-pointer py-2.5 px-3 rounded-md outline-0 border border-gray-200"
+          id="assignee"
         >
-          <div
-            class="h-6 w-6 p-2 font-semibold bg-bgAvatar text-xs rounded-xl text-textSecondary flex justify-center items-center"
-          >
-            MS
-          </div>
-
-          <select
-            class="w-full outline-0 cursor-pointer text-textPrimary"
-            id="assignee"
-          >
-            <option value="mohaemd salah">Mohamed Salah</option>
-          </select>
-        </div>
+          @for (member of members$ | async; track member.member_id) {
+            <option [value]="member.user_id">
+              {{ member.metadata.name }}
+            </option>
+          }
+        </select>
       </div>
 
       <!-- Reporter -->
@@ -102,10 +131,10 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fug
           <div
             class="h-6 w-6 p-3 font-semibold text-textPrimary bg-bgAvatar text-xs rounded-xl flex justify-center items-center"
           >
-            MS
+            {{ task()?.created_by?.name | trimText }}
           </div>
 
-          <span class="text-textPrimary"> Mohamed Salah </span>
+          <span class="text-textPrimary"> {{ task()?.created_by?.name }} </span>
         </div>
       </div>
 
@@ -126,6 +155,7 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fug
 
             <input
               [value]=""
+              formControlName="due_date"
               id="deadline"
               class="w-full cursor-pointer outline-0 text-textPrimary"
               [matDatepicker]="picker"
@@ -142,7 +172,9 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, accusamus. Fug
           Created AT
         </span>
 
-        <span class="text-textPrimary"> date </span>
+        <span class="text-textPrimary text-sm">
+          {{ task()?.created_at | date: "dd MMM YYYY" }}
+        </span>
       </div>
 
       <!-- Close Button -->

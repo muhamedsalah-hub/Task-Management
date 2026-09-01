@@ -6,8 +6,9 @@ import { AsyncPipe, DatePipe, NgClass } from '@angular/common';
 import { ITasksState } from '../../../../../../core/interfaces/Projects/types';
 import { TrimTextPipe } from '../../../../../../core/pipes/trim-text.pipe';
 import { PaginationComponent } from '../../../shared/pagination/pagination.component';
-import { TaskDetailsModalService } from '../../../shared/services/task-details-modal.service';
 import { TaskDetailsPopUpComponent } from '../../../shared/task-details-pop-up/task-details-pop-up.component';
+import { RouterLink } from "@angular/router";
+import { TaskDetailsModalService } from '../../../../../../core/services/task-details-modal.service';
 
 @Component({
   selector: 'app-list-view-tasks',
@@ -19,8 +20,8 @@ import { TaskDetailsPopUpComponent } from '../../../shared/task-details-pop-up/t
     TrimTextPipe,
     PaginationComponent,
     TaskDetailsPopUpComponent,
-  ],
-  providers: [TaskDetailsModalService],
+    RouterLink
+],
   templateUrl: './list-view-tasks.component.html',
   styleUrl: './list-view-tasks.component.css',
 })

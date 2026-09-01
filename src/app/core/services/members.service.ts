@@ -11,7 +11,7 @@ import { ProjectContextService } from './project-context.service';
 export class MembersService {
   private readonly _HttpClient = inject(HttpClient);
   private readonly _ProjectContextService = inject(ProjectContextService);
-  projectMembers$ = this._HttpClient
+  private projectMembers$ = this._HttpClient
     .get<
       IProjectMembers[]
     >(`${environmet.baseUrl}/rest/v1/get_project_members?project_id=eq.${this._ProjectContextService.projectId()}`)

@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class TaskDetailsModalService {
   isOpen = signal<boolean>(false);
 
@@ -10,5 +10,4 @@ export class TaskDetailsModalService {
   openModal() {
     this.isOpen.set(true);
   }
-  
 }
