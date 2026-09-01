@@ -13,6 +13,9 @@
       @for (task of state.tasks; track task.id) {
         <tbody class="border-2 border-gray-100">
           <tr
+            [routerLink]="[]"
+            [queryParams]="{ taskId: task.id }"
+            [queryParamsHandling]="'merge'"
             (click)="_TaskDetailsModalService.openModal()"
             class="bg-white cursor-pointer *:p-6"
           >

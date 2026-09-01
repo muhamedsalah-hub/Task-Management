@@ -53,6 +53,9 @@
         @for (task of groupedTask[1]; track task.id) {
           <div
             cdkDrag
+            [routerLink]="[]"
+            [queryParams]="{ taskId: task.id }"
+            [queryParamsHandling]="'merge'"
             [cdkDragData]="task"
             (click)="_TaskDetailsModalService.openModal()"
             [ngClass]="{
@@ -108,7 +111,7 @@
     <!--          Drawback shadow                  -->
     <div
       (click)="_TaskDetailsModalService.closeModal()"
-      class="absolute z-40 my-0 inset-0 bg-black/50"
+      class="absolute overflow-hidden z-40 my-0 inset-0 bg-black/50"
     ></div>
   }
 </div>

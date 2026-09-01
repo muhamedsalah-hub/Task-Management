@@ -27,8 +27,8 @@ import { ProjectContextService } from '../../../../../core/services/project-cont
 import { TasksService } from '../../../../../core/services/tasks.service';
 import { catchError, map, of, startWith, tap } from 'rxjs';
 import { EmptyTasksComponent } from '../../tasks/epics/empty-EpicTasks/empty-EpicTasks.component';
-import { TaskDetailsModalService } from '../../shared/services/task-details-modal.service';
-import { TaskDetailsPopUpComponent } from "../../shared/task-details-pop-up/task-details-pop-up.component";
+import { TaskDetailsPopUpComponent } from '../../shared/task-details-pop-up/task-details-pop-up.component';
+import { TaskDetailsModalService } from '../../../../../core/services/task-details-modal.service';
 
 @Component({
   selector: 'app-epic-details-popup',
@@ -45,9 +45,8 @@ import { TaskDetailsPopUpComponent } from "../../shared/task-details-pop-up/task
     EmptyTasksComponent,
     TaskDetailsPopUpComponent,
     NgClass,
-    RouterLink
-],
-  providers:[TaskDetailsModalService],
+    RouterLink,
+  ],
   templateUrl: './epic-details-popup.component.html',
   styleUrl: './epic-details-popup.component.css',
 })
@@ -126,4 +125,8 @@ export class EpicDetailsPopupComponent implements OnInit {
     );
   }
 
+  handleClick() {
+    this.closePopUp();
+    this._TaskDetailsModalService.closeModal();
+  }
 }

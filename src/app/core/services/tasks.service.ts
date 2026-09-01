@@ -6,7 +6,7 @@ import {
   signal,
   WritableSignal,
 } from '@angular/core';
-import { IAddTaskForm, IStatus, ITasks } from '../interfaces/Projects/types';
+import { IAddTaskForm, IStatus, ITaskBody, ITasks } from '../interfaces/Projects/types';
 import { environmet } from '../environment/environment';
 import { ProjectContextService } from './project-context.service';
 import {
@@ -84,6 +84,10 @@ export class TasksService {
       `${environmet.baseUrl}/rest/v1/tasks?id=eq.${taskId}`,
       { status },
     );
+  }
+
+  updateTaskDetails(taskId:string,body:ITaskBody):Observable<null>{
+    return this._HtppClient.patch<null>(`${environmet.baseUrl}/rest/v1/tasks?id=eq.${taskId}`,body)
   }
 
   refreshTasks() {

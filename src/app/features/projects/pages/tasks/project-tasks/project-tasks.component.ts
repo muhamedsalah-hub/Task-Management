@@ -15,7 +15,6 @@ import {
 } from '../../../../../../../node_modules/@angular/common';
 import {
   catchError,
-  combineLatest,
   debounceTime,
   distinctUntilChanged,
   map,
@@ -43,6 +42,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { TaskDetailsPopUpComponent } from '../../../components/shared/task-details-pop-up/task-details-pop-up.component';
+import { TaskDetailsModalService } from '../../../../../core/services/task-details-modal.service';
 
 @Component({
   selector: 'app-project-tasks',
@@ -62,6 +63,7 @@ import { toObservable } from '@angular/core/rxjs-interop';
     FormsModule,
     MatFormFieldModule,
     MatOption,
+    TaskDetailsPopUpComponent
   ],
   templateUrl: './project-tasks.component.html',
   styleUrl: './project-tasks.component.css',
@@ -76,6 +78,7 @@ export class ProjectTasksComponent implements OnInit {
   private readonly _Router = inject(Router);
   private readonly _ActivatedRoute = inject(ActivatedRoute);
   readonly _ProjectContextService = inject(ProjectContextService);
+  readonly _TaskDetailsModalService = inject(TaskDetailsModalService);
 
   tasks$ = merge(
     toObservable(this.searchedTask).pipe(
@@ -132,7 +135,6 @@ export class ProjectTasksComponent implements OnInit {
   changeView(view: 'list' | 'board') {
     this._Router.navigate([], {
       queryParams: { view },
-      queryParamsHandling: 'merge',
     });
   }
 }
