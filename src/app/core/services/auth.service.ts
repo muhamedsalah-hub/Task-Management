@@ -12,6 +12,7 @@ import {
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProjectsService } from './projects.service';
+import { ProjectContextService } from './project-context.service';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +22,7 @@ export class AuthService {
 
   private readonly _PlatrformID = inject(PLATFORM_ID);
   private readonly _Router = inject(Router);
+  private readonly _ProjectContextService = inject(ProjectContextService);
   private readonly _ProjectsService = inject(ProjectsService);
 
   constructor(private _HttpClient: HttpClient) {
@@ -73,6 +75,7 @@ export class AuthService {
     localStorage.removeItem('user');
     this.user = null;
     this._ProjectsService.clearCache();
+    this._ProjectContextService.clearProjectId();
     this._Router.navigate(['/login']);
   }
 
