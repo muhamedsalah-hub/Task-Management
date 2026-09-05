@@ -16,8 +16,15 @@ import { ProjectMembersComponent } from './features/projects/pages/members/proje
 import { EditProjectComponent } from './features/projects/pages/Project/edit-project/edit-project.component';
 import { AddEpicComponent } from './features/projects/pages/epics/add-epic/add-epic.component';
 import { AddTaskComponent } from './features/projects/pages/tasks/add-task/add-task.component';
+import { AcceptInvitationComponent } from './features/projects/pages/members/accept-invitation/accept-invitation.component';
+import { acceptInvitationGuard } from './core/guards/accept-invitation.guard';
 
 export const routes: Routes = [
+  {
+    path: 'invite',
+    component: AcceptInvitationComponent,
+    canActivate: [acceptInvitationGuard],
+  },
   {
     path: '',
     component: AuthLayoutComponent,

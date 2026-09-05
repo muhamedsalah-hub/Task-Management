@@ -11,6 +11,7 @@ import {
 } from '../interfaces/Auth/types';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
+import { ProjectsService } from './projects.service';
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,7 @@ export class AuthService {
 
   private readonly _PlatrformID = inject(PLATFORM_ID);
   private readonly _Router = inject(Router);
+  private readonly _ProjectsService = inject(ProjectsService);
 
   constructor(private _HttpClient: HttpClient) {
     if (isPlatformBrowser(this._PlatrformID) && localStorage.getItem('user')) {
@@ -70,6 +72,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this.user = null;
+    this._ProjectsService.clearCache();
     this._Router.navigate(['/login']);
   }
 

@@ -14,9 +14,9 @@
       (click)="toggleDropdown()"
       class="cursor-pointer relative w-10 h-10 text-white border rounded-lg bg-bgPrimary flex justify-center items-center"
     >
-      <span>{{ _AuthService.user?.name || "" | trimText }}</span>
+      <span>{{ _AuthService.user?.name?.toUpperCase() | trimText }}</span>
+      
       <!--            dropdown Menu            -->
-
       <div
         [ngClass]="{
           ' block': isDropped,

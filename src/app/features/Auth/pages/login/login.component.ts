@@ -47,6 +47,7 @@ export class LoginComponent {
     password: ['', [Validators.required]],
   });
 
+
   logInSubmission() {
     if (this.loginForm.valid) {
       this.isLoading = true;
@@ -54,8 +55,12 @@ export class LoginComponent {
         .logIn(this.loginForm.value)
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe(() => {
-          this._Toastr.success("User logged in successfully")
-          this._Router.navigate(['/Projects']);
+          this._Toastr.success('User logged in successfully');
+          if (window.history.state.returnUrl) {
+            this._Router.navigateByUrl(window.history.state.returnUrl);
+          } else {
+            this._Router.navigate(['/Projects']);
+          }
         });
     }
   }

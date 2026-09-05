@@ -6,9 +6,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class TrimTextPipe implements PipeTransform {
   transform(value: string | undefined, ...args: unknown[]): any {
-    if(!value) return ;
-    const firstName = value.split(' ')[0] ;
+    if (!value) return;
+    const firstName = value.split(' ')[0];
     const lastName = value.split(' ')[1];
-    return lastName[0].padStart(2, firstName[0]);
+    return `${firstName.length > 0 ? firstName[0] : ''}${lastName?.length > 0 ? lastName[0] : ''}`.toUpperCase();
   }
 }
