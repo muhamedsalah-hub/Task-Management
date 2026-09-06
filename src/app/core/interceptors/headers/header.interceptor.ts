@@ -34,6 +34,20 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
       });
     }
 
+    //Invite Member
+    if (req.url.includes('invite_member')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+
+    //Accept Invitation
+    if (req.url.includes('accept_invitation')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
+
     //Add project Epic
     if (req.url.includes('rest/v1/epics')) {
       req = req.clone({

@@ -5,4 +5,8 @@ import { Injectable, signal, WritableSignal } from '@angular/core';
 })
 export class ProjectContextService {
   projectId: WritableSignal<string | null> = signal(null);
+
+  clearProjectId() {
+    this.projectId.set(null);
+  }
 }

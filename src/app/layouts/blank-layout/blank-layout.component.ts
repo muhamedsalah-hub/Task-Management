@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../core/services/auth.service';
-import { IconsComponent } from '../../shared/icons/icons.component';
 import { NgClass } from '../../../../node_modules/@angular/common';
 import {  RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -15,7 +14,6 @@ import { SidebarComponent } from '../../features/projects/layouts/sidebar/sideba
     TopNavBarComponent,
     BottomNavbarComponent,
     SidebarComponent,
-    IconsComponent,
     NgClass,
     RouterOutlet],
   templateUrl: './blank-layout.component.html',

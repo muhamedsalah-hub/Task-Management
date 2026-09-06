@@ -26,7 +26,8 @@ export interface IProjectMembers {
   metadata: {
     name: string;
     email: string;
-    department: string;
+    department?: string;
+    job_title: string;
   };
 }
 

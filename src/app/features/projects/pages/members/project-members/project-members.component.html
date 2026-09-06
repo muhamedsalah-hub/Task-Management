@@ -11,10 +11,11 @@
     <div class="md:flex md:justify-between md:items-center">
       <h1 class="headline-lg text-center text-textPrimary">Project Members</h1>
       <button
-        class="hidden md:flex justify-center items-center space-x-2 rounded-xs btn-primary"
+        (click)="openPopup()"
+        class="hidden md:flex justify-center items-center cursor-pointer space-x-2 rounded-xs btn-primary"
       >
         <svg width="19" height="14" viewBox="0 0 19 14">
-          <use attr="#invite"></use>
+          <use href="#invite"></use>
         </svg>
         <span>Invite Members</span>
       </button>
@@ -58,7 +59,11 @@
               <div
                 class="flex items-center justify-center label-sm bg-bgInput py-0.5 px-2"
               >
-                <span class="title-sm">{{ member.metadata.department }}</span>
+                <span class="title-sm">{{
+                  member.metadata.department
+                    ? member.metadata.department
+                    : member.metadata.job_title
+                }}</span>
               </div>
               <div class="self-end hover:bg-bgSurface-low cursor-pointer">
                 <svg
@@ -76,6 +81,7 @@
 
         <!--           Fixed button to invite in mobile view                    -->
         <div
+          (click)="openPopup()"
           class="md:hidden cursor-pointer fixed rounded-xl bottom-35 right-6 flex justify-center items-center w-10 h-10 btn-primary"
         >
           <span class="text-xl text-white">
@@ -87,7 +93,6 @@
       </div>
 
       <!--          Members Desktop view ( Table )               -->
-
       <div class="hidden md:flex justify-center my-5">
         <table class="w-196 border-4 border-gray-100">
           <thead class="bg-[#E0E8FF4D]">
@@ -123,15 +128,17 @@
                   <div
                     class="w-fit rounded-xl label-sm bg-bgPrimary text-white py-1 px-3"
                   >
-                    <span class="title-sm">{{
-                      member.metadata.department
-                    }}</span>
+                    <span class="title-sm">
+                      {{
+                        member.metadata.department
+                          ? member.metadata.department
+                          : member.metadata.job_title
+                      }}
+                    </span>
                   </div>
                 </td>
                 <td class="p-8">
-                  <div
-                    class="w-full flex justify-end  cursor-pointer"
-                  >
+                  <div class="w-full flex justify-end cursor-pointer">
                     <svg
                       width="4"
                       height="16"
@@ -148,5 +155,15 @@
         </table>
       </div>
     }
+  }
+
+  @if (isOpen()) {
+    <app-invite-members-popup (close)="closePopup()" />
+
+    <!--          Drawback shadow                  -->
+    <div
+      (click)="closePopup()"
+      class="absolute overflow-hidden z-40 my-0 inset-0 bg-black/50"
+    ></div>
   }
 </section>

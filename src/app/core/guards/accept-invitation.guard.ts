@@ -3,7 +3,7 @@ import { inject, PLATFORM_ID } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export const loggedGuard: CanActivateFn = (route, state) => {
+export const acceptInvitationGuard: CanActivateFn = (route, state) => {
   const _PLATFORM_ID = inject(PLATFORM_ID);
   const _Router = inject(Router);
   const _AuthService = inject(AuthService);
@@ -12,9 +12,8 @@ export const loggedGuard: CanActivateFn = (route, state) => {
     if (_AuthService.isAuthenticated()) {
       return true;
     } else {
-      return _Router.createUrlTree(['/login']);
+      return _Router.navigate(['/login'], { state: { returnUrl: state.url } });
     }
   }
-
   return false;
 };
