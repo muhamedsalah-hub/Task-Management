@@ -30,6 +30,12 @@ export class ProjectsService {
     );
   }
 
+  getAllProjects(): Observable<IProjects[]> {
+    return this._HttpClient.get<IProjects[]>(
+      `${environmet.baseUrl}/rest/v1/rpc/get_projects`,
+    );
+  }
+
   editProject(
     body: {
       name: string;

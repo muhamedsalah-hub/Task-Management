@@ -9,7 +9,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const _AuthService = inject(AuthService);
 
   if (isPlatformBrowser(_PLATFORM_ID)) {
-   
     if (_AuthService.isAuthenticated()) {
       return _Router.createUrlTree(['/Projects']);
     } else {

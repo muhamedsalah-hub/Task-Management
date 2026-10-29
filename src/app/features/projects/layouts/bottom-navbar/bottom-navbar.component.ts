@@ -18,9 +18,9 @@ export class BottomNavbarComponent {
   getLink(link?: string) {
     if (link === 'projects') {
       return ['/Projects'];
-    }
-
-    if (this._ProjectContextService.projectId()) {
+    } else if (link === 'statistics') {
+      return ['/my-statistics'];
+    } else if (this._ProjectContextService.projectId()) {
       return ['/projects', this._ProjectContextService.projectId(), link];
     }
 
