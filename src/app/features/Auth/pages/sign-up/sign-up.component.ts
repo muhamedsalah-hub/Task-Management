@@ -7,7 +7,6 @@ import {
 } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
-import { AuthValidationRules } from '../../../../core/utils/validations';
 import { AuthService } from '../../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
 import {  FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
@@ -16,6 +15,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { finalize } from 'rxjs';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AuthValidationRules } from '../../utils/validations';
 
 @Component({
   selector: 'app-sign-up',
@@ -40,6 +40,7 @@ export class SignUpComponent {
   private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _Toastr = inject(ToastrService);
+
 
   signUpForm: FormGroup = this._FormBuilder.group(
     {

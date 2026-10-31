@@ -125,3 +125,17 @@ export interface ITaskBody {
   due_date?: Date | null;
   status?: IStatus;
 }
+
+export interface IStatistics {
+  p_start_date: FormControl<Date >;
+  p_end_date: FormControl<Date >;
+  p_project_id: FormControl<string | null>;
+  p_status: FormControl<IStatus | null>;
+}
+
+export interface IStatisticsBody {
+  p_start_date: string;
+  p_end_date: string;
+  p_project_id: string | null;
+  p_status: IStatus | null;
+}

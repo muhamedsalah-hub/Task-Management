@@ -21,7 +21,7 @@ import { AuthCardComponent } from '../../components/auth-card/auth-card.componen
 import { AuthService } from '../../../../core/services/auth.service';
 import { NgClass } from '@angular/common';
 import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
-import { AuthValidationRules } from '../../../../core/utils/validations';
+import { AuthValidationRules } from '../../utils/validations';
 
 @Component({
   selector: 'app-forgot-password',
@@ -49,6 +49,7 @@ export class ForgotPasswordComponent {
   private readonly _AuthService = inject(AuthService);
   private readonly _FormBuilder = inject(FormBuilder);
   private readonly _Renderer2 = inject(Renderer2);
+  
   @ViewChild('success') divElement!: ElementRef;
 
   emailForm: FormGroup = this._FormBuilder.group({

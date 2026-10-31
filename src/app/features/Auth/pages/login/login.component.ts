@@ -12,9 +12,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faEye, faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import { faArrowRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { AuthCardComponent } from '../../components/auth-card/auth-card.component';
-import { AuthValidationRules } from '../../../../core/utils/validations';
 import { finalize } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
+import { AuthValidationRules } from '../../utils/validations';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,6 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class LoginComponent {
   readonly validations = AuthValidationRules;
-  readonly faEye = faEye;
   readonly faSpinner = faSpinner;
   readonly faArrowAltCircleRight = faArrowRight;
   readonly faEnvelope = faEnvelope;

@@ -1,0 +1,147 @@
+<div class="p-6 mb-16 bg-bgBackground flex flex-col gap-6">
+  <!--           Form             -->
+  <form [formGroup]="statForm" class="flex flex-col gap-6">
+    <!--    Projects     -->
+    <div class="bg-bgSurface-low py-3 px-4">
+      <select
+        formControlName="p_project_id"
+        class="w-full outline-0 text-textPrimary font-bold"
+      >
+        <option selected [value]="null">All Projects</option>
+        @for (project of projects$ | async; track project.id) {
+          <option [value]="project.id">{{ project.name }}</option>
+        }
+      </select>
+    </div>
+    <div class="flex items-center space-x-5">
+      <!--     Status    -->
+      <div class="bg-bgSurface-low py-3 px-4 flex-1">
+        <select
+          formControlName="p_status"
+          class="text-sm font-bold w-full outline-0"
+        >
+          <option selected [value]="null">All Status</option>
+          @for (status of statusValue; track $index) {
+            <option selected [value]="status">
+              {{ status.replaceAll("_", " ") }}
+            </option>
+          }
+        </select>
+      </div>
+      <!--     Date Range    -->
+      <div
+        (click)="picker.open()"
+        class="text-sm bg-bgSurface-low py-3 px-4 space-x-1 items-center justify-between flex-1 flex"
+      >
+        <svg class="mt-1" width="16" height="16" viewBox="0 0 14 14">
+          <use href="#calendar"></use>
+        </svg>
+        <mat-date-range-input  [rangePicker]="picker">
+          <input
+            matStartDate
+            class="font-bold"
+            formControlName="p_start_date"
+            placeholder="Start date"
+          />
+          <input
+            matEndDate
+            formControlName="p_end_date"
+            placeholder="End date"
+          />
+        </mat-date-range-input>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </div>
+    </div>
+  </form>
+
+  <!--       Tasks Status          -->
+  <div class="flex flex-col space-y-3">
+    <span class="title-sm text-textSecondary">Quick overview</span>
+    <div class="flex items-center justify-between space-x-2">
+      <!-- Total Tasks -->
+      <div
+        class="flex flex-col space-y-2 bg-white rounded-lg border border-gray-200 p-4"
+      >
+        <div>
+          <svg width="15" height="17" viewBox="0 0 15 17">
+            <use href="#totalTasks"></use>
+          </svg>
+        </div>
+        <div class="flex flex-col space-y-1">
+          <span class="text-sm text-textSecondary uppercase">Total Tasks</span>
+          <span class="text-2xl font-bold text-textPrimary">42</span>
+        </div>
+      </div>
+      <!-- Completed -->
+      <div
+        class="flex flex-col space-y-2 bg-white rounded-lg border border-gray-200 p-4"
+      >
+        <div>
+          <svg width="17" height="17" viewBox="0 0 17 17">
+            <use href="#completed"></use>
+          </svg>
+        </div>
+        <div class="flex flex-col space-y-1">
+          <span class="text-sm text-textSecondary uppercase"
+            >Completed Tasks</span
+          >
+          <span class="text-2xl font-bold text-textPrimary">42</span>
+        </div>
+      </div>
+      <!-- OverDue -->
+      <div
+        class="flex flex-col space-y-2 bg-white rounded-lg border border-gray-200 p-4"
+      >
+        <div>
+          <svg width="19" height="16" viewBox="0 0 19 16">
+            <use href="#overdue"></use>
+          </svg>
+        </div>
+        <div class="flex flex-col space-y-1">
+          <span class="text-sm text-textSecondary uppercase"
+            >OverDue Tasks</span
+          >
+          <span class="text-2xl font-bold text-textPrimary">42</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--           Calendar          -->
+  <div class="flex flex-col space-y-3">
+    <span class="text-2xl font-bold text-textPrimary">Calendar</span>
+    <div class="flex flex-col space-y-3">
+      @for (item of [1, 2, 3, 4, 5, 6, 7]; track $index) {
+        <div class="p-3 bg-bgSurface-low">
+          <div class="flex items-center justify-between">
+            <!-- Left Side -->
+            <div class="flex items-center space-x-3">
+              <div class="flex flex-col items-center">
+                <span class="text-xs font-medium text-textSecondary">SUN</span>
+                <span class="text-lg font-bold text-textPrimary">22</span>
+              </div>
+              <div
+                class="border-l-2 border-l-gray-300 pl-2 flex items-center space-x-2"
+              >
+                @for (item of [1, 2, 3]; track $index) {
+                  <div
+                    class="rounded-sm py-0.5 px-1.5 bg-bgInput flex items-center justify-center"
+                  >
+                    <span class="text-xs text-textSecondary">2</span>
+                  </div>
+                }
+              </div>
+            </div>
+            <!-- Right Side -->
+            <div>
+              <span
+                class="py-0.5 px-2 text-xs rounded-xl text-white bg-bgPrimary"
+                >Today</span
+              >
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

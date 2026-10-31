@@ -38,7 +38,6 @@
               placeholder="Password "
               autocomplete="off"
             />
-            <fa-icon [icon]="faEye"></fa-icon>
           </div>
         </div>
         <div>
@@ -74,8 +73,9 @@
             <span class="mx-1">Sign In</span>
             @if (isLoading) {
               <fa-icon [icon]="faSpinner" animation="spin"></fa-icon>
+            } @else {
+              <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
             }
-            <fa-icon [icon]="faArrowAltCircleRight"></fa-icon>
           </button>
         </div>
       </div>

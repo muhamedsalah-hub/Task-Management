@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap } from 'rxjs';
 import { environmet } from '../environment/environment';
 import {
   ILoginData,
@@ -19,7 +19,6 @@ import { ProjectContextService } from './project-context.service';
 })
 export class AuthService {
   user: IUserdata | null = null;
-
   private readonly _PlatrformID = inject(PLATFORM_ID);
   private readonly _Router = inject(Router);
   private readonly _ProjectContextService = inject(ProjectContextService);

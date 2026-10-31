@@ -18,13 +18,9 @@ import { AddEpicComponent } from './features/projects/pages/epics/add-epic/add-e
 import { AddTaskComponent } from './features/projects/pages/tasks/add-task/add-task.component';
 import { AcceptInvitationComponent } from './features/projects/pages/members/accept-invitation/accept-invitation.component';
 import { acceptInvitationGuard } from './core/guards/accept-invitation.guard';
+import { StatisticsComponent } from './features/projects/pages/statistics/statistics.component';
 
 export const routes: Routes = [
-  {
-    path: 'invite',
-    component: AcceptInvitationComponent,
-    canActivate: [acceptInvitationGuard],
-  },
   {
     path: '',
     component: AuthLayoutComponent,
@@ -46,6 +42,10 @@ export const routes: Routes = [
       { path: 'Projects', component: ProjectsListComponent },
       { path: 'Projects/add', component: AddProjectComponent },
       {
+        path: 'my-statistics',
+        component: StatisticsComponent,
+      },
+      {
         path: 'projects/:projectId',
         component: ProjectLayoutComponent,
         children: [
@@ -59,5 +59,10 @@ export const routes: Routes = [
         ],
       },
     ],
+  },
+  {
+    path: 'invite',
+    component: AcceptInvitationComponent,
+    canActivate: [acceptInvitationGuard],
   },
 ];

@@ -10,13 +10,13 @@ import {
   ɵInternalFormsSharedModule,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { AuthValidationRules } from '../../../../core/utils/validations';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { isPlatformBrowser, NgClass } from '@angular/common';
 import { FieldErrorComponent } from '../../../../shared/field-error/field-error.component';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs';
+import { AuthValidationRules } from '../../utils/validations';
 
 @Component({
   selector: 'app-reset-password',

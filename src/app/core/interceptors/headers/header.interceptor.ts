@@ -75,6 +75,13 @@ export const headerInterceptor: HttpInterceptorFn = (req, next) => {
         setHeaders: { Authorization: `Bearer ${token}` },
       });
     }
+    
+    //Get tasks statistics
+    if (req.url.includes('get_tasks_calendar_stats')) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
   }
 
   return next(req);
